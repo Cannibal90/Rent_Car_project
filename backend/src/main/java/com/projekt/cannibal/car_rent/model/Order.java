@@ -24,8 +24,6 @@ public class Order {
 
   private OrderStatus status;
 
-  private LocalDate exp_date;
-
   @ManyToOne
   @JoinColumn(name = "user_id")
   private User user;

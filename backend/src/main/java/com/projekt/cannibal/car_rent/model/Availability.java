@@ -21,7 +21,6 @@ public class Availability {
 
   private Integer count;
 
-  @ManyToOne
-  @JoinColumn(name = "car_id")
+  @OneToOne(mappedBy = "availability")
   private Car car;
 }

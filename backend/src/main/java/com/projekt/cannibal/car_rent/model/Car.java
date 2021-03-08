@@ -36,10 +36,11 @@ public class Car {
 
   private LocalDate production_date;
 
-  @OneToMany(mappedBy = "car")
-  private List<Availability> availability;
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "availability_id")
+  private Availability availability;
 
-  @OneToOne
+  @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "equipment_id")
   private Equipment equipment;
 

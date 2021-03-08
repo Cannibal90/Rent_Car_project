@@ -24,9 +24,21 @@ public class User {
 
   private String password;
 
-  @OneToMany(mappedBy = "user")
+  @OneToMany(
+      mappedBy = "user",
+      cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
   private List<Address> addresses = new ArrayList<>();
 
-  @OneToMany(mappedBy = "user")
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
   private List<Order> orders = new ArrayList<>();
+
+  public void addAddress(Address address) {
+    address.setUser(this);
+    getAddresses().add(address);
+  }
+
+  public void addOrder(Order order) {
+    order.setUser(this);
+    getOrders().add(order);
+  }
 }
