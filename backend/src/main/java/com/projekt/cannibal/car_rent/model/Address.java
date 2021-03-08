@@ -12,21 +12,21 @@ import javax.persistence.*;
 @Setter
 public class Address {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    private String country;
+  private String country;
 
-    private String city;
+  private String city;
 
-    private String postCode;
+  private String postCode;
 
-    private String street;
+  private String street;
 
-    private int number;
+  private int number;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  private User user;
 }

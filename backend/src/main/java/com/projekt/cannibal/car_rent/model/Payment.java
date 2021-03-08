@@ -1,5 +1,6 @@
 package com.projekt.cannibal.car_rent.model;
 
+import com.projekt.cannibal.car_rent.helpers.PaymentType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,16 +17,14 @@ import java.time.LocalDate;
 @Setter
 public class Payment {
 
-    @Id
-    @GeneratedValue
-    private Long Id;
+  @Id @GeneratedValue private Long Id;
 
-    private Type type;
+  private PaymentType type;
 
-    private double amount;
+  private double amount;
 
-    private LocalDate paymentDate;
+  private LocalDate paymentDate;
 
-    @OneToOne(mappedBy = "payment")
-    private Order order;
+  @OneToOne(mappedBy = "payment")
+  private Order order;
 }

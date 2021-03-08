@@ -14,19 +14,19 @@ import java.util.List;
 @Setter
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    private String firstname;
+  private String firstname;
 
-    private String lastname;
+  private String lastname;
 
-    private String password;
+  private String password;
 
-    @OneToMany(mappedBy = "user")
-    private List<Address> addresses = new ArrayList<>();
+  @OneToMany(mappedBy = "user")
+  private List<Address> addresses = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<Order> orders = new ArrayList<>();
+  @OneToMany(mappedBy = "user")
+  private List<Order> orders = new ArrayList<>();
 }

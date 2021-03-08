@@ -16,26 +16,27 @@ import java.util.List;
 @Setter
 public class Order {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_id")
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "order_id")
+  private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+  private OrderStatus status;
 
-    @ManyToMany
-    @JoinTable(name = "order_cars", joinColumns = @JoinColumn(name = "id_order", referencedColumnName = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "id_car", referencedColumnName = "car_id"))
-    private List<Car> cars = new ArrayList<>();
+  private LocalDate exp_date;
 
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  private User user;
 
-    private OrderStatus status;
+  @ManyToMany
+  @JoinTable(
+      name = "order_cars",
+      joinColumns = @JoinColumn(name = "id_order", referencedColumnName = "order_id"),
+      inverseJoinColumns = @JoinColumn(name = "id_car", referencedColumnName = "car_id"))
+  private List<Car> cars = new ArrayList<>();
 
-    private LocalDate exp_date;
-
-    @OneToOne
-    @JoinColumn(name = "payment_id")
-    private Payment payment;
+  @OneToOne
+  @JoinColumn(name = "payment_id")
+  private Payment payment;
 }

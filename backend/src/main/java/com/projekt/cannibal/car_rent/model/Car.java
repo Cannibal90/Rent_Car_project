@@ -1,5 +1,7 @@
 package com.projekt.cannibal.car_rent.model;
 
+import com.projekt.cannibal.car_rent.helpers.Brand;
+import com.projekt.cannibal.car_rent.helpers.Fuel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,30 +17,32 @@ import java.util.List;
 @Setter
 public class Car {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "car_id")
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "car_id")
+  private Long id;
 
-    private Brand brand;
+  private Brand brand;
 
-    private String Model;
+  private String Model;
 
-//    private Availability availability; to jescze do uzgodnienia
+  private String engine;
 
-    private String engine;
+  private Fuel fuel;
 
-    private Fuel fuel;
+  private double price;
 
-    private Equipment equipment;
+  private long odometer;
 
-    private double price;
+  private LocalDate production_date;
 
-    private long odometer;
+  @OneToMany(mappedBy = "car")
+  private List<Availability> availability;
 
-    private LocalDate production_date;
+  @OneToOne
+  @JoinColumn(name = "equipment_id")
+  private Equipment equipment;
 
-    @ManyToMany(mappedBy = "cars")
-    private List<Order> orders = new ArrayList<>();
-
+  @ManyToMany(mappedBy = "cars")
+  private List<Order> orders = new ArrayList<>();
 }

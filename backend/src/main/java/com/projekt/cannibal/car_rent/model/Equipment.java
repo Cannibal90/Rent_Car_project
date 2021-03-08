@@ -1,13 +1,13 @@
 package com.projekt.cannibal.car_rent.model;
 
+import com.projekt.cannibal.car_rent.helpers.CarType;
+import com.projekt.cannibal.car_rent.helpers.Gearbox;
+import com.projekt.cannibal.car_rent.helpers.Upholostery;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
@@ -15,23 +15,26 @@ import javax.persistence.Id;
 @Setter
 public class Equipment {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    private CType carType;
+  private CarType carType;
 
-    private int doors;
+  private int doors;
 
-    private boolean powerWindows;
+  private boolean powerWindows;
 
-    private Upholostery upholostery;
+  private Upholostery upholostery;
 
-    private boolean AC;
+  private boolean AC;
 
-    private Gearbox gearbox;
+  private Gearbox gearbox;
 
-    private boolean ABS;
+  private boolean ABS;
 
-    private boolean ESP;
+  private boolean ESP;
+
+  @OneToOne(mappedBy = "equipment")
+  private Car car;
 }
