@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@Table(name = "order_basket")
 public class Order {
 
   @Id
@@ -32,8 +33,8 @@ public class Order {
   @ManyToMany
   @JoinTable(
       name = "order_cars",
-      joinColumns = @JoinColumn(name = "id_order", referencedColumnName = "order_id"),
-      inverseJoinColumns = @JoinColumn(name = "id_car", referencedColumnName = "car_id"))
+      joinColumns = {@JoinColumn(name = "id_order", referencedColumnName = "order_id")},
+      inverseJoinColumns = {@JoinColumn(name = "id_car", referencedColumnName = "car_id")})
   private List<Car> cars = new ArrayList<>();
 
   @OneToOne
