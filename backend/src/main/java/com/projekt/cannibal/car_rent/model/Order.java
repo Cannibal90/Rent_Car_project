@@ -1,12 +1,12 @@
 package com.projekt.cannibal.car_rent.model;
 
-import com.projekt.cannibal.car_rent.helpers.OrderStatus;
+
+import com.projekt.cannibal.car_rent.model.helpers.OrderStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +22,8 @@ public class Order {
   @Column(name = "order_id")
   private Long id;
 
+  @ManyToOne
+  @JoinColumn(name = "orderStatus_id")
   private OrderStatus status;
 
   @ManyToOne

@@ -1,6 +1,6 @@
 package com.projekt.cannibal.car_rent.model;
 
-import com.projekt.cannibal.car_rent.helpers.PaymentType;
+import com.projekt.cannibal.car_rent.model.helpers.PaymentType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,7 +18,9 @@ public class Payment {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long Id;
 
-  private PaymentType type;
+  @ManyToOne
+  @JoinColumn(name = "paymentType_id")
+  private PaymentType paymentType;
 
   private double amount;
 

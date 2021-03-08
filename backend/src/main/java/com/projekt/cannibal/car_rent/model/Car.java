@@ -1,13 +1,15 @@
 package com.projekt.cannibal.car_rent.model;
 
-import com.projekt.cannibal.car_rent.helpers.Brand;
-import com.projekt.cannibal.car_rent.helpers.Fuel;
+
+import com.projekt.cannibal.car_rent.model.helpers.CarBrand;
+import com.projekt.cannibal.car_rent.model.helpers.Fuel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,26 +17,31 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Car {
+@ToString
+public class Car implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "car_id")
   private Long id;
 
-  private Brand brand;
+  @ManyToOne
+  @JoinColumn(name = "brand_id")
+  private CarBrand brand;
 
-  private String Model;
+  private String model;
 
   private String engine;
 
+  @ManyToOne
+  @JoinColumn(name = "fuel_id")
   private Fuel fuel;
 
   private double price;
 
   private long odometer;
 
-  private LocalDate production_date;
+  private String production_date;
 
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "availability_id")

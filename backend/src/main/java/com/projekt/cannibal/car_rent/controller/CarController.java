@@ -1,9 +1,27 @@
 package com.projekt.cannibal.car_rent.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.projekt.cannibal.car_rent.model.Car;
+import com.projekt.cannibal.car_rent.serice.CarService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/car")
 public class CarController {
+
+    @Autowired
+    private CarService carService;
+
+    @GetMapping("/all")
+    public List<Car> getAll(){
+        return carService.findAll();
+    }
+
+    @PostMapping("add")
+    public Car add(@RequestBody Car car){
+    System.out.println(car);
+        return carService.add(car);
+    }
 }
