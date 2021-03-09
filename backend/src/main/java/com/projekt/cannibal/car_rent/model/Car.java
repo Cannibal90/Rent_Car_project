@@ -1,8 +1,10 @@
 package com.projekt.cannibal.car_rent.model;
 
 
+import com.projekt.cannibal.car_rent.helpers.CarType;
+import com.projekt.cannibal.car_rent.helpers.Fuel;
 import com.projekt.cannibal.car_rent.model.helpers.CarBrand;
-import com.projekt.cannibal.car_rent.model.helpers.Fuel;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,12 +33,11 @@ public class Car implements Serializable {
 
   private String model;
 
+  private CarType carType;
+
   private String engine;
 
-  @ManyToOne
-  @JoinColumn(name = "fuel_id")
   private Fuel fuel;
-
 
   private double price;
 

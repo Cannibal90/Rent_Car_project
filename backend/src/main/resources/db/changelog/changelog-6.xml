@@ -10,33 +10,20 @@
         <createTable catalogName="car_rent"
                      remarks="A String"
                      schemaName="public"
-                     tableName="car_type"
+                     tableName="order_basket"
                      tablespace="${tablespace}">
-            <column name="id" type="BIGINT" autoIncrement="true">
+            <column name="order_id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="type" type="VARCHAR(255)"/>
+
+            <column name="status" type="INTEGER"/>
+
+            <column name="payment_id" type="BIGINT"/>
+
+            <column name="user_id" type="BIGINT"/>
 
         </createTable>
     </changeSet>
-
-    <changeSet author="Cannibal" id="Cannibal">
-        <loadData catalogName="car_rent"
-                  commentLineStartsWith="/"
-                  encoding="UTF-8"
-                  file="data/car_type.csv"
-                  quotchar="'"
-                  relativeToChangelogFile="true"
-                  schemaName="public"
-                  separator=","
-                  tableName="car_type"
-                  usePreparedStatements="true">
-            <column index="2"
-                    name="type"
-                    type="string"/>
-        </loadData>
-    </changeSet>
-
 
 
 </databaseChangeLog>

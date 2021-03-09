@@ -10,36 +10,31 @@
         <createTable catalogName="car_rent"
                      remarks="A String"
                      schemaName="public"
-                     tableName="car"
+                     tableName="car_brand"
                      tablespace="${tablespace}">
-            <column name="car_id" type="BIGINT" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="engine" type="VARCHAR(255)"/>
-
-            <column name="model" type="VARCHAR(255)"/>
-
-            <column name="odometer" type="BIGINT">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="price" type="DOUBLE PRECISION">
-            <constraints nullable="false"/>
-            </column>
-
-            <column name="production_date" type="VARCHAR(255)"/>
-
-            <column name="availability_id" type="BIGINT"/>
-
-            <column name="brand_id" type="BIGINT"/>
-
-            <column name="equipment_id" type="BIGINT"/>
-
-            <column name="fuel_id" type="BIGINT"/>
+            <column name="brand_name" type="VARCHAR(255)"/>
         </createTable>
     </changeSet>
 
-
+    <changeSet author="Cannibal" id="Cannibal">
+        <loadData catalogName="car_rent"
+                  commentLineStartsWith="/"
+                  encoding="UTF-8"
+                  file="data/car_brand.csv"
+                  quotchar="'"
+                  relativeToChangelogFile="true"
+                  schemaName="public"
+                  separator=","
+                  tableName="car_brand"
+                  usePreparedStatements="true">
+            <column index="2"
+                    name="brand_name"
+                    type="string"/>
+        </loadData>
+    </changeSet>
 
 </databaseChangeLog>
 

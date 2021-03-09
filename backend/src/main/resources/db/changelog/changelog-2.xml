@@ -15,12 +15,14 @@
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+
+            <column name="availability_status" type="INTEGER"/>
+
             <column name="count" type="INTEGER"/>
 
             <column name="availability_status_id" type="BIGINT"/>
         </createTable>
     </changeSet>
-
 
 
 </databaseChangeLog>

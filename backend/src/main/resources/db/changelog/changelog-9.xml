@@ -10,33 +10,22 @@
         <createTable catalogName="car_rent"
                      remarks="A String"
                      schemaName="public"
-                     tableName="gearbox"
+                     tableName="user"
                      tablespace="${tablespace}">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="gear_type" type="VARCHAR(255)"/>
+
+            <column name="email" type="VARCHAR(255)"/>
+
+            <column name="firstname" type="VARCHAR(255)"/>
+
+            <column name="lastname" type="VARCHAR(255)"/>
+
+            <column name="password" type="VARCHAR(255)"/>
 
         </createTable>
     </changeSet>
-
-    <changeSet author="Cannibal" id="Cannibal">
-        <loadData catalogName="car_rent"
-                  commentLineStartsWith="/"
-                  encoding="UTF-8"
-                  file="data/gearbox.csv"
-                  quotchar="'"
-                  relativeToChangelogFile="true"
-                  schemaName="public"
-                  separator=","
-                  tableName="gearbox"
-                  usePreparedStatements="true">
-            <column index="2"
-                    name="gear_type"
-                    type="string"/>
-        </loadData>
-    </changeSet>
-
 
 
 </databaseChangeLog>

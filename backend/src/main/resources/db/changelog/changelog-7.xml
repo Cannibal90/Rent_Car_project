@@ -10,40 +10,17 @@
         <createTable catalogName="car_rent"
                      remarks="A String"
                      schemaName="public"
-                     tableName="equipment"
+                     tableName="order_cars"
                      tablespace="${tablespace}">
-            <column name="id" type="BIGINT" autoIncrement="true">
+            <column name="id_order" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
 
-            <column name="abs" type="BOOLEAN">
-            <constraints nullable="false"/>
-            </column>
-
-            <column name="ac" type="BOOLEAN">
+            <column name="id_car" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
-
-            <column name="esp" type="BOOLEAN">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="doors" type="INTEGER">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="power_windows" type="BOOLEAN">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="car_type_id" type="BIGINT"/>
-
-            <column name="gearbox_id" type="BIGINT"/>
-
-            <column name="upholostery_id" type="BIGINT"/>
         </createTable>
     </changeSet>
-
 
 
 </databaseChangeLog>

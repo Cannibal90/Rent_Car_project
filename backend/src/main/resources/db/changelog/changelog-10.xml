@@ -7,24 +7,112 @@
 
 
     <changeSet id="10" author="Cannibal">
-        <createTable catalogName="car_rent"
-                     remarks="A String"
-                     schemaName="public"
-                     tableName="order_basket"
-                     tablespace="${tablespace}">
-            <column name="order_id" type="BIGINT" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
 
-            <column name="payment_id" type="BIGINT"/>
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableCatalogName="car_rent"
+                                 baseTableName="address"
+                                 baseTableSchemaName="public"
+                                 constraintName="fk_address_user"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"
+                                 referencedColumnNames="id"
+                                 referencedTableCatalogName="car_rent"
+                                 referencedTableName="user"
+                                 referencedTableSchemaName="public"
+                                 validate="true"/>
 
-            <column name="order_status_id" type="BIGINT"/>
+        <addForeignKeyConstraint baseColumnNames="availability_id"
+                                 baseTableCatalogName="car_rent"
+                                 baseTableName="car"
+                                 baseTableSchemaName="public"
+                                 constraintName="fk_car_availability"
+                                 onDelete="RESTRICT"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableCatalogName="car_rent"
+                                 referencedTableName="availability"
+                                 referencedTableSchemaName="public"
+                                 validate="true"/>
 
-            <column name="user_id" type="BIGINT"/>
+        <addForeignKeyConstraint baseColumnNames="brand_id"
+                                 baseTableCatalogName="car_rent"
+                                 baseTableName="car"
+                                 baseTableSchemaName="public"
+                                 constraintName="fk_car_brand"
+                                 onDelete="RESTRICT"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableCatalogName="car_rent"
+                                 referencedTableName="car_brand"
+                                 referencedTableSchemaName="public"
+                                 validate="true"/>
 
-        </createTable>
+        <addForeignKeyConstraint baseColumnNames="equipment_id"
+                                 baseTableCatalogName="car_rent"
+                                 baseTableName="car"
+                                 baseTableSchemaName="public"
+                                 constraintName="fk_car_equipment"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"
+                                 referencedColumnNames="id"
+                                 referencedTableCatalogName="car_rent"
+                                 referencedTableName="equipment"
+                                 referencedTableSchemaName="public"
+                                 validate="true"/>
+
+        <addForeignKeyConstraint baseColumnNames="payment_id"
+                                 baseTableCatalogName="car_rent"
+                                 baseTableName="order_basket"
+                                 baseTableSchemaName="public"
+                                 constraintName="fk_order_basket_payment"
+                                 onDelete="RESTRICT"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableCatalogName="car_rent"
+                                 referencedTableName="payment"
+                                 referencedTableSchemaName="public"
+                                 validate="true"/>
+
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableCatalogName="car_rent"
+                                 baseTableName="order_basket"
+                                 baseTableSchemaName="public"
+                                 constraintName="fk_order_basket_user"
+                                 onDelete="RESTRICT"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableCatalogName="car_rent"
+                                 referencedTableName="user"
+                                 referencedTableSchemaName="public"
+                                 validate="true"/>
+
+        <addForeignKeyConstraint baseColumnNames="id_car"
+                                 baseTableCatalogName="car_rent"
+                                 baseTableName="order_cars"
+                                 baseTableSchemaName="public"
+                                 constraintName="fk_order_cars_car"
+                                 onDelete="RESTRICT"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="car_id"
+                                 referencedTableCatalogName="car_rent"
+                                 referencedTableName="car"
+                                 referencedTableSchemaName="public"
+                                 validate="true"/>
+
+        <addForeignKeyConstraint baseColumnNames="id_order"
+                                 baseTableCatalogName="car_rent"
+                                 baseTableName="order_cars"
+                                 baseTableSchemaName="public"
+                                 constraintName="fk_order_cars_order"
+                                 onDelete="RESTRICT"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="order_id"
+                                 referencedTableCatalogName="car_rent"
+                                 referencedTableName="order_basket"
+                                 referencedTableSchemaName="public"
+                                 validate="true"/>
+
     </changeSet>
-
 
 
 </databaseChangeLog>

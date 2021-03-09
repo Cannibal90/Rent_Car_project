@@ -10,32 +10,38 @@
         <createTable catalogName="car_rent"
                      remarks="A String"
                      schemaName="public"
-                     tableName="availability_status"
+                     tableName="car"
                      tablespace="${tablespace}">
-            <column name="id" type="BIGINT" autoIncrement="true">
+            <column name="car_id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="status" type="VARCHAR(255)"/>
+            <column name="engine" type="VARCHAR(255)"/>
+
+            <column name="fuel" type="INTEGER"/>
+
+            <column name="model" type="VARCHAR(255)"/>
+
+            <column name="car_type" type="INTEGER"/>
+
+            <column name="odometer" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="price" type="DOUBLE PRECISION">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="production_date" type="VARCHAR(255)"/>
+
+            <column name="availability_id" type="BIGINT"/>
+
+            <column name="brand_id" type="BIGINT"/>
+
+            <column name="equipment_id" type="BIGINT"/>
+
+            <column name="fuel_id" type="BIGINT"/>
         </createTable>
     </changeSet>
-
-    <changeSet author="Cannibal" id="Cannibal">
-        <loadData catalogName="car_rent"
-                  commentLineStartsWith="/"
-                  encoding="UTF-8"
-                  file="data/availability_status.csv"
-                  quotchar="'"
-                  relativeToChangelogFile="true"
-                  schemaName="public"
-                  separator=","
-                  tableName="availability_status"
-                  usePreparedStatements="true">
-            <column index="2"
-                    name="status"
-                    type="string"/>
-        </loadData>
-    </changeSet>
-
 
 
 </databaseChangeLog>

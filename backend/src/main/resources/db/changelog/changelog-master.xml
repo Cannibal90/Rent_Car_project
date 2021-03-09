@@ -15,13 +15,6 @@
     <include  file="db/changelog/changelog-8.xml"/>
     <include  file="db/changelog/changelog-9.xml"/>
     <include  file="db/changelog/changelog-10.xml"/>
-    <include  file="db/changelog/changelog-11.xml"/>
-    <include  file="db/changelog/changelog-12.xml"/>
-    <include  file="db/changelog/changelog-13.xml"/>
-    <include  file="db/changelog/changelog-14.xml"/>
-    <include  file="db/changelog/changelog-15.xml"/>
-    <include  file="db/changelog/changelog-16.xml"/>
-    <include  file="db/changelog/changelog-17.xml"/>
 
 
 </databaseChangeLog>

@@ -4,9 +4,9 @@ import com.projekt.cannibal.car_rent.dao.AvailabilityDao;
 import com.projekt.cannibal.car_rent.dao.CarDao;
 import com.projekt.cannibal.car_rent.dao.EquipmentDao;
 import com.projekt.cannibal.car_rent.dao.helpers.CarBrandDao;
-import com.projekt.cannibal.car_rent.dao.helpers.FuelDao;
+
 import com.projekt.cannibal.car_rent.model.Car;
-import com.projekt.cannibal.car_rent.model.helpers.Fuel;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +21,6 @@ public class CarService {
     @Autowired
     private EquipmentDao equipmentDao;
     @Autowired
-    private FuelDao fuelDao;
-    @Autowired
     private CarBrandDao carBrandDao;
     @Autowired
     private AvailabilityDao availabilityDao;
@@ -36,10 +34,7 @@ public class CarService {
     }
 
     public Car add(Car car){
-        Fuel fuel =  fuelDao.findByFuelType(car.getFuel().getFuelType()).get();
-
-        car.setFuel(fuel);
-    System.out.printf("availability: " + car.getAvailability());
+    System.out.println("availability: " + car.getFuel());
         return  carDao.save(car);
     }
 

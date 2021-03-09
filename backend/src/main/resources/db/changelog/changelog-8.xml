@@ -10,33 +10,21 @@
         <createTable catalogName="car_rent"
                      remarks="A String"
                      schemaName="public"
-                     tableName="fuel"
+                     tableName="payment"
                      tablespace="${tablespace}">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="fuel_type" type="VARCHAR(255)"/>
 
+            <column name="amount" type="DOUBLE PRECISION">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="payment_date" type="DATE"/>
+
+            <column name="payment_type" type="INTEGER"/>
         </createTable>
     </changeSet>
-
-    <changeSet author="Cannibal" id="Cannibal">
-        <loadData catalogName="car_rent"
-                  commentLineStartsWith="/"
-                  encoding="UTF-8"
-                  file="data/fuel.csv"
-                  quotchar="'"
-                  relativeToChangelogFile="true"
-                  schemaName="public"
-                  separator=","
-                  tableName="fuel"
-                  usePreparedStatements="true">
-            <column index="2"
-                    name="fuel_type"
-                    type="string"/>
-        </loadData>
-    </changeSet>
-
 
 
 </databaseChangeLog>
