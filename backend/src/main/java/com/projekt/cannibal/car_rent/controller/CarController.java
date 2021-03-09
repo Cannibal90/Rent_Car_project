@@ -1,7 +1,7 @@
 package com.projekt.cannibal.car_rent.controller;
 
 import com.projekt.cannibal.car_rent.model.Car;
-import com.projekt.cannibal.car_rent.serice.CarService;
+import com.projekt.cannibal.car_rent.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

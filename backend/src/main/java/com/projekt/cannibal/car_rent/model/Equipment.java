@@ -6,6 +6,7 @@ import com.projekt.cannibal.car_rent.model.helpers.Upholostery;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,6 +15,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Equipment implements Serializable {
 
   @Id

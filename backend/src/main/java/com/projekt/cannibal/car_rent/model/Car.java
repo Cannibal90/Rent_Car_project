@@ -37,6 +37,7 @@ public class Car implements Serializable {
   @JoinColumn(name = "fuel_id")
   private Fuel fuel;
 
+
   private double price;
 
   private long odometer;
@@ -53,4 +54,6 @@ public class Car implements Serializable {
 
   @ManyToMany(mappedBy = "cars")
   private List<Order> orders = new ArrayList<>();
+
+
 }

@@ -5,8 +5,10 @@ import com.projekt.cannibal.car_rent.model.helpers.OrderStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "order_basket")
+@ToString
 public class Order {
 
   @Id

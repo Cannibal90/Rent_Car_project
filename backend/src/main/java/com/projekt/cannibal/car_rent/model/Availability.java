@@ -4,14 +4,17 @@ import com.projekt.cannibal.car_rent.model.helpers.AvailabilityStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @NoArgsConstructor
 @Getter
 @Setter
-public class Availability {
+@ToString
+public class Availability implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,4 +28,5 @@ public class Availability {
 
   @OneToOne(mappedBy = "availability")
   private Car car;
+
 }

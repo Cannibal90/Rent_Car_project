@@ -1,10 +1,14 @@
 package com.projekt.cannibal.car_rent.model;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class User {
 
   @Id
@@ -20,9 +25,12 @@ public class User {
 
   private String firstname;
 
+
   private String lastname;
 
+
   private String email;
+
 
   private String password;
 
