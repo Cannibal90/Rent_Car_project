@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+
+    <changeSet id="7" author="Cannibal">
+        <createTable catalogName="car_rent"
+                     remarks="A String"
+                     schemaName="public"
+                     tableName="equipment"
+                     tablespace="${tablespace}">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="abs" type="BOOLEAN">
+            <constraints nullable="false"/>
+            </column>
+
+            <column name="ac" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="esp" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="doors" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="power_windows" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="car_type_id" type="BIGINT"/>
+
+            <column name="gearbox_id" type="BIGINT"/>
+
+            <column name="upholostery_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+
+
+
+</databaseChangeLog>
+

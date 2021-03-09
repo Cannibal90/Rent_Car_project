@@ -5,22 +5,39 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
+
+    <changeSet id="9" author="Cannibal">
+        <createTable catalogName="car_rent"
+                     remarks="A String"
+                     schemaName="public"
+                     tableName="gearbox"
+                     tablespace="${tablespace}">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="gear_type" type="VARCHAR(255)"/>
+
+        </createTable>
+    </changeSet>
+
     <changeSet author="Cannibal" id="Cannibal">
         <loadData catalogName="car_rent"
                   commentLineStartsWith="/"
                   encoding="UTF-8"
-                  file="data/car_brand.csv"
+                  file="data/gearbox.csv"
                   quotchar="'"
                   relativeToChangelogFile="true"
                   schemaName="public"
                   separator=","
-                  tableName="car_brand"
+                  tableName="gearbox"
                   usePreparedStatements="true">
             <column index="2"
-                    name="brand_name"
+                    name="gear_type"
                     type="string"/>
         </loadData>
     </changeSet>
+
+
 
 </databaseChangeLog>
 
