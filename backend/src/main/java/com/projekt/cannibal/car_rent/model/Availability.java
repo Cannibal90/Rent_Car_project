@@ -1,6 +1,7 @@
 package com.projekt.cannibal.car_rent.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.projekt.cannibal.car_rent.helpers.AvailabilityStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

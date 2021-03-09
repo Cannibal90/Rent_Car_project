@@ -1,5 +1,6 @@
 package com.projekt.cannibal.car_rent.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.projekt.cannibal.car_rent.helpers.CarType;
 import com.projekt.cannibal.car_rent.helpers.Gearbox;
 import com.projekt.cannibal.car_rent.helpers.Upholostery;
@@ -15,7 +16,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 public class Equipment implements Serializable {
 
   @Id
@@ -38,4 +38,18 @@ public class Equipment implements Serializable {
 
   @OneToOne(mappedBy = "equipment")
   private Car car;
+
+  @Override
+  public String toString() {
+    return "Equipment{" +
+            "id=" + id +
+            ", doors=" + doors +
+            ", powerWindows=" + powerWindows +
+            ", upholostery=" + upholostery +
+            ", AC=" + AC +
+            ", gearbox=" + gearbox +
+            ", ABS=" + ABS +
+            ", ESP=" + ESP +
+            '}';
+  }
 }

@@ -30,4 +30,14 @@ public class Payment {
 
   @OneToOne(mappedBy = "payment")
   private Order order;
+
+  @Override
+  public String toString() {
+    return "Payment{" +
+            "Id=" + Id +
+            ", paymentType=" + paymentType +
+            ", amount=" + amount +
+            ", paymentDate=" + paymentDate +
+            '}';
+  }
 }

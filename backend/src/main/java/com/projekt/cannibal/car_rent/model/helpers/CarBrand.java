@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class CarBrand {
+public class CarBrand implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,4 +26,9 @@ public class CarBrand {
 
     @OneToMany(mappedBy = "brand")
     private List<Car> cars = new ArrayList<>();
+
+    public void addCar(Car car){
+        car.setBrand(this);
+        cars.add(car);
+    }
 }

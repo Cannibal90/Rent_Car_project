@@ -14,7 +14,6 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 public class Address {
 
   @Id
@@ -35,4 +34,16 @@ public class Address {
   @ManyToOne
   @JoinColumn(name = "user_id")
   private User user;
+
+  @Override
+  public String toString() {
+    return "Address{" +
+            "id=" + id +
+            ", country='" + country + '\'' +
+            ", city='" + city + '\'' +
+            ", postCode='" + postCode + '\'' +
+            ", street='" + street + '\'' +
+            ", number=" + number +
+            '}';
+  }
 }

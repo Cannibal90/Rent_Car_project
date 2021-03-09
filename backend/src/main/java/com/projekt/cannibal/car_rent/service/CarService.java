@@ -5,8 +5,10 @@ import com.projekt.cannibal.car_rent.dao.CarDao;
 import com.projekt.cannibal.car_rent.dao.EquipmentDao;
 import com.projekt.cannibal.car_rent.dao.helpers.CarBrandDao;
 
+import com.projekt.cannibal.car_rent.model.Availability;
 import com.projekt.cannibal.car_rent.model.Car;
 
+import com.projekt.cannibal.car_rent.model.helpers.CarBrand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +36,11 @@ public class CarService {
     }
 
     public Car add(Car car){
-    System.out.println("availability: " + car.getFuel());
+
+        CarBrand carBrand = carBrandDao.findByBrandName(car.getBrand().getBrandName()).get();
+        carBrand.addCar(car);
+        car.getAvailability().setCar(car);
+        car.getEquipment().setCar(car);
         return  carDao.save(car);
     }
 

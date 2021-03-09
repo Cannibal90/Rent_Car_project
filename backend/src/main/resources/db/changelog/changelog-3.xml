@@ -38,8 +38,6 @@
             <column name="brand_id" type="BIGINT"/>
 
             <column name="equipment_id" type="BIGINT"/>
-
-            <column name="fuel_id" type="BIGINT"/>
         </createTable>
     </changeSet>
 

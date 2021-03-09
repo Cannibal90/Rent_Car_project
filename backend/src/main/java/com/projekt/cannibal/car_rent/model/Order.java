@@ -16,7 +16,6 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "order_basket")
-@ToString
 public class Order {
 
   @Id
@@ -41,4 +40,15 @@ public class Order {
   @OneToOne
   @JoinColumn(name = "payment_id")
   private Payment payment;
+
+  @Override
+  public String toString() {
+    return "Order{" +
+            "id=" + id +
+            ", status=" + status +
+            ", user=" + user +
+            ", cars=" + cars +
+            ", payment=" + payment +
+            '}';
+  }
 }

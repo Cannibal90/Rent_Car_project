@@ -1,6 +1,7 @@
 package com.projekt.cannibal.car_rent.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.projekt.cannibal.car_rent.helpers.CarType;
 import com.projekt.cannibal.car_rent.helpers.Fuel;
 import com.projekt.cannibal.car_rent.model.helpers.CarBrand;
@@ -28,6 +29,7 @@ public class Car implements Serializable {
   private Long id;
 
   @ManyToOne
+  @JsonIgnoreProperties("cars")
   @JoinColumn(name = "brand_id")
   private CarBrand brand;
 
@@ -47,14 +49,20 @@ public class Car implements Serializable {
 
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "availability_id")
+  @JsonIgnoreProperties("car")
   private Availability availability;
 
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "equipment_id")
+  @JsonIgnoreProperties("car")
   private Equipment equipment;
 
   @ManyToMany(mappedBy = "cars")
   private List<Order> orders = new ArrayList<>();
 
+  public void addAvailability(Availability availability){
+    availability.setCar(this);
+    this.availability = availability;
+  }
 
 }
