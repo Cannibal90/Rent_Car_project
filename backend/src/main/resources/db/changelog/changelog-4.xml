@@ -6,35 +6,43 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
 
-    <changeSet id="4" author="Cannibal">
+    <changeSet id="5" author="Cannibal">
         <createTable catalogName="car_rent"
                      remarks="A String"
                      schemaName="public"
-                     tableName="car_brand"
+                     tableName="equipment"
                      tablespace="${tablespace}">
             <column name="id" type="BIGINT" autoIncrement="true">
-                <constraints nullable="false" primaryKey="true"/>
+                <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="brand_name" type="VARCHAR(255)"/>
+
+            <column name="abs" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="ac" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="esp" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="doors" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="gearbox" type="INTEGER"/>
+
+            <column name="power_windows" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="upholostery" type="INTEGER"/>
+
         </createTable>
     </changeSet>
 
-    <changeSet author="Cannibal" id="Cannibal">
-        <loadData catalogName="car_rent"
-                  commentLineStartsWith="/"
-                  encoding="UTF-8"
-                  file="data/car_brand.csv"
-                  quotchar="'"
-                  relativeToChangelogFile="true"
-                  schemaName="public"
-                  separator=","
-                  tableName="car_brand"
-                  usePreparedStatements="true">
-            <column index="2"
-                    name="brand_name"
-                    type="string"/>
-        </loadData>
-    </changeSet>
 
 </databaseChangeLog>
 

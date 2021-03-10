@@ -2,6 +2,7 @@ package com.projekt.cannibal.car_rent.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.projekt.cannibal.car_rent.helpers.AvailabilityStatus;
 import com.projekt.cannibal.car_rent.helpers.CarType;
 import com.projekt.cannibal.car_rent.helpers.Fuel;
 import com.projekt.cannibal.car_rent.model.helpers.CarBrand;
@@ -47,10 +48,7 @@ public class Car implements Serializable {
 
   private String production_date;
 
-  @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "availability_id")
-  @JsonIgnoreProperties("car")
-  private Availability availability;
+  private AvailabilityStatus availabilityStatus;
 
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "equipment_id")
@@ -59,10 +57,4 @@ public class Car implements Serializable {
 
   @ManyToMany(mappedBy = "cars")
   private List<Order> orders = new ArrayList<>();
-
-  public void addAvailability(Availability availability){
-    availability.setCar(this);
-    this.availability = availability;
-  }
-
 }

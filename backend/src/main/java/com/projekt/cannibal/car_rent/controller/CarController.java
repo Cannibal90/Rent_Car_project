@@ -19,8 +19,13 @@ public class CarController {
         return carService.findAll();
     }
 
-    @PostMapping("add")
+    @PostMapping("/add")
     public Car add(@RequestBody Car car){
         return carService.add(car);
+    }
+
+    @PutMapping("/update")
+    public Car update(@RequestBody Car car){
+        return carService.update(car);
     }
 }

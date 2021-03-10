@@ -6,19 +6,23 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
 
-    <changeSet id="7" author="Cannibal">
+    <changeSet id="8" author="Cannibal">
         <createTable catalogName="car_rent"
                      remarks="A String"
                      schemaName="public"
-                     tableName="order_cars"
+                     tableName="payment"
                      tablespace="${tablespace}">
-            <column name="id_order" type="BIGINT" autoIncrement="true">
+            <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
 
-            <column name="id_car" type="BIGINT">
+            <column name="amount" type="DOUBLE PRECISION">
                 <constraints nullable="false"/>
             </column>
+
+            <column name="payment_date" type="DATE"/>
+
+            <column name="payment_type" type="INTEGER"/>
         </createTable>
     </changeSet>
 
