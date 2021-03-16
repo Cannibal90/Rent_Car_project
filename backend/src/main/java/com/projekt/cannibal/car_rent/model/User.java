@@ -1,13 +1,12 @@
 package com.projekt.cannibal.car_rent.model;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 import com.projekt.cannibal.car_rent.helpers.Role;
+import com.projekt.cannibal.car_rent.validators.UniqueEmail;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -24,17 +23,27 @@ public class User {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @NotNull
+  @Size(min = 2, max = 15)
+  @Column(unique = true)
+  private String username;
+
+  @NotNull
+  @Size(min = 2, max = 15)
   private String firstname;
 
-
+  @NotNull
+  @Size(min = 3, max = 15)
   private String lastname;
 
-
+  @UniqueEmail
   private String email;
 
+  @NotNull
   private String password;
 
-  //TODO add to liquibase
+  // TODO add to liquibase
+  @NotNull
   private Role role;
 
   @OneToMany(
@@ -42,7 +51,7 @@ public class User {
       cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
   private List<Address> addresses = new ArrayList<>();
 
-  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
   private List<Order> orders = new ArrayList<>();
 
   public void addAddress(Address address) {
@@ -65,13 +74,23 @@ public class User {
 
   @Override
   public String toString() {
-    return "User{" +
-            "id=" + id +
-            ", firstname='" + firstname + '\'' +
-            ", lastname='" + lastname + '\'' +
-            ", email='" + email + '\'' +
-            ", password='" + password + '\'' +
-            ", role=" + role +
-            '}';
+    return "User{"
+        + "id="
+        + id
+        + ", firstname='"
+        + firstname
+        + '\''
+        + ", lastname='"
+        + lastname
+        + '\''
+        + ", email='"
+        + email
+        + '\''
+        + ", password='"
+        + password
+        + '\''
+        + ", role="
+        + role
+        + '}';
   }
 }

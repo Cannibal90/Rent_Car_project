@@ -1,13 +1,12 @@
 package com.projekt.cannibal.car_rent.model;
 
-
 import com.projekt.cannibal.car_rent.helpers.OrderStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,11 +22,11 @@ public class Order {
   @Column(name = "order_id")
   private Long id;
 
-
-  private OrderStatus status;
+  @NotNull private OrderStatus status;
 
   @ManyToOne
   @JoinColumn(name = "user_id")
+  @NotNull
   private User user;
 
   @ManyToMany
@@ -37,18 +36,23 @@ public class Order {
       inverseJoinColumns = {@JoinColumn(name = "id_car", referencedColumnName = "car_id")})
   private List<Car> cars = new ArrayList<>();
 
-  @OneToOne
+  @OneToOne(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "payment_id")
   private Payment payment;
 
   @Override
   public String toString() {
-    return "Order{" +
-            "id=" + id +
-            ", status=" + status +
-            ", user=" + user +
-            ", cars=" + cars +
-            ", payment=" + payment +
-            '}';
+    return "Order{"
+        + "id="
+        + id
+        + ", status="
+        + status
+        + ", user="
+        + user
+        + ", cars="
+        + cars
+        + ", payment="
+        + payment
+        + '}';
   }
 }

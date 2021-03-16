@@ -1,6 +1,6 @@
 package com.projekt.cannibal.car_rent.configuration.auth;
 
-import com.projekt.cannibal.car_rent.helpers.Role;
+
 import com.projekt.cannibal.car_rent.model.User;
 import com.projekt.cannibal.car_rent.service.UserService;
 import io.jsonwebtoken.Jwts;
@@ -11,13 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.yaml.snakeyaml.util.ArrayUtils;
 
-import java.sql.SQLOutput;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Optional;
 
 @RestController
@@ -34,7 +30,7 @@ public class AuthController {
     public ResponseEntity<?> auth(@RequestBody UserAuthDTO userAuthDTO){
 
     userService.findAll().forEach(System.out::println);
-        Optional<User> optionalUser = userService.findAll().stream().filter(u-> u.getFirstname().equals(userAuthDTO.getName()) && passwordEncoder.matches(userAuthDTO.getPassword(), u.getPassword())).findFirst();
+        Optional<User> optionalUser = userService.findAll().stream().filter(u-> u.getUsername().equals(userAuthDTO.getName()) && passwordEncoder.matches(userAuthDTO.getPassword(), u.getPassword())).findFirst();
         if(!optionalUser.isPresent()){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid credentials");
         }

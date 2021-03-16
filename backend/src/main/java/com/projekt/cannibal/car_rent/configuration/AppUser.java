@@ -1,13 +1,12 @@
 package com.projekt.cannibal.car_rent.configuration;
 
-import com.projekt.cannibal.car_rent.helpers.Role;
+
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
 
 @Data
 public class AppUser implements UserDetails {

@@ -13,6 +13,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,20 +35,26 @@ public class Car implements Serializable {
   @JoinColumn(name = "brand_id")
   private CarBrand brand;
 
+  @NotNull
   private String model;
 
+  @NotNull
   private CarType carType;
 
+  @NotNull
   private String engine;
 
+  @NotNull
   private Fuel fuel;
 
   private double price;
 
   private long odometer;
 
+  @NotNull
   private String production_date;
 
+  @NotNull
   private AvailabilityStatus availabilityStatus;
 
   @OneToOne(cascade = CascadeType.ALL)

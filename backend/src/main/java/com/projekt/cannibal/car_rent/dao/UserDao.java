@@ -11,4 +11,8 @@ import java.util.Optional;
 @Repository
 @Transactional
 public interface UserDao extends JpaRepository<User, Long> {
+
+    Optional<User> findByUsername(String username);
+
+    Optional<User> findByEmail(String email);
 }

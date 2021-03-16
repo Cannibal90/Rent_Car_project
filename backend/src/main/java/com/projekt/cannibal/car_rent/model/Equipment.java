@@ -1,15 +1,14 @@
 package com.projekt.cannibal.car_rent.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.projekt.cannibal.car_rent.helpers.CarType;
 import com.projekt.cannibal.car_rent.helpers.Gearbox;
 import com.projekt.cannibal.car_rent.helpers.Upholostery;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
+
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
@@ -22,21 +21,29 @@ public class Equipment implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @NotNull
   private int doors;
 
+  @NotNull
   private boolean powerWindows;
 
+  @NotNull
   private Upholostery upholostery;
 
+  @NotNull
   private boolean AC;
 
+  @NotNull
   private Gearbox gearbox;
 
+  @NotNull
   private boolean ABS;
 
+  @NotNull
   private boolean ESP;
 
   @OneToOne(mappedBy = "equipment")
+  @NotNull
   private Car car;
 
   @Override
