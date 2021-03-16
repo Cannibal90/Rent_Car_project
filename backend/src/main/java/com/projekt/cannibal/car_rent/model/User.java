@@ -2,6 +2,8 @@ package com.projekt.cannibal.car_rent.model;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+
+import com.projekt.cannibal.car_rent.helpers.Role;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,8 +32,10 @@ public class User {
 
   private String email;
 
-
   private String password;
+
+  //TODO add to liquibase
+  private Role role;
 
   @OneToMany(
       mappedBy = "user",
