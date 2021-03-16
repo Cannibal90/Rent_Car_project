@@ -8,12 +8,14 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.yaml.snakeyaml.util.ArrayUtils;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,20 +26,15 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-    private List<User> users = new ArrayList<>();
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
-    public AuthController(){
-        User user = new User("user", "userL", "www@gmail.com", "user", Role.ROLE_USER);
-        User user1 = new User("admin", "adminL", "wwwa@gmail.com", "admin", Role.ROLE_ADMIN);
-        users.add(user);
-        users.add(user1);
-//        userService.add(user);
-//        userService.add(user);
-    }
 
     @PostMapping("api/auth")
     public ResponseEntity<?> auth(@RequestBody UserAuthDTO userAuthDTO){
-        Optional<User> optionalUser = users.stream().filter(u -> (u.getFirstname().equals(userAuthDTO.getName()) && u.getPassword().equals(userAuthDTO.getPassword()))).findFirst();
+
+    userService.findAll().forEach(System.out::println);
+        Optional<User> optionalUser = userService.findAll().stream().filter(u-> u.getFirstname().equals(userAuthDTO.getName()) && passwordEncoder.matches(userAuthDTO.getPassword(), u.getPassword())).findFirst();
         if(!optionalUser.isPresent()){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid credentials");
         }
@@ -46,10 +43,9 @@ public class AuthController {
         String token = Jwts.builder()
                 .claim("username", user.getFirstname())
                 .claim("id",""+user.getId())
+                .claim("role", user.getRole().toString())
                 .signWith(SignatureAlgorithm.HS512, "my_app").compact();
 
         return ResponseEntity.ok(token);
-
-
     }
 }
