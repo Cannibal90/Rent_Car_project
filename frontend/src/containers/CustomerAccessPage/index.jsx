@@ -1,4 +1,5 @@
 import React from "react";
+import { AccountBox } from "../../components/accountBox";
 import { Navbar } from "../../components/navbar";
 import {
   InnerPageContainer,
@@ -9,7 +10,9 @@ export function CustomerAccessPage(props) {
   return (
     <PageContainer>
       <Navbar />
-      <InnerPageContainer></InnerPageContainer>
+      <InnerPageContainer>
+        <AccountBox />
+      </InnerPageContainer>
     </PageContainer>
   );
 }
