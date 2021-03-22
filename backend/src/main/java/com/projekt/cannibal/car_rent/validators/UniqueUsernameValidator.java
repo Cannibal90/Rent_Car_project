@@ -9,15 +9,14 @@ import javax.validation.ConstraintValidatorContext;
 import java.util.Optional;
 
 
-public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, String> {
+public class UniqueUsernameValidator implements ConstraintValidator<UniqueUsername, String> {
 
     @Autowired
     private UserService userService;
 
-
     @Override
     public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
-        Optional<User> userInDB = userService.findByEmail(s);
+        Optional<User> userInDB = userService.findByUsername(s);
         return !userInDB.isPresent();
     }
 }

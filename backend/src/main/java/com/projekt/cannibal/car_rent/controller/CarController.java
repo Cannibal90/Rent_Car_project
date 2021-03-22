@@ -19,12 +19,14 @@ public class CarController {
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public List<Car> getAll(){
+    public List<Car> getAll(@LoggedInUser AppUser appUser){
+        System.out.println("userId: " + appUser.getId());
         return carService.findAll();
     }
 
     @PostMapping("/add")
     public Car add(@RequestBody Car car, @LoggedInUser AppUser appUser){
+    System.out.println("userId: " + appUser.getId());
         return carService.add(car);
     }
 

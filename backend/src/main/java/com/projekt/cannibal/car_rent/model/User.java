@@ -4,6 +4,7 @@ import javax.validation.constraints.NotNull;
 
 import com.projekt.cannibal.car_rent.helpers.Role;
 import com.projekt.cannibal.car_rent.validators.UniqueEmail;
+import com.projekt.cannibal.car_rent.validators.UniqueUsername;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,7 +26,7 @@ public class User {
 
   @NotNull
   @Size(min = 2, max = 15)
-  @Column(unique = true)
+  @UniqueUsername
   private String username;
 
   @NotNull
