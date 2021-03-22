@@ -49,4 +49,8 @@ public class UserService {
         return userDao.findByEmail(email);
     }
 
+    public void deleteUser(User user){
+        userDao.delete(user);
+    }
+
 }

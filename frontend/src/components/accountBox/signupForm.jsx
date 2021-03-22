@@ -38,7 +38,7 @@ export function SignupForm(props) {
         console.log("Response: ", response);
       })
       .catch((error) => {
-        console.log("Error: ", error.message);
+        console.log(error.response.data.validationErrors);
       });
   };
 
