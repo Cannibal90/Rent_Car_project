@@ -36,9 +36,25 @@ public class Order {
       inverseJoinColumns = {@JoinColumn(name = "id_car", referencedColumnName = "car_id")})
   private List<Car> cars = new ArrayList<>();
 
-  @OneToOne(cascade = CascadeType.PERSIST)
+  @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
   @JoinColumn(name = "payment_id")
   private Payment payment;
+
+  public void addPayment(Payment payment){
+    payment.setOrder(this);
+    this.payment = payment;
+  }
+
+  public void addCar(Car car){
+    car.getOrders().add(this);
+    this.cars.add(car);
+  }
+
+  public void addUser(User user){
+    user.getOrders().add(this);
+    this.user = user;
+  }
+
 
   @Override
   public String toString() {

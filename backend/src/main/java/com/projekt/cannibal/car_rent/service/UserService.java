@@ -2,6 +2,7 @@ package com.projekt.cannibal.car_rent.service;
 
 import com.projekt.cannibal.car_rent.dao.AddressDao;
 import com.projekt.cannibal.car_rent.dao.UserDao;
+import com.projekt.cannibal.car_rent.exceptions.ApiNoFoundResourceException;
 import com.projekt.cannibal.car_rent.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,16 +20,16 @@ public class UserService {
     @Autowired
     private UserDao userDao;
 
-    @Autowired
-    private AddressDao addressDao;
-
-
     public List<User> findAll(){
         return userDao.findAll();
     }
 
-    public Optional<User> findById(Long id){
-        return userDao.findById(id);
+    public User findById(Long id){
+        Optional<User> userInDB = userDao.findById(id);
+        if(userInDB.isEmpty()){
+            throw new ApiNoFoundResourceException("User not found");
+        }
+        return userInDB.get();
     }
 
     public User add(User user){
@@ -37,8 +38,24 @@ public class UserService {
         return userDao.save(user);
     }
 
-    public User update(User user){
-        return user;
+    public User update(Long id, User user){
+        //TODO: sprawdzic czy nie ma takiego samego emaila i username
+        Optional<User> userInDb = userDao.findById(id);
+        if(userInDb.isEmpty()){
+            throw new ApiNoFoundResourceException("User not found");
+        }
+        user.setId(id);
+        return userDao.save(user);
+    }
+
+    public User deleteUser(long id){
+        Optional<User> userInDB = userDao.findById(id);
+        if(userInDB.isEmpty()){
+            throw new ApiNoFoundResourceException("User not found");
+        }
+        //TODO: usuwanie addresow i orderow
+        userDao.delete(userInDB.get());
+        return  userInDB.get();
     }
 
     public Optional<User> findByUsername(String username){
@@ -47,10 +64,6 @@ public class UserService {
 
     public Optional<User> findByEmail(String email){
         return userDao.findByEmail(email);
-    }
-
-    public void deleteUser(User user){
-        userDao.delete(user);
     }
 
 }

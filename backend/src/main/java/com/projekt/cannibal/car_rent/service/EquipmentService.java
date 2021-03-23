@@ -2,6 +2,7 @@ package com.projekt.cannibal.car_rent.service;
 
 import com.projekt.cannibal.car_rent.dao.CarDao;
 import com.projekt.cannibal.car_rent.dao.EquipmentDao;
+import com.projekt.cannibal.car_rent.exceptions.ApiNoFoundResourceException;
 import com.projekt.cannibal.car_rent.model.Car;
 import com.projekt.cannibal.car_rent.model.Equipment;
 import liquibase.pro.packaged.E;
@@ -24,26 +25,31 @@ public class EquipmentService {
         return equipmentDao.findAll();
     }
 
-    public Optional<Equipment> findById(Long id){
-        return equipmentDao.findById(id);
+    public Equipment findById(Long id){
+        Optional<Equipment> equipmentInDb = equipmentDao.findById(id);
+        if(equipmentInDb.isEmpty())
+            throw new ApiNoFoundResourceException("Equipment not found");
+        return equipmentInDb.get();
     }
 
     public Equipment add(Equipment equipment){
         return equipmentDao.save(equipment);
     }
 
-    public Equipment update(Equipment equipment){
+    public Equipment update(Equipment equipment, Long id){
+        Optional<Equipment> equipmentInDb = equipmentDao.findById(id);
+        if(equipmentInDb.isEmpty())
+            throw new ApiNoFoundResourceException("Equipment not found");
+        equipment.setId(id);
         return  equipmentDao.save(equipment);
     }
 
-    public void delete(Equipment equipment){
-        Optional<Car> car = carDao.findById(equipment.getCar().getId());
-        if(car.isPresent()){
-            car.get().setEquipment(null);
-            carDao.save(car.get());
-        }
-        equipmentDao.delete(equipment);
-
+    public void delete(Long id){
+        //TODO: usuwanie z car
+        Optional<Equipment> equipmentInDb = equipmentDao.findById(id);
+        if(equipmentInDb.isEmpty())
+            throw new ApiNoFoundResourceException("Equipment not found");
+        equipmentDao.delete(equipmentInDb.get());
     }
 
 

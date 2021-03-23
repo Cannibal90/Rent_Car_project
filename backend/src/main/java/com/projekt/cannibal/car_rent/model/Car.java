@@ -57,11 +57,21 @@ public class Car implements Serializable {
   @NotNull
   private AvailabilityStatus availabilityStatus;
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
   @JoinColumn(name = "equipment_id")
   @JsonIgnoreProperties("car")
   private Equipment equipment;
 
   @ManyToMany(mappedBy = "cars")
   private List<Order> orders = new ArrayList<>();
+
+  public void addCarBrand(CarBrand carBrand){
+    carBrand.getCars().add(this);
+    this.brand = carBrand;
+  }
+
+  public void addEquipment(Equipment equipment){
+      equipment.setCar(this);
+      this.equipment = equipment;
+  }
 }

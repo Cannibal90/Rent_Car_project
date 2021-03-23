@@ -31,10 +31,15 @@ public class Address {
   @NotNull
   private int number;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "user_id")
   @NotNull
   private User user;
+
+  public void addUser(User user){
+    user.getAddresses().add(this);
+    this.user = user;
+  }
 
   @Override
   public String toString() {

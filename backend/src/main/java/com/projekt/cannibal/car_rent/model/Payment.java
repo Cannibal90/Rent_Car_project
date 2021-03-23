@@ -31,8 +31,13 @@ public class Payment {
   private LocalDate paymentDate;
 
   @OneToOne(mappedBy = "payment")
-  @NotNull
   private Order order;
+
+  public Payment(@NotNull PaymentType paymentType, @NotNull double amount, @NotNull LocalDate paymentDate) {
+    this.paymentType = paymentType;
+    this.amount = amount;
+    this.paymentDate = paymentDate;
+  }
 
   @Override
   public String toString() {

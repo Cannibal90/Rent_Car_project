@@ -1,6 +1,7 @@
 package com.projekt.cannibal.car_rent.service.helpers;
 
 import com.projekt.cannibal.car_rent.dao.helpers.CarBrandDao;
+import com.projekt.cannibal.car_rent.exceptions.ApiNoFoundResourceException;
 import com.projekt.cannibal.car_rent.model.helpers.CarBrand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,25 +19,39 @@ public class CarBrandService {
         return carBrandDao.findAll();
     }
 
-    public Optional<CarBrand> findById(Long id){
-        return carBrandDao.findById(id);
+    public CarBrand findById(Long id){
+        Optional<CarBrand> carBrandInDb = carBrandDao.findById(id);
+        if(carBrandInDb.isEmpty())
+            throw new ApiNoFoundResourceException("CarBrand not found");
+        return carBrandInDb.get();
     }
 
-    public Optional<CarBrand> findByBrandName(String name){
-        return carBrandDao.findByBrandName(name);
+    public CarBrand findByBrandName(String name){
+        Optional<CarBrand> carBrandInDb = carBrandDao.findByBrandName(name);
+        if(carBrandInDb.isEmpty())
+            throw new ApiNoFoundResourceException("CarBrand not found");
+        return carBrandInDb.get();
     }
 
     public CarBrand add(CarBrand carBrand){
+        //TODO: sprawdzic jak z walidacja - unique
         return carBrandDao.save(carBrand);
     }
 
-    public CarBrand upadate(CarBrand carBrand){
-        //Optional<CarBrand> carBrandToUpdate = carBrandDao.findById(carBrand.getId());
+    public CarBrand upadate(CarBrand carBrand, Long id){
+        Optional<CarBrand> carBrandInDb = carBrandDao.findById(id);
+        if(carBrandInDb.isEmpty())
+            throw new ApiNoFoundResourceException("CarBrand not found");
+        carBrand.setId(id);
         return carBrandDao.save(carBrand);
     }
 
-    public void delete(CarBrand carBrand){
-        carBrandDao.delete(carBrand);
+    public void delete(Long id){
+        //TODO: usuwanie samochodow
+        Optional<CarBrand> carBrandInDb = carBrandDao.findById(id);
+        if(carBrandInDb.isEmpty())
+            throw new ApiNoFoundResourceException("CarBrand not found");
+        carBrandDao.delete(carBrandInDb.get());
     }
 
 }

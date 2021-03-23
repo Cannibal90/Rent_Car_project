@@ -27,8 +27,4 @@ public class CarBrand implements Serializable {
     @OneToMany(mappedBy = "brand")
     private List<Car> cars = new ArrayList<>();
 
-    public void addCar(Car car){
-        car.setBrand(this);
-        cars.add(car);
-    }
 }

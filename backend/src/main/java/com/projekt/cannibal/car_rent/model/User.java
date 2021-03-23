@@ -43,7 +43,6 @@ public class User {
   @NotNull
   private String password;
 
-  // TODO add to liquibase
   @NotNull
   private Role role;
 
@@ -54,16 +53,6 @@ public class User {
 
   @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
   private List<Order> orders = new ArrayList<>();
-
-  public void addAddress(Address address) {
-    address.setUser(this);
-    getAddresses().add(address);
-  }
-
-  public void addOrder(Order order) {
-    order.setUser(this);
-    getOrders().add(order);
-  }
 
   public User(String firstname, String lastname, String email, String password, Role role) {
     this.firstname = firstname;

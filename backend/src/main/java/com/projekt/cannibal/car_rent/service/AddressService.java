@@ -2,6 +2,7 @@ package com.projekt.cannibal.car_rent.service;
 
 import com.projekt.cannibal.car_rent.dao.AddressDao;
 import com.projekt.cannibal.car_rent.dao.UserDao;
+import com.projekt.cannibal.car_rent.exceptions.ApiNoFoundResourceException;
 import com.projekt.cannibal.car_rent.model.Address;
 import com.projekt.cannibal.car_rent.model.Car;
 import com.projekt.cannibal.car_rent.model.User;
@@ -25,24 +26,49 @@ public class AddressService {
         return addressDao.findAll();
     }
 
-    public Optional<Address> findById(Long id){
-        return addressDao.findById(id);
-    }
-
-    public Address add(Address address){
-        return addressDao.save(address);
-    }
-
-    public Address update(Address address){
-        return addressDao.save(address);
-    }
-
-    public void delete(Address address){
-        User user = address.getUser();
-        Optional<User> userToModify = userDao.findById(user.getId());
-        if(userToModify.isPresent()){
-            user.getAddresses().remove(address);
+    public Address findAddressById(Long id){
+        Optional<Address> addressInDB = addressDao.findById(id);
+        if(addressInDB.isEmpty()){
+            throw new ApiNoFoundResourceException("Address not found");
         }
-        addressDao.delete(address);
+        return addressInDB.get();
+    }
+
+    public List<Address> findByUserId(Long id){
+        Optional<User> userInDb = userDao.findById(id);
+        if(userInDb.isEmpty()){
+            throw new ApiNoFoundResourceException("User not found");
+        }
+        return addressDao.findByUser(userInDb.get());
+    }
+
+    public Address add(Address address, Long userId){
+        Optional<User> userInDB = userDao.findById(userId);
+        if(userInDB.isEmpty()){
+            throw new ApiNoFoundResourceException("User not found");
+        }
+        address.addUser(userInDB.get());
+        return addressDao.save(address);
+    }
+
+    public Address update(Address address, Long addressId){
+        Optional<Address> addressInDB = addressDao.findById(addressId);
+        if(addressInDB.isEmpty())
+            throw new ApiNoFoundResourceException("Address not found");
+        address.setId(addressInDB.get().getId());
+        return addressDao.save(address);
+    }
+
+    public void delete(Long id){
+        Optional<Address> addressInDB = addressDao.findById(id);
+        if(addressInDB.isEmpty())
+            throw new ApiNoFoundResourceException("Address not found");
+        User user = addressInDB.get().getUser();
+        user.getAddresses().remove(addressInDB.get());
+        Optional<User> userToModify = userDao.findById(user.getId());
+        if(userToModify.isEmpty())
+            throw new ApiNoFoundResourceException("User not found");
+        userDao.save(user);
+        addressDao.delete(addressInDB.get());
     }
 }

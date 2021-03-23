@@ -43,7 +43,6 @@ public class Equipment implements Serializable {
   private boolean ESP;
 
   @OneToOne(mappedBy = "equipment")
-  @NotNull
   private Car car;
 
   @Override
