@@ -33,23 +33,16 @@ public class AddressController {
     return addressService.findAddressById(id);
   }
 
-//  @GetMapping("/id")
-//  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROlE_USER')")
-//  public ResponseEntity<Address> getAddressById(
-//      @PathVariable(name = "id") Long id, @LoggedInUser AppUser appUser) {
-//    Optional<Address> addressInDB = addressService.findAddressById(id);
-//    if (addressInDB.isEmpty()) {
-//      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//    } else if (appUser.getId() != addressInDB.get().getUser().getId()
-//        && !appUser.getRole().equals(Role.ROLE_ADMIN.toString())) {
-//      return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-//    }
-//    return ResponseEntity.ok().body(addressInDB.get());
-//  }
+  @PutMapping("/update/{id}")
+  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROlE_USER')")
+  public Address updateAddress(@PathVariable(name = "id") Long id, @RequestBody Address address){
+    return addressService.update(address, id);
+  }
 
-  @PostMapping("/id")
-  public ResponseEntity<Address> saveAddress(@PathVariable(name = "id") Long id, @RequestBody Address address, @LoggedInUser AppUser appUser ){
-      return ResponseEntity.ok().body(address);
+  @DeleteMapping("/delete/{id}")
+  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROlE_USER')")
+  public void deleteAddress(@PathVariable(name = "id") Long id){
+    addressService.delete(id);
   }
 
 }

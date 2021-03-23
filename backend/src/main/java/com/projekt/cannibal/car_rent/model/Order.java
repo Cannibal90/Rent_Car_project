@@ -29,7 +29,7 @@ public class Order {
   @NotNull
   private User user;
 
-  @ManyToMany
+  @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
   @JoinTable(
       name = "order_cars",
       joinColumns = {@JoinColumn(name = "id_order", referencedColumnName = "order_id")},

@@ -19,23 +19,25 @@ public class CarController {
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public List<Car> getAll(@LoggedInUser AppUser appUser){
-        System.out.println("userId: " + appUser.getId());
+    public List<Car> getAll(){
         return carService.findAll();
     }
 
     @PostMapping("/add")
-    public Car add(@RequestBody Car car, @LoggedInUser AppUser appUser){
-    System.out.println("userId: " + appUser.getId());
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public Car add(@RequestBody Car car){
         return carService.add(car);
     }
 
     @PutMapping("/update/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Car update(@RequestBody Car car, @PathVariable(name = "id") Long id){
+
         return carService.update(car, id);
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void delete(@PathVariable(name = "id") Long id){
         carService.delete(id);
     }

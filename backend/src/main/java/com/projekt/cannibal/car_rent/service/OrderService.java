@@ -63,17 +63,36 @@ public class OrderService {
     }
 
     public Order addCarsToOrder(Long orderId, Long carId){
-        return new Order();
+        Optional<Order> orderInDb = orderDao.findById(orderId);
+        if(orderInDb.isEmpty())
+            throw new ApiNoFoundResourceException("Order not found");
+
+        Optional<Car> carInDb = carDao.findById(carId);
+        if(carInDb.isEmpty())
+            throw new ApiNoFoundResourceException("Car not found");
+
+        Payment payment = orderInDb.get().getPayment();
+        Double price = carInDb.get().getPrice() + payment.getAmount();
+        payment.setAmount(price);
+        orderInDb.get().setPayment(payment);
+        carInDb.get().getOrders().add(orderInDb.get());
+        orderInDb.get().getCars().add(carInDb.get());
+        return orderDao.save(orderInDb.get());
     }
 
-    //TODO update i delete
-    public Order update(Order order){
-
-        return order;
+    public Order update(Order order, Long orderId){
+        Optional<Order> orderInDb = orderDao.findById(orderId);
+        if(orderInDb.isEmpty())
+            throw new ApiNoFoundResourceException("Order not found");
+        order.setId(orderId);
+        return orderDao.save(order);
     }
 
-    public void delete(Order order){
+    public void delete(Long orderId){
+        Optional<Order> orderInDb = orderDao.findById(orderId);
+        if(orderInDb.isEmpty())
+            throw new ApiNoFoundResourceException("Order not found");
 
-        orderDao.delete(order);
+        orderDao.delete(orderInDb.get());
     }
 }
