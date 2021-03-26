@@ -1,4 +1,6 @@
-import { createStore } from "redux";
-import reducers from "./_reducers";
+import { createStore, combineReducers } from "redux";
+import homePage from "./containers/HomePage/reducers";
 
-export const store = createStore(reducers);
+const reducers = combineReducers({ homePage });
+
+export default createStore(reducers);

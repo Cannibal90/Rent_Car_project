@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { BrandLogo } from "../brandLogo";
 import { Button } from "../../components/button";
 import { Marginer } from "../marginer";
-
+import { Link } from "react-router-dom";
 const NavbarContainer = styled.div`
   width: 100%;
   height: 75px;
@@ -21,7 +21,7 @@ const AccessibilityContainer = styled.div`
   align-items: center;
 `;
 
-const AnchorLink = styled.a`
+const AnchorLink = styled(Link)`
   font-size: 17px;
   color: #fff;
   cursor: pointer;
@@ -39,13 +39,17 @@ export function Navbar(props) {
   const { useTransparent } = props;
   return (
     <NavbarContainer useTransparent={useTransparent}>
-      <BrandLogo />
+      <Link to="/">
+        <BrandLogo />
+      </Link>
       <AccessibilityContainer>
-        <Button size={15} paddingW={2} paddingH={3}>
-          Register
-        </Button>
+        <Link to="/signup">
+          <Button size={15} paddingW={2} paddingH={3}>
+            Register
+          </Button>
+        </Link>
         <Marginer direction="horizontal" margin={5} />
-        <AnchorLink>LogIn</AnchorLink>
+        <AnchorLink to="/signin">LogIn</AnchorLink>
       </AccessibilityContainer>
     </NavbarContainer>
   );

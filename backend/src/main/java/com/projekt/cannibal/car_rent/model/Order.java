@@ -1,5 +1,6 @@
 package com.projekt.cannibal.car_rent.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.projekt.cannibal.car_rent.helpers.OrderStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,7 @@ public class Order {
 
   @ManyToOne
   @JoinColumn(name = "user_id")
+  @JsonIgnoreProperties("orders")
   @NotNull
   private User user;
 
@@ -37,6 +39,7 @@ public class Order {
   private List<Car> cars = new ArrayList<>();
 
   @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+  @JsonIgnoreProperties("order")
   @JoinColumn(name = "payment_id")
   private Payment payment;
 

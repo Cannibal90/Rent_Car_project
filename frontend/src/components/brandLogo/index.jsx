@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 import LogoSrc from "../../images/logo.png";
 
@@ -21,9 +22,11 @@ const LogoImage = styled.div`
 export function BrandLogo(props) {
   return (
     <BrandLogoContainer>
-      <LogoImage>
-        <img src={LogoSrc} alt="Service logo" />
-      </LogoImage>
+      <Link to="/">
+        <LogoImage>
+          <img src={LogoSrc} alt="Service logo" />
+        </LogoImage>
+      </Link>
     </BrandLogoContainer>
   );
 }

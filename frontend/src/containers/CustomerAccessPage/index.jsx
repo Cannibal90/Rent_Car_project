@@ -1,4 +1,5 @@
 import React from "react";
+import { useParams } from "react-router";
 import { AccountBox } from "../../components/accountBox";
 import { Navbar } from "../../components/navbar";
 import {
@@ -7,11 +8,12 @@ import {
 } from "../../components/PageContainer";
 
 export function CustomerAccessPage(props) {
+  const { action } = useParams();
   return (
     <PageContainer>
       <Navbar />
       <InnerPageContainer>
-        <AccountBox />
+        <AccountBox initialActive={action} />
       </InnerPageContainer>
     </PageContainer>
   );
