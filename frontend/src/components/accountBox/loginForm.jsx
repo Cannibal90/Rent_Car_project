@@ -6,34 +6,44 @@ import {
   Input,
   MutedLink,
   SubmitButton,
+  Valid,
 } from "./common";
 import { Marginer } from "../marginer";
 import { AccountContext } from "./accountContext";
-// import { axios } from "axios";
+import axios from "axios";
 
 export function LoginForm(props) {
   const { switchToSignup } = useContext(AccountContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [validation, setValidation] = useState([]);
 
   var getAuth = function () {
-    console.log("tez");
-
-    //   axios
-    //     .post("localhost:8080/api/auth", {
-    //       name: username,
-    //       password: password,
-    //     })
-    //     .then((response) => {
-    //       console.log("Response: ", response);
-    //     })
-    //     .catch((error) => {
-    //       console.log("Error: ", error);
-    //     });
+    setValidation([]);
+    axios
+      .post(
+        "http://localhost:8080/api/auth",
+        {
+          name: username,
+          password: password,
+        },
+        { headers: { "Content-Type": "application/json " } }
+      )
+      .then((response) => {
+        console.log("Response: ", response);
+        localStorage.setItem("isLogged", true);
+        localStorage.setItem("currentUser", JSON.stringify(response.data));
+        window.location = "/";
+      })
+      .catch((error) => {
+        console.log("Error: ", error.response.data);
+        setValidation(error.response.data);
+      });
   };
 
   return (
     <BoxContainer>
+      {validation !== undefined && <Valid>{validation}</Valid>}
       <FormContainer>
         <Input
           type="email"

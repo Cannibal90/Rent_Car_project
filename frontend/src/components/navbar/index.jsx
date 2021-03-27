@@ -22,7 +22,7 @@ const AccessibilityContainer = styled.div`
 `;
 
 const AnchorLink = styled(Link)`
-  font-size: 17px;
+  font-size: 25px;
   color: #fff;
   cursor: pointer;
   text-decoration: none;
@@ -37,19 +37,75 @@ const AnchorLink = styled(Link)`
 
 export function Navbar(props) {
   const { useTransparent } = props;
+  const isLogged = localStorage.getItem("isLogged");
+  const user = JSON.parse(localStorage.getItem("currentUser"));
+  // console.log("user curr: ", user);
+  const role = user ? user.role : null;
+
+  var logOut = function () {
+    localStorage.clear();
+  };
+
   return (
     <NavbarContainer useTransparent={useTransparent}>
-      <Link to="/">
-        <BrandLogo />
-      </Link>
       <AccessibilityContainer>
-        <Link to="/signup">
-          <Button size={15} paddingW={2} paddingH={3}>
-            Register
-          </Button>
+        <Link to="/">
+          <BrandLogo />
         </Link>
-        <Marginer direction="horizontal" margin={5} />
-        <AnchorLink to="/signin">LogIn</AnchorLink>
+        {isLogged === "true" && (
+          <>
+            <Link to="/cars">
+              <Button size={25} paddingW={2} paddingH={3}>
+                Oferta
+              </Button>
+            </Link>
+            <Marginer direction="horizontal" margin={5} />
+            <Link to="/history">
+              <Button size={25} paddingW={2} paddingH={3}>
+                Historia
+              </Button>
+            </Link>
+            <Marginer direction="horizontal" margin={5} />
+            <Link to="/FAQ">
+              <Button size={25} paddingW={2} paddingH={3}>
+                FAQ
+              </Button>
+            </Link>
+          </>
+        )}
+      </AccessibilityContainer>
+
+      <AccessibilityContainer>
+        {isLogged == null && (
+          <>
+            <Link to="/signup">
+              <Button size={25} paddingW={2} paddingH={3}>
+                Register
+              </Button>
+            </Link>
+            <Marginer direction="horizontal" margin={5} />
+            <AnchorLink to="/signin">LogIn</AnchorLink>
+          </>
+        )}
+        {role === "ROLE_ADMIN" && (
+          <>
+            <Link to="/manage">
+              <Button size={25} paddingW={2} paddingH={3}>
+                Panel zarządzania
+              </Button>
+            </Link>
+            <Marginer direction="horizontal" margin={5} />
+          </>
+        )}
+        {isLogged === "true" && (
+          <>
+            <Link to="/">
+              <Button onClick={logOut} size={25} paddingW={2} paddingH={3}>
+                LogOut
+              </Button>
+            </Link>
+          </>
+        )}
       </AccessibilityContainer>
     </NavbarContainer>
   );
