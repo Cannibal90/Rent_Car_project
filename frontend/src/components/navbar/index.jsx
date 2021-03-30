@@ -87,6 +87,16 @@ export function Navbar(props) {
             <AnchorLink to="/signin">LogIn</AnchorLink>
           </>
         )}
+        {isLogged === "true" && (
+          <>
+            <Link to="/account">
+              <Button size={25} paddingW={2} paddingH={3}>
+                Moje konto
+              </Button>
+            </Link>
+            <Marginer direction="horizontal" margin={5} />
+          </>
+        )}
         {role === "ROLE_ADMIN" && (
           <>
             <Link to="/manage">

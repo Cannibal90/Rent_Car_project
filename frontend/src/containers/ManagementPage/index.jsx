@@ -3,15 +3,15 @@ import {
   PageContainer,
 } from "../../components/PageContainer";
 import { Navbar } from "../../components/navbar";
-import { Cars } from "../OffertsPage/cars";
 import { Footer } from "../../components/footer";
+import { ManageOfferts } from "./manage";
 
-export function OffertsPage(props) {
+export function ManagementPage(props) {
   return (
     <PageContainer>
       <Navbar />
       <InnerPageContainer>
-        <Cars />
+        <ManageOfferts />
       </InnerPageContainer>
       <Footer />
     </PageContainer>

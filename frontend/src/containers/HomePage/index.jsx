@@ -6,6 +6,7 @@ import { PageContainer } from "../../components/PageContainer";
 import { TopSection } from "./topSection";
 import { createSelector } from "reselect";
 import { useSelector } from "react-redux";
+import { Footer } from "../../components/footer";
 
 const stateSelector = createSelector(makeSelectUsers, (users) => ({
   users,
@@ -20,6 +21,7 @@ export function HomePage(props) {
       <TopSection>
         <Navbar useTransparent></Navbar>
       </TopSection>
+      <Footer />
     </PageContainer>
   );
 }

@@ -25,15 +25,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
 
-//        http.authorizeRequests()
-//                .antMatchers(HttpMethod.POST, "/api/user/save").permitAll()
-//                .and()
-//                .authorizeRequests().anyRequest().authenticated();
-
-        http.authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/car/add").authenticated()
+        http.cors().and().authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/api/user/save", "/api/auth").permitAll()
                 .and()
-                .authorizeRequests().anyRequest().permitAll();
+                .authorizeRequests().anyRequest().authenticated();
+
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Button } from "../../components/button";
-
+import { Link } from "react-router-dom";
 import TopSectionBackgroundImg from "../../images/home_background.jpg";
 import Pointer from "../../images/odometer_pointer_w.png";
 
@@ -11,6 +11,7 @@ const TopSectionContainer = styled.div`
   background: url(${TopSectionBackgroundImg});
   background-position: 0px -150px;
   background-size: cover;
+  margin-bottom: 10%;
 `;
 
 const BackgroundFilter = styled.div`
@@ -61,7 +62,9 @@ export function TopSection(props) {
         {children}
         <Title>Kup swoje auto juz dziś</Title>
         <TopSectionInnerContainer>
-          <Button> Znajdz swoje auto </Button>
+          <Link to="/cars">
+            <Button size={20}> Znajdz swoje auto </Button>
+          </Link>
         </TopSectionInnerContainer>
 
         <TopSectionInnerContainer>
