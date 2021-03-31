@@ -43,7 +43,7 @@ public class UserController {
   @PutMapping("/update/{id}")
   @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
   public User updateUser(
-      @PathVariable(name = "id") Long id, @RequestBody User user, @LoggedInUser AppUser appUser) {
+      @PathVariable(name = "id") Long id,@RequestBody User user, @LoggedInUser AppUser appUser) {
     RoleIdValidator.validate(appUser,id, "This resource is forbbiden for this role");
     return userService.update(id, user);
   }

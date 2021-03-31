@@ -3,6 +3,7 @@ package com.projekt.cannibal.car_rent.service;
 import com.projekt.cannibal.car_rent.dao.AddressDao;
 import com.projekt.cannibal.car_rent.dao.UserDao;
 import com.projekt.cannibal.car_rent.exceptions.ApiNoFoundResourceException;
+import com.projekt.cannibal.car_rent.exceptions.ApiValidationException;
 import com.projekt.cannibal.car_rent.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -39,12 +40,30 @@ public class UserService {
     }
 
     public User update(Long id, User user){
-        //TODO: sprawdzic czy nie ma takiego samego emaila i username
+        //TODO: sprawdzic jak z rolami gdy sa zle podane
         Optional<User> userInDb = userDao.findById(id);
         if(userInDb.isEmpty()){
             throw new ApiNoFoundResourceException("User not found");
         }
+        if(!user.getEmail().equals(userInDb.get().getEmail())){
+            Optional<User> userWithEmail =  userDao.findByEmail(user.getEmail());
+            if(userWithEmail.isPresent()){
+                throw new ApiValidationException("This email is in use");
+            }
+        }
+        if(!user.getUsername().equals(userInDb.get().getUsername())){
+            Optional<User> userWithUsername =  userDao.findByUsername(user.getUsername());
+            if(userWithUsername.isPresent()){
+                throw new ApiValidationException("This username is in use");
+            }
+        }
+
         user.setId(id);
+        if(!user.getPassword().equals(userInDb.get().getPassword())){
+            String encodedPassword = this.passwordEncoder.encode(user.getPassword());
+            user.setPassword(encodedPassword);
+        }
+
         return userDao.save(user);
     }
 
