@@ -33,6 +33,18 @@ public class AddressController {
     return addressService.findAddressById(id);
   }
 
+  @GetMapping("/userId/{id}}")
+  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROlE_USER')")
+  public List<Address> getAddressByUserId(@PathVariable(name = "id") Long id){
+    return addressService.findByUserId(id);
+  }
+
+  @PostMapping("/add/{id}")
+  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROlE_USER')")
+  public Address addAddress(@PathVariable(name = "id") Long id, @RequestBody Address address){
+    return addressService.add(address, id);
+  }
+
   @PutMapping("/update/{id}")
   @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROlE_USER')")
   public Address updateAddress(@PathVariable(name = "id") Long id, @RequestBody Address address){

@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import { UserCard } from "../../components/userCard";
+import { Info, ContentContainer } from "../../components/Cards";
 
 const UserContainer = styled.div`
   width: 100%;
@@ -10,28 +11,6 @@ const UserContainer = styled.div`
   flex-direction: column;
   align-items: flex-start;
   margin-bottom: 10%;
-`;
-
-const ContentContainer = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  padding: 15px 14px;
-  background-color: #fff;
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
-`;
-const Info = styled.div`
-  width: 100%;
-  height: 32px;
-  outline: none;
-  border: 1px solid rgba(200, 200, 200, 0.3);
-  //padding: 0px 10px;
-  border-bottom: 1.4px solid transparent;
-  transition: all 200ms ease-in-out;
-  font-size: 20px;
-  text-align: center;
-  border-bottom: 1.5px solid rgba(200, 200, 200, 0.4);
 `;
 
 export function Users(props) {
