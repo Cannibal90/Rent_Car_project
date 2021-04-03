@@ -5,7 +5,13 @@ import { useEffect, useState } from "react";
 import { AddressCard } from "../../components/addressCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faSave } from "@fortawesome/free-regular-svg-icons";
-import { Input, Info, Icon, ContentContainer } from "../../components/Cards";
+import {
+  Input,
+  Info,
+  Icon,
+  ContentContainer,
+  Title,
+} from "../../components/Cards";
 
 const AddressContainer = styled.div`
   width: 100%;
@@ -17,7 +23,6 @@ const AddressContainer = styled.div`
 
 export function Addresses(props) {
   const { userId } = props;
-  console.log("Id: " + userId);
   const user = JSON.parse(localStorage.getItem("currentUser"));
   const token = `Bearer ${user.token}`;
   const [addressList, setAddressList] = useState([]);
@@ -34,12 +39,16 @@ export function Addresses(props) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/address/userId/" + userId, {
-        headers: {
-          Authorization: token,
-          "Content-Type": "application/json ",
-        },
-      })
+      .get(
+        "http://localhost:8080/api/address/" + userId,
+
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json ",
+          },
+        }
+      )
       .then((response) => {
         console.log("Response: ", response.data);
         setAddressList(response.data);
@@ -47,24 +56,46 @@ export function Addresses(props) {
       .catch((error) => {
         console.log("Error: ", error.response);
       });
-  }, [token]);
+  }, [token, userId]);
 
   var addAddress = function (id) {
     setDisable(true);
     console.log("dziala?: " + id);
   };
 
+  var saveAddress = function () {
+    axios
+      .post(
+        "http://localhost:8080/api/address/add/" + userId,
+        {
+          country: newCountry,
+          city: newCity,
+          postCode: newPostCode,
+          street: newStreet,
+          number: newNumber,
+        },
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json ",
+          },
+        }
+      )
+      .then((response) => {
+        console.log("Response: ", response.data);
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log("Error: ", error.response.data);
+        // setBody(error.response.data.message);
+        // setShow(true);
+      });
+  };
+
   return (
     <AddressContainer>
       <ContentContainer>
-        <Info>Id</Info>
-        <Info>country</Info>
-        <Info>city</Info>
-        <Info>street</Info>
-        <Info>number</Info>
-        <Info>post code</Info>
-        <Info>edit</Info>
-        <Info>delete</Info>
+        <Title>Addresses</Title>
       </ContentContainer>
       <ContentContainer>
         <Button
@@ -75,6 +106,16 @@ export function Addresses(props) {
         >
           +
         </Button>
+      </ContentContainer>
+      <ContentContainer>
+        <Info>Id</Info>
+        <Info>country</Info>
+        <Info>city</Info>
+        <Info>street</Info>
+        <Info>number</Info>
+        <Info>post code</Info>
+        <Info>edit</Info>
+        <Info>delete</Info>
       </ContentContainer>
 
       {disable ? (
@@ -119,7 +160,7 @@ export function Addresses(props) {
             <FontAwesomeIcon
               icon={faSave}
               onClick={() => {
-                console.log("save");
+                saveAddress();
               }}
             />
           </Icon>
@@ -138,6 +179,7 @@ export function Addresses(props) {
 
       {addressList.map((address) => (
         <AddressCard
+          key={address.id}
           id={address.id}
           country={address.country}
           city={address.city}

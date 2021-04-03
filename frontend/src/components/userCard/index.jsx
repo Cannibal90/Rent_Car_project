@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEdit,
@@ -10,6 +9,7 @@ import {
 import axios from "axios";
 import { useState } from "react";
 import { Icon, Input, ContentContainer, TopContainer } from "../Cards";
+import { DropdownList } from "../dropdownList";
 
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -92,6 +92,7 @@ export function UserCard(props) {
 
   const handleClose = () => setShow(false);
 
+  var userRoles = ["ROLE_USER", "ROLE_ADMIN"];
   return (
     <TopContainer>
       <Dialog
@@ -158,14 +159,13 @@ export function UserCard(props) {
           }}
           disabled={disable ? true : ""}
         />
-        <Input
-          type="text"
-          placeholder={role}
-          onChange={(e) => {
-            setNewRole(e.target.value);
-          }}
+        <DropdownList
+          items={userRoles}
+          selected={role}
+          handler={setNewRole}
           disabled={disable ? true : ""}
         />
+
         {disable ? (
           <Icon>
             <FontAwesomeIcon icon={faEdit} onClick={() => updateUser(id)} />

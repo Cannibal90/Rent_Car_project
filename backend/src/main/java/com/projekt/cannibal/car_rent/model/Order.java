@@ -27,11 +27,12 @@ public class Order {
 
   @ManyToOne
   @JoinColumn(name = "user_id")
-  @JsonIgnoreProperties("orders")
+  @JsonIgnoreProperties({"orders", "addresses"})
   @NotNull
   private User user;
 
   @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+  @JsonIgnoreProperties("orders")
   @JoinTable(
       name = "order_cars",
       joinColumns = {@JoinColumn(name = "id_order", referencedColumnName = "order_id")},

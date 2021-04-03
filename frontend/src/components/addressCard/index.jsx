@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEdit,
@@ -10,7 +10,9 @@ import {
 import { Input, Icon, ContentContainer, TopContainer } from "../Cards";
 
 export function AddressCard(props) {
-  const { id, country, city, street, number, postCode, userId } = props;
+  const user = JSON.parse(localStorage.getItem("currentUser"));
+  const token = `Bearer ${user.token}`;
+  const { id, country, city, street, number, postCode } = props;
   const [newCountry, setNewCountry] = useState(country);
   const [newCity, setNewCity] = useState(city);
   const [newStreet, setNewStreet] = useState(street);
@@ -24,10 +26,52 @@ export function AddressCard(props) {
   };
   var saveAddress = function (id) {
     console.log("save " + id);
-    setDisable(true);
+    axios
+      .put(
+        "http://localhost:8080/api/address/update/" + id,
+        {
+          id: id,
+          country: newCountry,
+          city: newCity,
+          street: newStreet,
+          number: newNumber,
+          postCode: newPostCode,
+        },
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json ",
+          },
+        }
+      )
+      .then((response) => {
+        console.log("Response: ", response.data);
+        setDisable(true);
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log("Error: ", error.response);
+      });
   };
   var deleteAddress = function (id) {
-    console.log("delete " + id);
+    axios
+      .delete(
+        "http://localhost:8080/api/address/delete/" + id,
+
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json ",
+          },
+        }
+      )
+      .then((response) => {
+        console.log("Response: ", response.data);
+      })
+      .catch((error) => {
+        console.log("Error: ", error.response);
+      });
+    window.location.reload();
   };
 
   return (

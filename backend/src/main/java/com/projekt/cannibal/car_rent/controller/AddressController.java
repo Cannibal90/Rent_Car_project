@@ -13,8 +13,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
+
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("api/address")
 public class AddressController {
@@ -28,31 +29,26 @@ public class AddressController {
   }
 
   @GetMapping("/{id}")
-  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROlE_USER')")
-  public Address getAddressById(@PathVariable(name = "id") Long id){
-    return addressService.findAddressById(id);
-  }
-
-  @GetMapping("/userId/{id}}")
-  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROlE_USER')")
+  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
   public List<Address> getAddressByUserId(@PathVariable(name = "id") Long id){
+    System.out.println("adresy: " + addressService.findByUserId(id));
     return addressService.findByUserId(id);
   }
 
   @PostMapping("/add/{id}")
-  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROlE_USER')")
+  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
   public Address addAddress(@PathVariable(name = "id") Long id, @RequestBody Address address){
     return addressService.add(address, id);
   }
 
   @PutMapping("/update/{id}")
-  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROlE_USER')")
+  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
   public Address updateAddress(@PathVariable(name = "id") Long id, @RequestBody Address address){
     return addressService.update(address, id);
   }
 
   @DeleteMapping("/delete/{id}")
-  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROlE_USER')")
+  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
   public void deleteAddress(@PathVariable(name = "id") Long id){
     addressService.delete(id);
   }

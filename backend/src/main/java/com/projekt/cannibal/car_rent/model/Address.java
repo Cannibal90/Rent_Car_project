@@ -1,5 +1,6 @@
 package com.projekt.cannibal.car_rent.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,12 +35,14 @@ public class Address {
   @ManyToOne(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "user_id")
   @NotNull
+  @JsonIgnoreProperties({"addresses", "orders"})
   private User user;
 
   public void addUser(User user){
     user.getAddresses().add(this);
     this.user = user;
   }
+
 
   @Override
   public String toString() {

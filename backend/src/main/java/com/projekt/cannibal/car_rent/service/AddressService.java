@@ -2,6 +2,7 @@ package com.projekt.cannibal.car_rent.service;
 
 import com.projekt.cannibal.car_rent.dao.AddressDao;
 import com.projekt.cannibal.car_rent.dao.UserDao;
+
 import com.projekt.cannibal.car_rent.exceptions.ApiNoFoundResourceException;
 import com.projekt.cannibal.car_rent.model.Address;
 import com.projekt.cannibal.car_rent.model.Car;
@@ -56,6 +57,7 @@ public class AddressService {
         if(addressInDB.isEmpty())
             throw new ApiNoFoundResourceException("Address not found");
         address.setId(addressInDB.get().getId());
+    address.setUser(addressInDB.get().getUser());
         return addressDao.save(address);
     }
 

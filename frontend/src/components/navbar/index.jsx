@@ -49,9 +49,8 @@ export function Navbar(props) {
   return (
     <NavbarContainer useTransparent={useTransparent}>
       <AccessibilityContainer>
-        <Link to="/">
-          <BrandLogo />
-        </Link>
+        <BrandLogo />
+
         {isLogged === "true" && (
           <>
             <Link to="/cars">

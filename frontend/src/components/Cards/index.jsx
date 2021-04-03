@@ -13,6 +13,24 @@ export const Icon = styled.div`
   border-bottom: 1.5px solid rgba(200, 200, 200, 0.4);
   cursor: pointer;
 `;
+
+export const InputButton = styled.button`
+  width: 100%;
+  height: 52px;
+  outline: none;
+  border: 1px solid rgba(200, 200, 200, 0.3);
+  border-bottom: 1.4px solid transparent;
+  transition: all 200ms ease-in-out;
+  font-size: 20px;
+  text-align: center;
+  border-bottom: 1.5px solid rgba(200, 200, 200, 0.4);
+  color: #000;
+  &:focus {
+    outline: none;
+    border-bottom: 2px solid rgb(127, 94, 245);
+  }
+`;
+
 export const Input = styled.input`
   width: 100%;
   height: 52px;
@@ -26,6 +44,11 @@ export const Input = styled.input`
 
   &::placeholder {
     color: rgba(200, 200, 200, 1);
+  }
+  &:disabled {
+    &::placeholder {
+      color: #000;
+    }
   }
   &:focus {
     outline: none;
@@ -62,4 +85,11 @@ export const ContentContainer = styled.div`
 export const TopContainer = styled.div`
   width: 100%;
   display: flex;
+`;
+
+export const Title = styled.h2`
+  margin: 0;
+  color: #000;
+  font-weight: 600;
+  font-size: 30px;
 `;

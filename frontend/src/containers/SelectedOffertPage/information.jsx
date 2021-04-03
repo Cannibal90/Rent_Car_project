@@ -9,7 +9,7 @@ const InformationContainer = styled.div`
 
 const InformationWrapper = styled.div`
   display: flex;
-  margin: 0 15%;
+  margin: 0 7%;
   flex-wrap: wrap;
 `;
 

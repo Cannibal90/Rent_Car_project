@@ -1,6 +1,6 @@
 package com.projekt.cannibal.car_rent.service;
 
-import com.projekt.cannibal.car_rent.dao.AddressDao;
+
 import com.projekt.cannibal.car_rent.dao.UserDao;
 import com.projekt.cannibal.car_rent.exceptions.ApiNoFoundResourceException;
 import com.projekt.cannibal.car_rent.exceptions.ApiValidationException;
@@ -59,6 +59,7 @@ public class UserService {
         }
 
         user.setId(id);
+    user.setAddresses(userInDb.get().getAddresses());
         if(!user.getPassword().equals(userInDb.get().getPassword())){
             String encodedPassword = this.passwordEncoder.encode(user.getPassword());
             user.setPassword(encodedPassword);

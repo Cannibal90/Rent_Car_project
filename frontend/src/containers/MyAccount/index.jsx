@@ -4,12 +4,15 @@ import {
 } from "../../components/PageContainer";
 import { Navbar } from "../../components/navbar";
 import { Footer } from "../../components/footer";
+import { ManageUser } from "./manageUser";
 
 export function MyAccount(props) {
   return (
     <PageContainer>
       <Navbar />
-      <InnerPageContainer>ala ma kota</InnerPageContainer>
+      <InnerPageContainer>
+        <ManageUser />
+      </InnerPageContainer>
       <Footer />
     </PageContainer>
   );

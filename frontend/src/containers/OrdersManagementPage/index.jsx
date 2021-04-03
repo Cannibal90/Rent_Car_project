@@ -4,12 +4,15 @@ import {
 } from "../../components/PageContainer";
 import { Navbar } from "../../components/navbar";
 import { Footer } from "../../components/footer";
+import { ManageOrders } from "./orders";
 
 export function OrdersManagementPage(props) {
   return (
     <PageContainer>
       <Navbar />
-      <InnerPageContainer>orders</InnerPageContainer>
+      <InnerPageContainer>
+        <ManageOrders />
+      </InnerPageContainer>
       <Footer />
     </PageContainer>
   );

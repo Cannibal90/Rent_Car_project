@@ -1,9 +1,8 @@
+import { ContentContainer, Info } from "../../components/Cards";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { useEffect } from "react";
-import { useState } from "react";
 import styled from "styled-components";
 import { UserCard } from "../../components/userCard";
-import { Info, ContentContainer, Title } from "../../components/Cards";
 
 const UserContainer = styled.div`
   width: 100%;
@@ -13,14 +12,15 @@ const UserContainer = styled.div`
   margin-bottom: 10%;
 `;
 
-export function Users(props) {
+export function ManageUser(props) {
   const user = JSON.parse(localStorage.getItem("currentUser"));
   const token = `Bearer ${user.token}`;
-  const [userList, setUserList] = useState([]);
+  const [userFromDb, setUserFromDb] = useState();
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/user/all", {
+      .get("http://localhost:8080/api/user/" + user.id, {
         headers: {
           Authorization: token,
           "Content-Type": "application/json ",
@@ -28,18 +28,20 @@ export function Users(props) {
       })
       .then((response) => {
         console.log("Response: ", response.data);
-        setUserList(response.data);
+        setUserFromDb(response.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.log("Error: ", error.response);
       });
-  }, [token]);
+  }, [token, user.id]);
+
+  if (isLoading) {
+    return <div className="App">Loading...</div>;
+  }
 
   return (
     <UserContainer>
-      <ContentContainer>
-        <Title>Users</Title>
-      </ContentContainer>
       <ContentContainer>
         <Info>id</Info>
         <Info>username</Info>
@@ -52,19 +54,16 @@ export function Users(props) {
         <Info>addresses</Info>
         <Info>delete</Info>
       </ContentContainer>
-
-      {userList.map((user) => (
-        <UserCard
-          key={user.id}
-          id={user.id}
-          username={user.username}
-          email={user.email}
-          password={user.password}
-          firstname={user.firstname}
-          lastname={user.lastname}
-          role={user.role}
-        />
-      ))}
+      <UserCard
+        key={userFromDb.id}
+        id={userFromDb.id}
+        username={userFromDb.username}
+        email={userFromDb.email}
+        password={userFromDb.password}
+        firstname={userFromDb.firstname}
+        lastname={userFromDb.lastname}
+        role={userFromDb.role}
+      />
     </UserContainer>
   );
 }
