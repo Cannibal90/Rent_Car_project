@@ -7,7 +7,7 @@ import { OffertsPage } from "./containers/OffertsPage";
 import { SelectedOffertPage } from "./containers/SelectedOffertPage";
 import { MyAccount } from "./containers/MyAccount";
 import { ManagementPage } from "./containers/ManagementPage";
-import { FAQ } from "./containers/FAQ";
+import { Basket } from "./containers/Basket";
 import { History } from "./containers/History";
 import { UsersManagementPage } from "./containers/UsersManagementPage";
 import { CarsManagementPage } from "./containers/CarsManagementPage";
@@ -30,7 +30,7 @@ function App() {
             exact
             component={AddressManagementPage}
           />
-          <Route path="/FAQ" exact component={FAQ} />
+          <Route path="/basket" exact component={Basket} />
           <Route path="/history" exact component={History} />
           <Route path="/cars" exact component={OffertsPage} />
           <Route path="/cars/:id" exact component={SelectedOffertPage} />

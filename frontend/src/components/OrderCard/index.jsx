@@ -1,6 +1,7 @@
 import React from "react";
-import { Icon, Input, ContentContainer, TopContainer } from "../Cards";
-import { useEffect, useState } from "react";
+import { Icon, Input, ContentContainer, Info } from "../Cards";
+import { useState } from "react";
+import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEdit,
@@ -8,25 +9,111 @@ import {
   faSave,
 } from "@fortawesome/free-regular-svg-icons";
 import { DropdownList } from "../dropdownList";
+import styled from "styled-components";
+import { CarCard } from "../carCard";
+
+const CarContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 1%;
+  z-index: 1;
+`;
+
+const CarWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0;
+  flex-wrap: wrap; //tutaj nastepuje przeniesienie do nowej lini
+`;
+
+const OrderCarContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 10%;
+`;
+
+const TopContainer = styled.div`
+  width: 100%;
+`;
 
 export function OrderCard(props) {
-  const { id, status, paymentType, amount, paymentDate } = props;
+  const {
+    id,
+    status,
+    paymentType,
+    amount,
+    paymentDate,
+    paymentId,
+    cars,
+    orderUser,
+  } = props;
+  const user = JSON.parse(localStorage.getItem("currentUser"));
+  const token = `Bearer ${user.token}`;
+
   const [disable, setDisable] = useState(true);
   const [newStatus, setNewStatus] = useState(status);
   const [newPaymentType, setNewPaymentType] = useState(paymentType);
   const [newAmount, setNewAmount] = useState(amount);
   const [newPaymentDate, setNewPaymentDate] = useState(paymentDate);
+  const [newCars, setNewCars] = useState(cars);
 
   var modifyOrder = function () {
     setDisable(false);
   };
 
-  var saveOrder = function () {
-    setDisable(true);
+  var saveOrder = function (id) {
+    axios
+      .put(
+        "http://localhost:8080/api/order/update/" + id,
+        {
+          id: id,
+          status: newStatus,
+          payment: {
+            paymentType: newPaymentType,
+            amount: newAmount,
+            paymentDate: newPaymentDate,
+            id: paymentId,
+          },
+          user: orderUser,
+          cars: newCars,
+        },
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json ",
+          },
+        }
+      )
+      .then((response) => {
+        console.log("Response: ", response.data);
+        setDisable(true);
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log("Error: ", error.response.data);
+      });
   };
 
-  var deleteOrder = function () {
+  var deleteOrder = function (id) {
     console.log("delete");
+    axios
+      .delete("http://localhost:8080/api/order/delete/" + id, {
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json ",
+        },
+      })
+      .then((response) => {
+        console.log("Response: ", response.data);
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log("Error: ", error.response.data);
+      });
   };
   var statusOption = [
     "Verification",
@@ -34,7 +121,15 @@ export function OrderCard(props) {
     "Implementation",
     "Delivered",
   ];
+  var click = function (car) {
+    const index = cars.indexOf(car);
+    if (index > -1) {
+      cars.splice(index, 1);
+      setNewCars(cars);
+    }
+  };
   var paymentTypes = ["Bank transfer", "Cash", "Payment card"];
+  const images = require.context("../../images", true);
   return (
     <TopContainer>
       <ContentContainer>
@@ -73,14 +168,49 @@ export function OrderCard(props) {
           </Icon>
         ) : (
           <Icon>
-            <FontAwesomeIcon icon={faSave} onClick={() => saveOrder()} />
+            <FontAwesomeIcon icon={faSave} onClick={() => saveOrder(id)} />
           </Icon>
         )}
 
         <Icon>
-          <FontAwesomeIcon icon={faTrashAlt} onClick={() => deleteOrder()} />
+          <FontAwesomeIcon icon={faTrashAlt} onClick={() => deleteOrder(id)} />
         </Icon>
       </ContentContainer>
+      <OrderCarContainer>
+        <Info
+          style={{
+            fontSize: "30px",
+            fontWeight: "600",
+            height: "40px",
+          }}
+        >
+          Cars
+        </Info>
+        <CarContainer>
+          <CarWrapper>
+            {cars.map((car) => (
+              <CarCard
+                key={car.id}
+                id={car.id}
+                title={car.brand.brandName + " " + car.model}
+                price={car.price}
+                engine={car.engine}
+                fuel={car.fuel}
+                year={car.production_date}
+                odometer={car.odometer}
+                gearbox={car.equipment.gearbox}
+                urls={
+                  images(`./${car.brand.brandName} ${car.model}.jpg`).default
+                }
+                disabled={disable ? true : ""}
+                handler={() => {
+                  click(car);
+                }}
+              />
+            ))}
+          </CarWrapper>
+        </CarContainer>
+      </OrderCarContainer>
     </TopContainer>
   );
 }

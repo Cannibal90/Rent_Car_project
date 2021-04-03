@@ -31,6 +31,7 @@ const TopContainer = styled.div`
 const CarThumbnail = styled.div`
   width: 100%;
   height: 18em;
+  position: relative;
 
   img {
     width: 100%;
@@ -79,6 +80,17 @@ const Info = styled.div`
   color: #000;
 `;
 
+const DeleteBoxText = styled.div`
+  position: absolute;
+  z-index: 2;
+  //margin: auto 0;
+  top: 8px;
+  right: 8px;
+  text-align: right;
+  font-size: 30px;
+  width: 100%;
+`;
+
 export function CarCard(props) {
   const {
     id,
@@ -90,15 +102,22 @@ export function CarCard(props) {
     odometer,
     gearbox,
     urls,
+    handler,
+    disabled,
   } = props;
 
   var to = `/cars/${id}`;
   return (
-    <Link to={to} style={{ textDecoration: "none" }}>
+    <Link to={disabled ? to : "#"} style={{ textDecoration: "none" }}>
       <CardContainer>
         <TopContainer>
           <CarThumbnail>
             <img src={urls} alt="car" />
+            {disabled ? (
+              <> </>
+            ) : (
+              <DeleteBoxText onClick={handler}>{"\u274C"}</DeleteBoxText>
+            )}
           </CarThumbnail>
         </TopContainer>
         <ContentContainer>

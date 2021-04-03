@@ -54,20 +54,20 @@ export function Navbar(props) {
         {isLogged === "true" && (
           <>
             <Link to="/cars">
-              <Button size={25} paddingW={2} paddingH={3}>
+              <Button size={24} paddingW={2} paddingH={3}>
                 Oferta
               </Button>
             </Link>
             <Marginer direction="horizontal" margin={5} />
             <Link to="/history">
-              <Button size={25} paddingW={2} paddingH={3}>
+              <Button size={24} paddingW={2} paddingH={3}>
                 Historia
               </Button>
             </Link>
             <Marginer direction="horizontal" margin={5} />
-            <Link to="/FAQ">
-              <Button size={25} paddingW={2} paddingH={3}>
-                FAQ
+            <Link to="/basket">
+              <Button size={24} paddingW={2} paddingH={3}>
+                Koszyk
               </Button>
             </Link>
           </>
@@ -78,7 +78,7 @@ export function Navbar(props) {
         {isLogged == null && (
           <>
             <Link to="/signup">
-              <Button size={25} paddingW={2} paddingH={3}>
+              <Button size={24} paddingW={2} paddingH={3}>
                 Register
               </Button>
             </Link>
@@ -89,7 +89,7 @@ export function Navbar(props) {
         {isLogged === "true" && (
           <>
             <Link to="/account">
-              <Button size={25} paddingW={2} paddingH={3}>
+              <Button size={24} paddingW={2} paddingH={3}>
                 Moje konto
               </Button>
             </Link>
@@ -99,7 +99,7 @@ export function Navbar(props) {
         {role === "ROLE_ADMIN" && (
           <>
             <Link to="/manage">
-              <Button size={25} paddingW={2} paddingH={3}>
+              <Button size={24} paddingW={2} paddingH={3}>
                 Panel zarządzania
               </Button>
             </Link>
@@ -109,7 +109,7 @@ export function Navbar(props) {
         {isLogged === "true" && (
           <>
             <Link to="/">
-              <Button onClick={logOut} size={25} paddingW={2} paddingH={3}>
+              <Button onClick={logOut} size={24} paddingW={2} paddingH={3}>
                 LogOut
               </Button>
             </Link>

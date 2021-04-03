@@ -5,7 +5,7 @@ import {
 import { Navbar } from "../../components/navbar";
 import { Footer } from "../../components/footer";
 
-export function FAQ(props) {
+export function Basket(props) {
   return (
     <PageContainer>
       <Navbar />

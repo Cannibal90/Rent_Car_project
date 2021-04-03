@@ -56,6 +56,7 @@ export function Cars(props) {
             odometer={car.odometer}
             gearbox={car.equipment.gearbox}
             urls={images(`./${car.brand.brandName} ${car.model}.jpg`).default}
+            disabled={true}
           />
         ))}
       </CarWrapper>

@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { ContentContainer, Info, Title } from "../../components/Cards";
 import { OrderCard } from "../../components/OrderCard";
-import { CarCard } from "../../components/carCard";
 
 const OrderContainer = styled.div`
   width: 100%;
@@ -15,22 +14,6 @@ const OrderContainer = styled.div`
 
 const HelpContainer = styled.div`
   width: 100%;
-`;
-
-const CarContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 1%;
-  z-index: 1;
-`;
-
-const CarWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 0 0;
-  flex-wrap: wrap; //tutaj nastepuje przeniesienie do nowej lini
 `;
 
 export function ManageOrders(props) {
@@ -54,7 +37,7 @@ export function ManageOrders(props) {
         console.log("Error: ", error.response);
       });
   }, [token]);
-  const images = require.context("../../images", true);
+
   return (
     <OrderContainer>
       <ContentContainer>
@@ -78,8 +61,11 @@ export function ManageOrders(props) {
             paymentType={order.payment.paymentType}
             amount={order.payment.amount}
             paymentDate={order.payment.paymentDate}
+            paymentId={order.payment.id}
+            cars={order.cars}
+            orderUser={order.user}
           />
-          <Info
+          {/* <Info
             style={{
               fontSize: "30px",
               fontWeight: "600",
@@ -107,7 +93,7 @@ export function ManageOrders(props) {
                 />
               ))}
             </CarWrapper>
-          </CarContainer>
+          </CarContainer> */}
         </HelpContainer>
       ))}
     </OrderContainer>

@@ -84,7 +84,6 @@ public class OrderService {
         Optional<Order> orderInDb = orderDao.findById(orderId);
         if(orderInDb.isEmpty())
             throw new ApiNoFoundResourceException("Order not found");
-        order.setId(orderId);
         return orderDao.save(order);
     }
 
