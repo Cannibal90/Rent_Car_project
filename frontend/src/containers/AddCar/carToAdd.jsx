@@ -10,14 +10,15 @@ import {
   Information,
   TopContainer,
   SelectedContainer,
-  CarGallery,
   InformationContainer,
 } from "../../components/carManageCommons";
+import { firebaseStorage } from "../../firebase";
 
 export function CarToAdd(props) {
   const user = JSON.parse(localStorage.getItem("currentUser"));
   const token = `Bearer ${user.token}`;
 
+  const [image, setImage] = useState(null);
   //basic car info
   const [newBrand, setNewBrand] = useState("");
   const [newModel, setNewModel] = useState("");
@@ -28,6 +29,8 @@ export function CarToAdd(props) {
   const [newOdometer, setNewOdometer] = useState(0);
   const [newProductionDate, setNewProductionDate] = useState("");
   const [newAvailabilityStatus, setNewAvailabilityStatus] = useState("");
+  //   const [newURL, setNewURL] = useState("");
+  //   const [newPower, setNewPower] = useState(0);
 
   //equipment car
   const [newDoors, setNewDoors] = useState(0);
@@ -135,15 +138,50 @@ export function CarToAdd(props) {
       });
   };
 
+  const handleChange = (e) => {
+    console.log("dziala");
+    if (e.target.files[0]) {
+      setImage(e.target.files[0]);
+    }
+  };
+
+  var uploadFile = function () {
+    console.log("upload");
+    const uploadPath = firebaseStorage.ref(`images/${image.name}`).put(image);
+    uploadPath.on(
+      "state_changed",
+      (snapshot) => {},
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        firebaseStorage
+          .ref("images")
+          .child(image.name)
+          .getDownloadURL()
+          .then((url) => {
+            console.log("URL: " + url);
+          });
+      }
+    );
+  };
+
+  console.log("image: " + image);
+
   return (
     <TopContainer>
+      <ContentContainer>
+        <Title>Select Image</Title>
+      </ContentContainer>
       <SelectedContainer>
-        <CarGallery>
-          <img
-            // src={images(`./${car.brand.brandName} ${car.model}.jpg`).default}
-            alt="car"
-          />
-        </CarGallery>
+        <Input type="file" onChange={handleChange} />
+        <Button
+          onClick={() => {
+            uploadFile();
+          }}
+        >
+          Upload
+        </Button>
       </SelectedContainer>
       <ContentContainer>
         <Title>Basic car info</Title>
