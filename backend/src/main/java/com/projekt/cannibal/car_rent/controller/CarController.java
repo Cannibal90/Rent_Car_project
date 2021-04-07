@@ -2,6 +2,7 @@ package com.projekt.cannibal.car_rent.controller;
 
 import com.projekt.cannibal.car_rent.configuration.AppUser;
 import com.projekt.cannibal.car_rent.configuration.LoggedInUser;
+import com.projekt.cannibal.car_rent.dao.helpers.CarBrandDao;
 import com.projekt.cannibal.car_rent.model.Car;
 import com.projekt.cannibal.car_rent.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ public class CarController {
 
     @Autowired
     private CarService carService;
+
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")

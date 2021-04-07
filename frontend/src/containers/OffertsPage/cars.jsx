@@ -13,7 +13,8 @@ const CarContainer = styled.div`
 
 const CarWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  //moze byc space between
   margin: 0 0;
   flex-wrap: wrap; //tutaj nastepuje przeniesienie do nowej lini
 `;

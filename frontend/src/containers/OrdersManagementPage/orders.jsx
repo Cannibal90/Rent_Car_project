@@ -65,35 +65,6 @@ export function ManageOrders(props) {
             cars={order.cars}
             orderUser={order.user}
           />
-          {/* <Info
-            style={{
-              fontSize: "30px",
-              fontWeight: "600",
-              height: "40px",
-            }}
-          >
-            Cars
-          </Info>
-          <CarContainer>
-            <CarWrapper>
-              {order.cars.map((car) => (
-                <CarCard
-                  key={car.id}
-                  id={car.id}
-                  title={car.brand.brandName + " " + car.model}
-                  price={car.price}
-                  engine={car.engine}
-                  fuel={car.fuel}
-                  year={car.production_date}
-                  odometer={car.odometer}
-                  gearbox={car.equipment.gearbox}
-                  urls={
-                    images(`./${car.brand.brandName} ${car.model}.jpg`).default
-                  }
-                />
-              ))}
-            </CarWrapper>
-          </CarContainer> */}
         </HelpContainer>
       ))}
     </OrderContainer>

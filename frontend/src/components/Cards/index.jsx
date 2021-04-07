@@ -54,6 +54,14 @@ export const Input = styled.input`
     outline: none;
     border-bottom: 2px solid rgb(127, 94, 245);
   }
+
+  &:checked {
+    height: 30px;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  &:not(:checked) {
+  }
 `;
 
 export const Info = styled.div`

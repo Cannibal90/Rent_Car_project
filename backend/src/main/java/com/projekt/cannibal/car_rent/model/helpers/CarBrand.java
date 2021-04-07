@@ -15,7 +15,6 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 public class CarBrand implements Serializable {
 
     @Id
@@ -27,4 +26,8 @@ public class CarBrand implements Serializable {
     @OneToMany(mappedBy = "brand")
     private List<Car> cars = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return "\""+brandName+"\"";
+    }
 }

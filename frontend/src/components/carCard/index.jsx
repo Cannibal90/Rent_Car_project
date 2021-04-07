@@ -104,9 +104,11 @@ export function CarCard(props) {
     urls,
     handler,
     disabled,
+    linkto,
   } = props;
 
-  var to = `/cars/${id}`;
+  //var to = `/cars/${id}`;
+  var to = linkto ? linkto : `/cars/${id}`;
   return (
     <Link to={disabled ? to : "#"} style={{ textDecoration: "none" }}>
       <CardContainer>

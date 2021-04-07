@@ -13,6 +13,8 @@ import { UsersManagementPage } from "./containers/UsersManagementPage";
 import { CarsManagementPage } from "./containers/CarsManagementPage";
 import { OrdersManagementPage } from "./containers/OrdersManagementPage";
 import { AddressManagementPage } from "./containers/AddressManagementPage";
+import { UpdateCarPage } from "./containers/UpdateCar";
+import { AddCarPage } from "./containers/AddCar";
 
 function App() {
   return (
@@ -24,6 +26,12 @@ function App() {
           <Route path="/manage" exact component={ManagementPage} />
           <Route path="/manage/users" exact component={UsersManagementPage} />
           <Route path="/manage/cars" exact component={CarsManagementPage} />
+          <Route path="/manage/cars/add" exact component={AddCarPage} />
+          <Route
+            path="/manage/cars/update/:id"
+            exact
+            component={UpdateCarPage}
+          />
           <Route path="/manage/orders" exact component={OrdersManagementPage} />
           <Route
             path="/manage/address/:id"

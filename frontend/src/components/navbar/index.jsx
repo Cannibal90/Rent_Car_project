@@ -90,7 +90,7 @@ export function Navbar(props) {
           <>
             <Link to="/account">
               <Button size={24} paddingW={2} paddingH={3}>
-                Moje konto
+                Konto
               </Button>
             </Link>
             <Marginer direction="horizontal" margin={5} />
@@ -100,7 +100,7 @@ export function Navbar(props) {
           <>
             <Link to="/manage">
               <Button size={24} paddingW={2} paddingH={3}>
-                Panel zarządzania
+                Zarządzanie
               </Button>
             </Link>
             <Marginer direction="horizontal" margin={5} />
