@@ -22,7 +22,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
+
 public class Car implements Serializable {
 
   @Id
@@ -57,12 +57,18 @@ public class Car implements Serializable {
   @NotNull
   private AvailabilityStatus availabilityStatus;
 
+  private String url;
+
+  @NotNull
+  private long power;
+
   @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
   @JoinColumn(name = "equipment_id")
   @JsonIgnoreProperties("car")
   private Equipment equipment;
 
   @ManyToMany(mappedBy = "cars")
+  @JsonIgnoreProperties("cars")
   private List<Order> orders = new ArrayList<>();
 
   public void addCarBrand(CarBrand carBrand){

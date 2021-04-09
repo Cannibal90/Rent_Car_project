@@ -5,8 +5,9 @@ import styled from "styled-components";
 import { Marginer } from "../../components/marginer";
 import { Link } from "react-router-dom";
 import { InformationContent } from "./information";
-import axios from "axios";
 import { useEffect, useState } from "react";
+import { getSelectedCar } from "../../_carFunctions";
+import { addCarToOrder } from "../../_ordersFunctions";
 
 const TopContainer = styled.div`
   width: 100%;
@@ -87,41 +88,30 @@ export function SelectedCar(props) {
   const [isLoading, setLoading] = useState(true);
   const { id } = props;
   const [car, setCar] = useState();
-  const user = JSON.parse(localStorage.getItem("currentUser"));
-  const token = `Bearer ${user.token}`;
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/api/car/" + id, {
-        headers: {
-          Authorization: token,
-          "Content-Type": "application/json ",
-        },
-      })
-      .then((response) => {
-        console.log("Response: ", response.data);
-        setCar(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log("Error: ", error.response);
-      });
-  }, [token, id]);
+    getSelectedCar(id).then((res) => {
+      setCar(res);
+      setLoading(false);
+    });
+  }, [id]);
 
   if (isLoading) {
     return <div className="App">Loading...</div>;
   }
 
-  const images = require.context("../../images", true);
+  var addToBasket = function () {
+    addCarToOrder(car).then((res) => {
+      console.log("udalo sie dodac! = " + JSON.stringify(res));
+      window.location.reload();
+    });
+  };
 
   return (
     <TopContainer>
       <SelectedContainer>
         <CarGallery>
-          <img
-            src={images(`./${car.brand.brandName} ${car.model}.jpg`).default}
-            alt="car"
-          />
+          <img src={car.url} alt="car" />
         </CarGallery>
       </SelectedContainer>
       <TitlePriceContainer>
@@ -132,7 +122,14 @@ export function SelectedCar(props) {
           <Title>{car.price}zł</Title>
           <Marginer direction="horizontal" margin={50} />
           <Link to="/basket">
-            <Button size={45} paddingW={2} paddingH={3}>
+            <Button
+              size={45}
+              paddingW={2}
+              paddingH={3}
+              onClick={() => {
+                addToBasket();
+              }}
+            >
               Kup teraz
             </Button>
           </Link>
@@ -158,7 +155,7 @@ export function SelectedCar(props) {
         </InfoWrapper>
         <InfoWrapper>
           <Title>Moc</Title>
-          <Title>{car.engine}</Title>
+          <Title>{car.power}KM</Title>
         </InfoWrapper>
       </ContentContainer>
 
@@ -166,6 +163,7 @@ export function SelectedCar(props) {
       <Basic>Dane Podstawowe</Basic>
       <Marginer direction="vertical" margin={30} />
       <InformationContent
+        engine={car.engine}
         carType={car.carType}
         date={car.production_date}
         doors={car.equipment.doors}

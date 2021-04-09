@@ -17,6 +17,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { deleteUser } from "../../_userFunctions";
 
 export function UserCard(props) {
   const { id, username, email, password, firstname, lastname, role } = props;
@@ -30,23 +31,12 @@ export function UserCard(props) {
   const [show, setShow] = useState(false);
   const [body, setBody] = useState("");
   const user = JSON.parse(localStorage.getItem("currentUser"));
-  const token = `Bearer ${user.token}`;
+  const token = user ? `Bearer ${user.token}` : "";
 
   var DeleteUser = function (id) {
-    axios
-      .delete("http://localhost:8080/api/user/delete/" + id, {
-        headers: {
-          Authorization: token,
-          "Content-Type": "application/json ",
-        },
-      })
-      .then((response) => {
-        console.log("Response: ", response.data);
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.log("Error: ", error.response);
-      });
+    deleteUser(id).then(() => {
+      window.location.reload();
+    });
   };
 
   var updateUser = function (id) {

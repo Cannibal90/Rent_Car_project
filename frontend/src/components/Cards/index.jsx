@@ -69,12 +69,24 @@ export const Info = styled.div`
   height: 32px;
   outline: none;
   border: 1px solid rgba(200, 200, 200, 0.3);
-  //padding: 0px 10px;
   border-bottom: 1.4px solid transparent;
   transition: all 200ms ease-in-out;
   font-size: 20px;
   text-align: center;
   border-bottom: 1.5px solid rgba(200, 200, 200, 0.4);
+`;
+
+export const WeightInfo = styled.div`
+  width: 100%;
+  height: 32px;
+  outline: none;
+  border: 1px solid rgba(200, 200, 200, 0.3);
+  border-bottom: 1.4px solid transparent;
+  transition: all 200ms ease-in-out;
+  font-size: 20px;
+  text-align: center;
+  border-bottom: 1.5px solid rgba(200, 200, 200, 0.4);
+  font-weight: 600;
 `;
 
 export const ContentContainer = styled.div`

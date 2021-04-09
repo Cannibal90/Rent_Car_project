@@ -36,6 +36,10 @@
 
             <column name="production_date" type="VARCHAR(255)"/>
 
+            <column name="url" type="VARCHAR(255)"/>
+
+            <column name="power" type="BIGINT"/>
+
             <column name="brand_id" type="BIGINT"/>
 
             <column name="equipment_id" type="BIGINT"/>

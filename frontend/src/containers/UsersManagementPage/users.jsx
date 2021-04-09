@@ -1,9 +1,9 @@
-import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import { UserCard } from "../../components/userCard";
 import { Info, ContentContainer, Title } from "../../components/Cards";
+import { getAllUsers } from "../../_userFunctions";
 
 const UserContainer = styled.div`
   width: 100%;
@@ -14,26 +14,10 @@ const UserContainer = styled.div`
 `;
 
 export function Users(props) {
-  const user = JSON.parse(localStorage.getItem("currentUser"));
-  const token = `Bearer ${user.token}`;
   const [userList, setUserList] = useState([]);
-
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/api/user/all", {
-        headers: {
-          Authorization: token,
-          "Content-Type": "application/json ",
-        },
-      })
-      .then((response) => {
-        console.log("Response: ", response.data);
-        setUserList(response.data);
-      })
-      .catch((error) => {
-        console.log("Error: ", error.response);
-      });
-  }, [token]);
+    getAllUsers().then((res) => setUserList(res));
+  }, []);
 
   return (
     <UserContainer>

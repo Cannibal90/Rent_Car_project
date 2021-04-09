@@ -16,7 +16,7 @@ import { firebaseStorage } from "../../firebase";
 
 export function CarToAdd(props) {
   const user = JSON.parse(localStorage.getItem("currentUser"));
-  const token = `Bearer ${user.token}`;
+  const token = user ? `Bearer ${user.token}` : "";
 
   const [image, setImage] = useState(null);
   //basic car info
@@ -29,8 +29,8 @@ export function CarToAdd(props) {
   const [newOdometer, setNewOdometer] = useState(0);
   const [newProductionDate, setNewProductionDate] = useState("");
   const [newAvailabilityStatus, setNewAvailabilityStatus] = useState("");
-  //   const [newURL, setNewURL] = useState("");
-  //   const [newPower, setNewPower] = useState(0);
+  const [newURL, setNewURL] = useState("");
+  const [newPower, setNewPower] = useState(0);
 
   //equipment car
   const [newDoors, setNewDoors] = useState(0);
@@ -112,6 +112,8 @@ export function CarToAdd(props) {
           odometer: newOdometer,
           production_date: newProductionDate,
           availabilityStatus: newAvailabilityStatus,
+          url: newURL,
+          power: newPower,
           equipment: {
             doors: newDoors,
             powerWindows: newPowerWindows,
@@ -139,7 +141,6 @@ export function CarToAdd(props) {
   };
 
   const handleChange = (e) => {
-    console.log("dziala");
     if (e.target.files[0]) {
       setImage(e.target.files[0]);
     }
@@ -160,13 +161,12 @@ export function CarToAdd(props) {
           .child(image.name)
           .getDownloadURL()
           .then((url) => {
+            setNewURL(url);
             console.log("URL: " + url);
           });
       }
     );
   };
-
-  console.log("image: " + image);
 
   return (
     <TopContainer>
@@ -239,6 +239,17 @@ export function CarToAdd(props) {
             placeholder={newEngine}
             onChange={(e) => {
               setNewEngine(e.target.value);
+            }}
+          />
+        </Information>
+
+        <Information>
+          <LeftInfo>Power</LeftInfo>
+          <Input
+            type="text"
+            placeholder={newPower}
+            onChange={(e) => {
+              setNewPower(e.target.value);
             }}
           />
         </Information>

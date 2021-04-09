@@ -17,7 +17,7 @@ import {
 export function CarToUpdate(props) {
   const { car } = props;
   const user = JSON.parse(localStorage.getItem("currentUser"));
-  const token = `Bearer ${user.token}`;
+  const token = user ? `Bearer ${user.token}` : "";
 
   //basic car info
   const [newBrand, setNewBrand] = useState(car.brand.brandName);
@@ -33,6 +33,8 @@ export function CarToUpdate(props) {
   const [newAvailabilityStatus, setNewAvailabilityStatus] = useState(
     car.availabilityStatus
   );
+  const [newURL, setNewURL] = useState(car.url);
+  const [newPower, setNewPower] = useState(car.power);
 
   //equipment car
   const [newDoors, setNewDoors] = useState(car.equipment.doors);
@@ -46,8 +48,6 @@ export function CarToUpdate(props) {
   const [newGearbox, setNewGearbox] = useState(car.equipment.gearbox);
   const [newABS, setNewABS] = useState(car.equipment.abs);
   const [newESP, setNewESP] = useState(car.equipment.esp);
-
-  const images = require.context("../../images", true);
 
   const brands = [
     "Acura",
@@ -153,10 +153,7 @@ export function CarToUpdate(props) {
     <TopContainer>
       <SelectedContainer>
         <CarGallery>
-          <img
-            src={images(`./${car.brand.brandName} ${car.model}.jpg`).default}
-            alt="car"
-          />
+          <img src={newURL} alt="car" />
         </CarGallery>
       </SelectedContainer>
       <ContentContainer>
@@ -215,6 +212,17 @@ export function CarToUpdate(props) {
             placeholder={newEngine}
             onChange={(e) => {
               setNewEngine(e.target.value);
+            }}
+          />
+        </Information>
+
+        <Information>
+          <LeftInfo>Power</LeftInfo>
+          <Input
+            type="text"
+            placeholder={newPower}
+            onChange={(e) => {
+              setNewPower(e.target.value);
             }}
           />
         </Information>

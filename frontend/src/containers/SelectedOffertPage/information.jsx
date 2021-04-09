@@ -40,13 +40,27 @@ const RightInfo = styled.div`
   color: #000;
 `;
 export function InformationContent(props) {
-  const { carType, date, doors, windows, upholostery, ac, abs, esp } = props;
+  const {
+    carType,
+    engine,
+    date,
+    doors,
+    windows,
+    upholostery,
+    ac,
+    abs,
+    esp,
+  } = props;
   return (
     <InformationContainer>
       <InformationWrapper>
         <Information>
           <LeftInfo>Rodzaj nadwozia</LeftInfo>
           <RightInfo>{carType}</RightInfo>
+        </Information>
+        <Information>
+          <LeftInfo>Silnik</LeftInfo>
+          <RightInfo>{engine}</RightInfo>
         </Information>
         <Information>
           <LeftInfo>Data produkcji</LeftInfo>

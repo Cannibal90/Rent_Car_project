@@ -4,7 +4,9 @@ import com.projekt.cannibal.car_rent.dao.CarDao;
 import com.projekt.cannibal.car_rent.dao.OrderDao;
 import com.projekt.cannibal.car_rent.dao.PaymentDao;
 import com.projekt.cannibal.car_rent.dao.UserDao;
+import com.projekt.cannibal.car_rent.dto.OrderDTO;
 import com.projekt.cannibal.car_rent.exceptions.ApiNoFoundResourceException;
+import com.projekt.cannibal.car_rent.helpers.OrderStatus;
 import com.projekt.cannibal.car_rent.helpers.PaymentType;
 import com.projekt.cannibal.car_rent.model.Car;
 import com.projekt.cannibal.car_rent.model.Order;
@@ -14,8 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -43,6 +47,26 @@ public class OrderService {
         return orderDao.findByUser(userInDb.get());
     }
 
+    public List<Order> getUserHistory(Long userId){
+        Optional<User> userInDb = userDao.findById(userId);
+        if(userInDb.isEmpty())
+            throw new ApiNoFoundResourceException("User not found");
+        return orderDao.findByUser(userInDb.get())
+                .stream()
+                .filter(order -> !(order.getStatus()).equals(OrderStatus.VERIFICATION))
+                .collect(Collectors.toList());
+    }
+
+    public List<Order> getUserBasket(Long userId){
+        Optional<User> userInDb = userDao.findById(userId);
+        if(userInDb.isEmpty())
+            throw new ApiNoFoundResourceException("User not found");
+        return orderDao.findByUser(userInDb.get())
+                .stream()
+                .filter(order -> order.getStatus().equals(OrderStatus.VERIFICATION))
+                .collect(Collectors.toList());
+    }
+
     public Order findById(Long id){
         Optional<Order> orderInDb = orderDao.findById(id);
         if(orderInDb.isEmpty())
@@ -59,25 +83,39 @@ public class OrderService {
         Payment payment = new Payment(PaymentType.CASH, 0, LocalDate.now());
         paymentDao.save(payment);
         order.addPayment(payment);
+        order.setStatus(OrderStatus.VERIFICATION);
         return orderDao.save(order);
     }
 
-    public Order addCarsToOrder(Long orderId, Long carId){
-        Optional<Order> orderInDb = orderDao.findById(orderId);
-        if(orderInDb.isEmpty())
-            throw new ApiNoFoundResourceException("Order not found");
+    public Order addCarsToOrder(OrderDTO orderDTO){
+        Optional<User> userInDb = userDao.findById(orderDTO.getUserId());
+        if(userInDb.isEmpty())
+            throw new ApiNoFoundResourceException("User not found");
+        List<Order> userOrder = orderDao.findByUser(userInDb.get())
+                .stream()
+                .filter(order -> order.getStatus().equals(OrderStatus.VERIFICATION))
+                .collect(Collectors.toList());
+        System.out.println("Orders: " +  userOrder);
+        Order orderInDb = null;
+        if(userOrder.isEmpty()){
+            orderInDb = addOrder(new Order(), orderDTO.getUserId());
+        }
+        else {
+            orderInDb = userOrder.get(0);
+        }
 
-        Optional<Car> carInDb = carDao.findById(carId);
+        Optional<Car> carInDb = carDao.findById(orderDTO.getCarToAdd().getId());
         if(carInDb.isEmpty())
             throw new ApiNoFoundResourceException("Car not found");
 
-        Payment payment = orderInDb.get().getPayment();
+        Payment payment = orderInDb.getPayment();
         Double price = carInDb.get().getPrice() + payment.getAmount();
         payment.setAmount(price);
-        orderInDb.get().setPayment(payment);
-        carInDb.get().getOrders().add(orderInDb.get());
-        orderInDb.get().getCars().add(carInDb.get());
-        return orderDao.save(orderInDb.get());
+        orderInDb.setPayment(payment);
+        orderInDb.addCar(carInDb.get());
+//        carInDb.get().getOrders().add(orderInDb);
+//        orderInDb.getCars().add(carInDb.get());
+        return orderDao.save(orderInDb);
     }
 
     public Order update(Order order, Long orderId){

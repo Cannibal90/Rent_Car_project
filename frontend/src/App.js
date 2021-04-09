@@ -1,4 +1,3 @@
-import React from "react";
 import "./App.css";
 import { HomePage } from "./containers/HomePage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -16,7 +15,7 @@ import { AddressManagementPage } from "./containers/AddressManagementPage";
 import { UpdateCarPage } from "./containers/UpdateCar";
 import { AddCarPage } from "./containers/AddCar";
 
-function App() {
+function App(props) {
   return (
     <div className="App">
       <Router>

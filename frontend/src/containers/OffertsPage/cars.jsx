@@ -1,7 +1,7 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { CarCard } from "../../components/carCard";
+import { getAllCars } from "../../_carFunctions";
 
 const CarContainer = styled.div`
   width: 100%;
@@ -20,28 +20,12 @@ const CarWrapper = styled.div`
 `;
 
 export function Cars(props) {
-  const user = JSON.parse(localStorage.getItem("currentUser"));
-  const token = `Bearer ${user.token}`;
   const [carList, setCarList] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/api/car/all", {
-        headers: {
-          Authorization: token,
-          "Content-Type": "application/json ",
-        },
-      })
-      .then((response) => {
-        console.log("Response: ", response.data);
-        setCarList(response.data);
-      })
-      .catch((error) => {
-        console.log("Error: ", error.response);
-      });
-  }, [token]);
+    getAllCars().then((res) => setCarList(res));
+  }, []);
 
-  const images = require.context("../../images", true);
   return (
     <CarContainer>
       <CarWrapper>
@@ -56,7 +40,8 @@ export function Cars(props) {
             year={car.production_date}
             odometer={car.odometer}
             gearbox={car.equipment.gearbox}
-            urls={images(`./${car.brand.brandName} ${car.model}.jpg`).default}
+            urls={car.url}
+            power={car.power}
             disabled={true}
           />
         ))}

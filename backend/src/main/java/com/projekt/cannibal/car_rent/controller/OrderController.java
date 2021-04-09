@@ -2,6 +2,7 @@ package com.projekt.cannibal.car_rent.controller;
 
 import com.projekt.cannibal.car_rent.configuration.AppUser;
 import com.projekt.cannibal.car_rent.configuration.LoggedInUser;
+import com.projekt.cannibal.car_rent.dto.OrderDTO;
 import com.projekt.cannibal.car_rent.model.Car;
 import com.projekt.cannibal.car_rent.model.Order;
 import com.projekt.cannibal.car_rent.service.OrderService;
@@ -16,38 +17,47 @@ import java.util.List;
 @RequestMapping("api/order")
 public class OrderController {
 
-    @Autowired
-    private OrderService orderService;
+  @Autowired private OrderService orderService;
 
-    @GetMapping("/all")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public List<Order> getAll(){
-        return orderService.findAll();
-    }
+  @GetMapping("/all")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  public List<Order> getAll() {
+    return orderService.findAll();
+  }
 
-    @PostMapping("/add")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-    public Order addOrder(@RequestBody Order order, @LoggedInUser AppUser appUser){
-        return orderService.addOrder(order, appUser.getId());
-    }
+  @GetMapping("/history/{id}")
+  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+  public List<Order> getUserHistory(@PathVariable(name = "id") Long id) {
+    return orderService.getUserHistory(id);
+  }
 
-    @PutMapping("/update/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-    public Order updateOrder(@PathVariable(name = "id") Long id, @RequestBody Order order){
-        return orderService.update(order, id);
-    }
+  @GetMapping("/basket/{id}")
+  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+  public List<Order> getUserBasket(@PathVariable(name = "id") Long id) {
+    return orderService.getUserBasket(id);
+  }
 
-    //TODO: przemyslec jak dodawac, trzeba chyba zrobic CarDTO
-    @PutMapping("/update/addcar/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-    public Order addCarToOrder(@PathVariable(name = "id") Long orderId, @RequestBody Car car){
-        return orderService.addCarsToOrder(orderId,car.getId());
-    }
+  @PostMapping("/add")
+  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+  public Order addOrder(@RequestBody Order order, @LoggedInUser AppUser appUser) {
+    return orderService.addOrder(order, appUser.getId());
+  }
 
-    @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void delete(@PathVariable(name = "id") Long id){
-        orderService.delete(id);
-    }
+  @PutMapping("/update/{id}")
+  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+  public Order updateOrder(@PathVariable(name = "id") Long id, @RequestBody Order order) {
+    return orderService.update(order, id);
+  }
 
+  @PutMapping("/addCar")
+  @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+  public Order addCarToOrder(@RequestBody OrderDTO orderDTO) {
+    return orderService.addCarsToOrder(orderDTO);
+  }
+
+  @DeleteMapping("/delete/{id}")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  public void delete(@PathVariable(name = "id") Long id) {
+    orderService.delete(id);
+  }
 }

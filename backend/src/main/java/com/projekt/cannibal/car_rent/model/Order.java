@@ -31,7 +31,7 @@ public class Order {
   @NotNull
   private User user;
 
-  @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+  @ManyToMany(cascade = {CascadeType.MERGE})
   @JsonIgnoreProperties("orders")
   @JoinTable(
       name = "order_cars",

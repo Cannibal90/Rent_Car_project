@@ -8,10 +8,11 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 
 import { Input, Icon, ContentContainer, TopContainer } from "../Cards";
+import { deleteSelectedAddress } from "../../_addressesFunctions";
 
 export function AddressCard(props) {
   const user = JSON.parse(localStorage.getItem("currentUser"));
-  const token = `Bearer ${user.token}`;
+  const token = user ? `Bearer ${user.token}` : "";
   const { id, country, city, street, number, postCode } = props;
   const [newCountry, setNewCountry] = useState(country);
   const [newCity, setNewCity] = useState(city);
@@ -54,24 +55,9 @@ export function AddressCard(props) {
       });
   };
   var deleteAddress = function (id) {
-    axios
-      .delete(
-        "http://localhost:8080/api/address/delete/" + id,
-
-        {
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json ",
-          },
-        }
-      )
-      .then((response) => {
-        console.log("Response: ", response.data);
-      })
-      .catch((error) => {
-        console.log("Error: ", error.response);
-      });
-    window.location.reload();
+    deleteSelectedAddress(id).then(() => {
+      window.location.reload();
+    });
   };
 
   return (

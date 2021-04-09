@@ -35,6 +35,7 @@ public class TokenFilter extends OncePerRequestFilter {
                 String role = (String)claims.get("role");
 
 
+
                 //create user details object
                 AppUser appUser = new AppUser(id, username, role);
 

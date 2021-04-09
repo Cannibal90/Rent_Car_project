@@ -1,8 +1,8 @@
 import { ContentContainer, Info } from "../../components/Cards";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import styled from "styled-components";
 import { UserCard } from "../../components/userCard";
+import { getSelectedUser } from "../../_userFunctions";
 
 const UserContainer = styled.div`
   width: 100%;
@@ -13,28 +13,15 @@ const UserContainer = styled.div`
 `;
 
 export function ManageUser(props) {
-  const user = JSON.parse(localStorage.getItem("currentUser"));
-  const token = `Bearer ${user.token}`;
   const [userFromDb, setUserFromDb] = useState();
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/api/user/" + user.id, {
-        headers: {
-          Authorization: token,
-          "Content-Type": "application/json ",
-        },
-      })
-      .then((response) => {
-        console.log("Response: ", response.data);
-        setUserFromDb(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log("Error: ", error.response);
-      });
-  }, [token, user.id]);
+    getSelectedUser().then((res) => {
+      setUserFromDb(res);
+      setLoading(false);
+    });
+  }, []);
 
   if (isLoading) {
     return <div className="App">Loading...</div>;

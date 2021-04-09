@@ -12,6 +12,7 @@ import {
   ContentContainer,
   Title,
 } from "../../components/Cards";
+import { getAddressForSelectedUser } from "../../_addressesFunctions";
 
 const AddressContainer = styled.div`
   width: 100%;
@@ -24,7 +25,7 @@ const AddressContainer = styled.div`
 export function Addresses(props) {
   const { userId } = props;
   const user = JSON.parse(localStorage.getItem("currentUser"));
-  const token = `Bearer ${user.token}`;
+  const token = user ? `Bearer ${user.token}` : "";
   const [addressList, setAddressList] = useState([]);
 
   //////////////
@@ -36,27 +37,9 @@ export function Addresses(props) {
   const [disable, setDisable] = useState(false);
 
   //////////////
-
   useEffect(() => {
-    axios
-      .get(
-        "http://localhost:8080/api/address/" + userId,
-
-        {
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json ",
-          },
-        }
-      )
-      .then((response) => {
-        console.log("Response: ", response.data);
-        setAddressList(response.data);
-      })
-      .catch((error) => {
-        console.log("Error: ", error.response);
-      });
-  }, [token, userId]);
+    getAddressForSelectedUser(userId).then((res) => setAddressList(res));
+  }, [userId]);
 
   var addAddress = function (id) {
     setDisable(true);

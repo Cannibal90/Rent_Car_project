@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
-import { ContentContainer, Info, Title } from "../../components/Cards";
-import { OrderCard } from "../../components/OrderCard";
-import { getAllOrders } from "../../_ordersFunctions";
+import { ContentContainer, WeightInfo, Title } from "../../components/Cards";
+import { useEffect, useState } from "react";
+import { getHistory } from "../../_ordersFunctions";
+import { HistoryBasketCard } from "../../components/HistoryBasketCard";
 
 const OrderContainer = styled.div`
   width: 100%;
@@ -11,37 +11,32 @@ const OrderContainer = styled.div`
   align-items: flex-start;
   margin-bottom: 10%;
 `;
-
 const HelpContainer = styled.div`
   width: 100%;
 `;
 
-export function ManageOrders(props) {
+export function HistoryOrders(props) {
   const [orderList, setOrderList] = useState([]);
 
   useEffect(() => {
-    getAllOrders().then((res) => {
-      setOrderList(res);
-    });
+    getHistory().then((res) => setOrderList(res));
   }, []);
 
   return (
     <OrderContainer>
       <ContentContainer>
-        <Title>Orders</Title>
+        <Title>History orders</Title>
       </ContentContainer>
       <ContentContainer>
-        <Info>id</Info>
-        <Info>Status</Info>
-        <Info>payment type</Info>
-        <Info>amount</Info>
-        <Info>payment date</Info>
-        <Info>edit</Info>
-        <Info>delete</Info>
+        <WeightInfo>id</WeightInfo>
+        <WeightInfo>Status</WeightInfo>
+        <WeightInfo>payment type</WeightInfo>
+        <WeightInfo>amount</WeightInfo>
+        <WeightInfo>payment date</WeightInfo>
       </ContentContainer>
       {orderList.map((order) => (
         <HelpContainer key={"div" + order.id}>
-          <OrderCard
+          <HistoryBasketCard
             key={order.id}
             id={order.id}
             status={order.status}

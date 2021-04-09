@@ -12,7 +12,7 @@ const CardContainer = styled.div`
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
   margin: 3.5em;
   margin-bottom: 1.3em;
-  z-index: 1;
+  //z-index: 1;
 
   &:hover {
     box-shadow: 0 0 33px rgba(0, 0, 0, 0.7);

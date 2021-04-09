@@ -39,6 +39,7 @@ const DropList = styled.ul`
   background: #ffffff;
   border: 2px solid #e5e5e5;
   position: absolute;
+  z-index: 10;
 `;
 
 const MainContainer = styled.div`
@@ -55,6 +56,7 @@ export function DropdownList(props) {
   };
 
   var changeOption = function (item) {
+    console.log("dziala cos ?");
     setOption(item.item);
     handler(item.item);
     setShow(false);

@@ -1,6 +1,15 @@
-import { createStore, combineReducers } from "redux";
-import homePage from "./containers/HomePage/reducers";
+import { createStore, applyMiddleware } from "redux";
+import allReducers from "./redux/reducers";
 
-const reducers = combineReducers({ homePage });
+import thunk from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
 
-export default createStore(reducers);
+const initalState = {};
+
+const middleware = [thunk];
+
+export default createStore(
+  allReducers,
+  initalState,
+  composeWithDevTools(applyMiddleware(...middleware))
+);

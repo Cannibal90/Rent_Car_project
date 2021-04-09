@@ -2,9 +2,10 @@ import { ContentContainer, Title } from "../../components/Cards";
 import styled from "styled-components";
 import { Button } from "../../components/button";
 import { CarCard } from "../../components/carCard";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { deleteCar, getAllCars } from "../../_carFunctions";
+import { useEffect } from "react";
 
 const CarsContainer = styled.div`
   width: 100%;
@@ -32,29 +33,11 @@ const CarWrapper = styled.div`
 export function ManageCars(props) {
   const [editMode, setEditMode] = useState(true);
   const [disable, setDisable] = useState(true);
-
-  const user = JSON.parse(localStorage.getItem("currentUser"));
-  const token = `Bearer ${user.token}`;
   const [carList, setCarList] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/api/car/all", {
-        headers: {
-          Authorization: token,
-          "Content-Type": "application/json ",
-        },
-      })
-      .then((response) => {
-        console.log("Response: ", response.data);
-        setCarList(response.data);
-      })
-      .catch((error) => {
-        console.log("Error: ", error.response);
-      });
-  }, [token]);
-
-  const images = require.context("../../images", true);
+    getAllCars().then((res) => setCarList(res));
+  }, []);
 
   var changeMode = function () {
     setEditMode(!editMode);
@@ -63,21 +46,7 @@ export function ManageCars(props) {
 
   var handleDelete = function (car) {
     console.log("delete " + car.id);
-    axios
-      .delete("http://localhost:8080/api/car/delete/" + car.id, {
-        headers: {
-          Authorization: token,
-          "Content-Type": "application/json ",
-        },
-      })
-      .then((response) => {
-        console.log("Response: ", response.data);
-        window.location.reload();
-        //TODO: usunac zdjecie
-      })
-      .catch((error) => {
-        console.log("Error: ", error.response);
-      });
+    deleteCar(car).then((res) => console.log("usuniete"));
   };
 
   return (
@@ -114,7 +83,8 @@ export function ManageCars(props) {
               year={car.production_date}
               odometer={car.odometer}
               gearbox={car.equipment.gearbox}
-              urls={images(`./${car.brand.brandName} ${car.model}.jpg`).default}
+              urls={car.url}
+              power={car.power}
               disabled={disable ? true : ""}
               handler={() => {
                 handleDelete(car);

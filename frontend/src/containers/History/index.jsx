@@ -4,12 +4,15 @@ import {
 } from "../../components/PageContainer";
 import { Navbar } from "../../components/navbar";
 import { Footer } from "../../components/footer";
+import { HistoryOrders } from "./history";
 
 export function History(props) {
   return (
     <PageContainer>
       <Navbar />
-      <InnerPageContainer>ala ma kota</InnerPageContainer>
+      <InnerPageContainer>
+        <HistoryOrders />
+      </InnerPageContainer>
       <Footer />
     </PageContainer>
   );

@@ -11,6 +11,7 @@ import {
 import { DropdownList } from "../dropdownList";
 import styled from "styled-components";
 import { CarCard } from "../carCard";
+import { deleteSelectedOrder } from "../../_ordersFunctions";
 
 const CarContainer = styled.div`
   width: 100%;
@@ -52,8 +53,7 @@ export function OrderCard(props) {
     orderUser,
   } = props;
   const user = JSON.parse(localStorage.getItem("currentUser"));
-  const token = `Bearer ${user.token}`;
-
+  const token = user ? `Bearer ${user.token}` : "";
   const [disable, setDisable] = useState(true);
   const [newStatus, setNewStatus] = useState(status);
   const [newPaymentType, setNewPaymentType] = useState(paymentType);
@@ -100,20 +100,7 @@ export function OrderCard(props) {
 
   var deleteOrder = function (id) {
     console.log("delete");
-    axios
-      .delete("http://localhost:8080/api/order/delete/" + id, {
-        headers: {
-          Authorization: token,
-          "Content-Type": "application/json ",
-        },
-      })
-      .then((response) => {
-        console.log("Response: ", response.data);
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.log("Error: ", error.response.data);
-      });
+    deleteSelectedOrder(id).then(() => window.location.reload());
   };
   var statusOption = [
     "Verification",
@@ -129,7 +116,6 @@ export function OrderCard(props) {
     }
   };
   var paymentTypes = ["Bank transfer", "Cash", "Payment card"];
-  const images = require.context("../../images", true);
   return (
     <TopContainer>
       <ContentContainer>
@@ -199,9 +185,8 @@ export function OrderCard(props) {
                 year={car.production_date}
                 odometer={car.odometer}
                 gearbox={car.equipment.gearbox}
-                urls={
-                  images(`./${car.brand.brandName} ${car.model}.jpg`).default
-                }
+                power={car.power}
+                urls={car.url}
                 disabled={disable ? true : ""}
                 handler={() => {
                   click(car);
