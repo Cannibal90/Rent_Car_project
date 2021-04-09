@@ -33,7 +33,7 @@ public class OrderController {
 
   @GetMapping("/basket/{id}")
   @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-  public List<Order> getUserBasket(@PathVariable(name = "id") Long id) {
+  public Order getUserBasket(@PathVariable(name = "id") Long id) {
     return orderService.getUserBasket(id);
   }
 

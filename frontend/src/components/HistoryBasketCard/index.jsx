@@ -2,6 +2,10 @@ import React from "react";
 import { ContentContainer, Info } from "../Cards";
 import styled from "styled-components";
 import { CarCard } from "../carCard";
+import { DropdownList } from "../dropdownList";
+import { useState } from "react";
+import axios from "axios";
+import { Button } from "../button";
 
 const CarContainer = styled.div`
   width: 100%;
@@ -32,14 +36,67 @@ const TopContainer = styled.div`
 `;
 
 export function HistoryBasketCard(props) {
-  const { id, status, paymentType, amount, paymentDate, cars } = props;
+  const {
+    id,
+    status,
+    paymentType,
+    amount,
+    paymentDate,
+    paymentId,
+    cars,
+    disable,
+    orderUser,
+  } = props;
+  const user = JSON.parse(localStorage.getItem("currentUser"));
+  const token = user ? `Bearer ${user.token}` : "";
+
+  const [newPaymentType, setNewPaymentType] = useState(paymentType);
+  var paymentTypes = ["Bank transfer", "Cash", "Payment card"];
+
+  var approveOrder = function () {
+    axios
+      .put(
+        "http://localhost:8080/api/order/update/" + id,
+        {
+          id: id,
+          status: "Wating for payment",
+          payment: {
+            paymentType: newPaymentType,
+            amount: amount,
+            paymentDate: paymentDate,
+            id: paymentId,
+          },
+          user: orderUser,
+          cars: cars,
+        },
+
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json ",
+          },
+        }
+      )
+      .then((response) => {
+        console.log("Response: ", response.data);
+        //window.location.reload();
+      })
+      .catch((error) => {
+        console.log("Error: ", error.response.data);
+      });
+  };
 
   return (
     <TopContainer>
       <ContentContainer>
         <Info>{id}</Info>
         <Info>{status}</Info>
-        <Info>{[paymentType]}</Info>
+        <DropdownList
+          items={paymentTypes}
+          selected={newPaymentType}
+          handler={setNewPaymentType}
+          disabled={disable ? true : ""}
+        />
         <Info>{amount}</Info>
         <Info>{paymentDate}</Info>
       </ContentContainer>
@@ -74,6 +131,18 @@ export function HistoryBasketCard(props) {
           </CarWrapper>
         </CarContainer>
       </OrderCarContainer>
+
+      {!disable && (
+        <ContentContainer>
+          <Button
+            onClick={() => {
+              approveOrder();
+            }}
+          >
+            Złóż zamówienie
+          </Button>
+        </ContentContainer>
+      )}
     </TopContainer>
   );
 }

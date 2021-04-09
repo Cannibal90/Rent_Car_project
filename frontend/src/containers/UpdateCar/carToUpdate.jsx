@@ -13,11 +13,14 @@ import {
   CarGallery,
   InformationContainer,
 } from "../../components/carManageCommons";
+import { firebaseStorage } from "../../firebase";
 
 export function CarToUpdate(props) {
   const { car } = props;
   const user = JSON.parse(localStorage.getItem("currentUser"));
   const token = user ? `Bearer ${user.token}` : "";
+  const [image, setImage] = useState(null);
+  const [change, setChange] = useState(false);
 
   //basic car info
   const [newBrand, setNewBrand] = useState(car.brand.brandName);
@@ -104,6 +107,34 @@ export function CarToUpdate(props) {
   const Gearbox = ["Automatic", "Manual 5S", "Manual 6S"];
   const Upholostery = ["Fabric", "Half leather", "Leather", "Velor"];
 
+  const handleChange = (e) => {
+    if (e.target.files[0]) {
+      setImage(e.target.files[0]);
+    }
+  };
+
+  var uploadFile = function () {
+    console.log("upload");
+    const uploadPath = firebaseStorage.ref(`images/${image.name}`).put(image);
+    uploadPath.on(
+      "state_changed",
+      (snapshot) => {},
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        firebaseStorage
+          .ref("images")
+          .child(image.name)
+          .getDownloadURL()
+          .then((url) => {
+            setNewURL(url);
+            console.log("URL: " + url);
+          });
+      }
+    );
+  };
+
   var updateCar = function () {
     console.log("update" + car.id);
     axios
@@ -122,6 +153,8 @@ export function CarToUpdate(props) {
           odometer: newOdometer,
           production_date: newProductionDate,
           availabilityStatus: newAvailabilityStatus,
+          url: newURL,
+          power: newPower,
           equipment: {
             id: car.equipment.id,
             doors: newDoors,
@@ -149,13 +182,42 @@ export function CarToUpdate(props) {
       });
   };
 
+  var changeImage = function () {
+    setChange(true);
+  };
+
   return (
     <TopContainer>
-      <SelectedContainer>
-        <CarGallery>
-          <img src={newURL} alt="car" />
-        </CarGallery>
-      </SelectedContainer>
+      {change ? (
+        <SelectedContainer>
+          <Input type="file" onChange={handleChange} />
+          <Button
+            onClick={() => {
+              uploadFile();
+            }}
+          >
+            Upload
+          </Button>
+        </SelectedContainer>
+      ) : (
+        <>
+          <SelectedContainer>
+            <CarGallery>
+              <img src={newURL} alt="car" />
+            </CarGallery>
+          </SelectedContainer>
+          <ContentContainer>
+            <Button
+              onClick={() => {
+                changeImage();
+              }}
+            >
+              Change image
+            </Button>
+          </ContentContainer>
+        </>
+      )}
+
       <ContentContainer>
         <Title>Basic car info</Title>
       </ContentContainer>

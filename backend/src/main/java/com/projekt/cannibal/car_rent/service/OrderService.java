@@ -57,14 +57,21 @@ public class OrderService {
                 .collect(Collectors.toList());
     }
 
-    public List<Order> getUserBasket(Long userId){
+    public Order getUserBasket(Long userId){
         Optional<User> userInDb = userDao.findById(userId);
         if(userInDb.isEmpty())
             throw new ApiNoFoundResourceException("User not found");
-        return orderDao.findByUser(userInDb.get())
+        Optional<Order> orderInDb = orderDao.findByUser(userInDb.get())
                 .stream()
                 .filter(order -> order.getStatus().equals(OrderStatus.VERIFICATION))
-                .collect(Collectors.toList());
+                .findFirst();
+        if(orderInDb.isEmpty())
+            return null;
+        return orderInDb.get();
+//        return orderDao.findByUser(userInDb.get())
+//                .stream()
+//                .filter(order -> order.getStatus().equals(OrderStatus.VERIFICATION))
+//                .collect(Collectors.toList());
     }
 
     public Order findById(Long id){

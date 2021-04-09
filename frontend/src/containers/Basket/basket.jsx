@@ -16,11 +16,19 @@ const HelpContainer = styled.div`
 `;
 
 export function BasketOrders(props) {
-  const [orderList, setOrderList] = useState([]);
+  const [order, setOrder] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getBasket().then((res) => setOrderList(res));
+    getBasket().then((res) => {
+      setOrder(res);
+      setIsLoading(false);
+    });
   }, []);
+
+  if (isLoading) {
+    return <div className="App">Loading...</div>;
+  }
 
   return (
     <OrderContainer>
@@ -34,10 +42,10 @@ export function BasketOrders(props) {
         <WeightInfo>amount</WeightInfo>
         <WeightInfo>payment date</WeightInfo>
       </ContentContainer>
-      {orderList.map((order) => (
-        <HelpContainer key={"divbasket" + order.id}>
+
+      {!isLoading && order && (
+        <HelpContainer>
           <HistoryBasketCard
-            key={order.id}
             id={order.id}
             status={order.status}
             paymentType={order.payment.paymentType}
@@ -46,9 +54,10 @@ export function BasketOrders(props) {
             paymentId={order.payment.id}
             cars={order.cars}
             orderUser={order.user}
+            disable={""}
           />
         </HelpContainer>
-      ))}
+      )}
     </OrderContainer>
   );
 }

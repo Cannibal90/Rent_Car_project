@@ -46,6 +46,7 @@ export function HistoryOrders(props) {
             paymentId={order.payment.id}
             cars={order.cars}
             orderUser={order.user}
+            disable={true}
           />
         </HelpContainer>
       ))}
