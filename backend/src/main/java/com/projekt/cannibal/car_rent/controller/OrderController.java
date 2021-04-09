@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -39,19 +40,19 @@ public class OrderController {
 
   @PostMapping("/add")
   @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-  public Order addOrder(@RequestBody Order order, @LoggedInUser AppUser appUser) {
+  public Order addOrder(@Valid @RequestBody Order order, @LoggedInUser AppUser appUser) {
     return orderService.addOrder(order, appUser.getId());
   }
 
   @PutMapping("/update/{id}")
   @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-  public Order updateOrder(@PathVariable(name = "id") Long id, @RequestBody Order order) {
+  public Order updateOrder(@PathVariable(name = "id") Long id, @Valid  @RequestBody Order order) {
     return orderService.update(order, id);
   }
 
   @PutMapping("/addCar")
   @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-  public Order addCarToOrder(@RequestBody OrderDTO orderDTO) {
+  public Order addCarToOrder(@Valid @RequestBody OrderDTO orderDTO) {
     return orderService.addCarsToOrder(orderDTO);
   }
 

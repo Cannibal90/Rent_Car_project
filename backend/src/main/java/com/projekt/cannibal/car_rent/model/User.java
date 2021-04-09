@@ -1,5 +1,6 @@
 package com.projekt.cannibal.car_rent.model;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.projekt.cannibal.car_rent.helpers.Role;
@@ -25,16 +26,16 @@ public class User {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NotNull
+  @NotBlank(message = "Username nie może być puste")
   @Size(min = 2, max = 15)
   @UniqueUsername
   private String username;
 
-  @NotNull
+  @NotBlank(message = "Firstname nie może być puste")
   @Size(min = 2, max = 15)
   private String firstname;
 
-  @NotNull
+  @NotBlank(message = "Lastname nie może być puste")
   @Size(min = 3, max = 15)
   private String lastname;
 
@@ -42,7 +43,7 @@ public class User {
   //TODO zastanowic się nad tym dlugim regexem
   private String email;
 
-  @NotNull
+  @NotBlank(message = "Password nie może być puste")
   private String password;
 
   @NotNull

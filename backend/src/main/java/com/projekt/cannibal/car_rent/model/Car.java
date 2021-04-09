@@ -13,7 +13,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,25 +34,32 @@ public class Car implements Serializable {
   @ManyToOne
   @JsonIgnoreProperties("cars")
   @JoinColumn(name = "brand_id")
+  @Valid
   private CarBrand brand;
 
-  @NotNull
+  @NotBlank(message = "Pole Model nie może być puste!")
   private String model;
 
   @NotNull
   private CarType carType;
 
-  @NotNull
+  @NotNull(message = "Pole Engine nie może być puste!")
   private String engine;
 
   @NotNull
   private Fuel fuel;
 
+  @NotNull
+  @Digits(integer = 7, fraction = 2, message = "Price musi byc max liczba 7 cyfrowa")
+  @PositiveOrZero(message = "Price musi byc wieksza od 0")
   private double price;
 
+  @NotNull
+  @Digits(integer = 7, fraction = 0, message = "Odometer musi byc max liczba 7 cyfrowa")
+  @PositiveOrZero(message = "Odometer musi byc wieksza od 0")
   private long odometer;
 
-  @NotNull
+  @NotBlank(message = "Pole Production Date nie może być puste!")
   private String production_date;
 
   @NotNull
@@ -59,12 +67,14 @@ public class Car implements Serializable {
 
   private String url;
 
-  @NotNull
+  @NotNull(message = "Pole Power nie może być puste!")
+  @Digits(integer = 3, fraction = 0, message = "Power musi byc max liczba 3 cyfrowa")
   private long power;
 
   @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
   @JoinColumn(name = "equipment_id")
   @JsonIgnoreProperties("car")
+  @Valid
   private Equipment equipment;
 
   @ManyToMany(mappedBy = "cars")

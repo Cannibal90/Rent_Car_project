@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,6 @@ public class Order {
   @ManyToOne
   @JoinColumn(name = "user_id")
   @JsonIgnoreProperties({"orders", "addresses"})
-  @NotNull
   private User user;
 
   @ManyToMany(cascade = {CascadeType.MERGE})
@@ -42,6 +42,7 @@ public class Order {
   @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
   @JsonIgnoreProperties("order")
   @JoinColumn(name = "payment_id")
+  @Valid
   private Payment payment;
 
   public void addPayment(Payment payment){

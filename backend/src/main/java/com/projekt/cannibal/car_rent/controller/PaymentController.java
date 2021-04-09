@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -29,13 +30,13 @@ public class PaymentController {
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public Payment addPayment(@RequestBody Payment payment){
+    public Payment addPayment(@Valid @RequestBody Payment payment){
         return paymentService.add(payment);
     }
 
     @PutMapping("/update/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public Payment updatePayment(@PathVariable(name = "id") Long id, Payment payment){
+    public Payment updatePayment(@PathVariable(name = "id") Long id, @Valid @RequestBody Payment payment){
         return paymentService.update(payment, id);
     }
 

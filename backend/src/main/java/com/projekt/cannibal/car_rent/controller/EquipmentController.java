@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -30,7 +31,7 @@ public class EquipmentController {
 
     @PutMapping("/update/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-    public Equipment updateEquipment(@PathVariable(name = "id") Long id, @RequestBody Equipment equipment){
+    public Equipment updateEquipment(@PathVariable(name = "id") Long id, @RequestBody @Valid Equipment equipment){
         return equipmentService.update(equipment, id);
     }
 

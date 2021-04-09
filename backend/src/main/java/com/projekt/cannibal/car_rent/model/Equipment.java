@@ -8,7 +8,7 @@ import lombok.Setter;
 
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 
 @Entity
@@ -21,7 +21,9 @@ public class Equipment implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NotNull
+  @NotNull(message = "Pole Doors nie moze byc puste")
+  @Min(value = 3, message = "Doors musi byc wieksze lub rowne od 3")
+  @Max(value = 5, message = "Doors musi byc mniejsze lub rowne od 5")
   private int doors;
 
   @NotNull

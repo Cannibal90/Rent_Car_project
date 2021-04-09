@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -33,13 +34,13 @@ public class CarController {
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public Car add(@RequestBody Car car){
+    public Car add(@Valid @RequestBody Car car){
         return carService.add(car);
     }
 
     @PutMapping("/update/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public Car update(@RequestBody Car car, @PathVariable(name = "id") Long id){
+    public Car update(@Valid @RequestBody Car car, @PathVariable(name = "id") Long id){
 
         return carService.update(car, id);
     }

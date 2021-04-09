@@ -7,7 +7,10 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDate;
 
 @Entity
@@ -25,9 +28,12 @@ public class Payment {
   private PaymentType paymentType;
 
   @NotNull
+  @Digits(integer = 8, fraction = 2, message = "Amount moze miec max 8 cyfr")
+  @PositiveOrZero( message = "Amount musi być większe lub rowne 0")
   private double amount;
 
   @NotNull
+  //TODO: cos z ta data pomyslec
   private LocalDate paymentDate;
 
   @OneToOne(mappedBy = "payment")
