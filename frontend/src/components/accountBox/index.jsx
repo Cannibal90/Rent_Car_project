@@ -109,10 +109,6 @@ export function AccountBox(props) {
 
   const playExpandingEffect = () => {
     setExpanded(true);
-    /*
-      Collapse it after short amount of time
-      To Finish transition 
-    */
     setTimeout(() => {
       setExpanded(false);
     }, expandingTransition.duration * 1000 - 1500);

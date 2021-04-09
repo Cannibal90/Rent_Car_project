@@ -5,7 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @NoArgsConstructor
@@ -17,24 +20,25 @@ public class Address {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NotNull
+  @NotBlank(message = "Country nie może być puste!")
   private String country;
 
-  @NotNull
+  @NotBlank(message = "City nie może być puste!")
   private String city;
 
-  @NotNull
+  @NotBlank(message = "Post Code nie może być puste!")
+  @Pattern(regexp = "[0-9]{2}-[0-9]{3}", message = "Post Code ma zły format!")
   private String postCode;
 
-  @NotNull
+  @NotBlank(message = "Street nie może być puste!")
   private String street;
 
-  @NotNull
+  @NotNull(message = "Number nie może być pusty!")
+  @Digits(integer = 4, fraction = 0)
   private int number;
 
   @ManyToOne(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "user_id")
-  @NotNull
   @JsonIgnoreProperties({"addresses", "orders"})
   private User user;
 

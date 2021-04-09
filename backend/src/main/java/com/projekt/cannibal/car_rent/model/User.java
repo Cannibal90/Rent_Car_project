@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,7 @@ public class User {
   private String lastname;
 
   @UniqueEmail
+  //TODO zastanowic się nad tym dlugim regexem
   private String email;
 
   @NotNull

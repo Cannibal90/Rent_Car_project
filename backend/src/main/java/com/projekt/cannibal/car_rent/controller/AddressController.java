@@ -12,6 +12,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -37,13 +38,13 @@ public class AddressController {
 
   @PostMapping("/add/{id}")
   @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-  public Address addAddress(@PathVariable(name = "id") Long id, @RequestBody Address address){
+  public Address addAddress(@PathVariable(name = "id") Long id, @RequestBody @Valid Address address){
     return addressService.add(address, id);
   }
 
   @PutMapping("/update/{id}")
   @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-  public Address updateAddress(@PathVariable(name = "id") Long id, @RequestBody Address address){
+  public Address updateAddress(@PathVariable(name = "id") Long id, @RequestBody @Valid Address address){
     return addressService.update(address, id);
   }
 

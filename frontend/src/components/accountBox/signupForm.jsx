@@ -39,7 +39,7 @@ export function SignupForm(props) {
       )
       .then((response) => {
         console.log("Response: ", response);
-        //TODO: albo poprosic o logowanie albo przeniesc
+        switchToSignin();
       })
       .catch((error) => {
         setValidation(error.response.data.validationErrors);
