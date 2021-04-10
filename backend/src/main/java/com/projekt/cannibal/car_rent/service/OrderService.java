@@ -13,6 +13,8 @@ import com.projekt.cannibal.car_rent.model.Order;
 import com.projekt.cannibal.car_rent.model.Payment;
 import com.projekt.cannibal.car_rent.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -36,8 +38,8 @@ public class OrderService {
     @Autowired
     private PaymentDao paymentDao;
 
-    public List<Order> findAll(){
-        return orderDao.findAll();
+    public Page<Order> findAll(Pageable page){
+        return orderDao.findAll(page);
     }
 
     public List<Order> findByUser(Long userId){
@@ -47,14 +49,11 @@ public class OrderService {
         return orderDao.findByUser(userInDb.get());
     }
 
-    public List<Order> getUserHistory(Long userId){
+    public Page<Order> getUserHistory(Long userId, Pageable page){
         Optional<User> userInDb = userDao.findById(userId);
         if(userInDb.isEmpty())
             throw new ApiNoFoundResourceException("User not found");
-        return orderDao.findByUser(userInDb.get())
-                .stream()
-                .filter(order -> !(order.getStatus()).equals(OrderStatus.VERIFICATION))
-                .collect(Collectors.toList());
+        return orderDao.findByUserAndStatusIsNot(userInDb.get(),OrderStatus.VERIFICATION, page);
     }
 
     public Order getUserBasket(Long userId){

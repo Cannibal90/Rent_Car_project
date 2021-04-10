@@ -7,6 +7,8 @@ import com.projekt.cannibal.car_rent.model.Car;
 import com.projekt.cannibal.car_rent.model.Order;
 import com.projekt.cannibal.car_rent.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,14 +24,14 @@ public class OrderController {
 
   @GetMapping("/all")
   @PreAuthorize("hasRole('ROLE_ADMIN')")
-  public List<Order> getAll() {
-    return orderService.findAll();
+  public Page<Order> getAll(Pageable page) {
+    return orderService.findAll(page);
   }
 
   @GetMapping("/history/{id}")
   @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-  public List<Order> getUserHistory(@PathVariable(name = "id") Long id) {
-    return orderService.getUserHistory(id);
+  public Page<Order> getUserHistory(@PathVariable(name = "id") Long id, Pageable page) {
+    return orderService.getUserHistory(id, page);
   }
 
   @GetMapping("/basket/{id}")

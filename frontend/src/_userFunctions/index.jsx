@@ -3,14 +3,20 @@ import axios from "axios";
 const user = JSON.parse(localStorage.getItem("currentUser"));
 const token = user ? `Bearer ${user.token}` : "";
 
-export async function getAllUsers() {
+export async function getAllUsers(number, size) {
   try {
-    let res = await axios.get("http://localhost:8080/api/user/all", {
-      headers: {
-        Authorization: token,
-        "Content-Type": "application/json ",
-      },
-    });
+    let res = await axios.get(
+      "http://localhost:8080/api/user/all?pageSize=" +
+        size +
+        "&pageNumber=" +
+        number,
+      {
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json ",
+        },
+      }
+    );
     console.log("GET ALL USERS");
     return res.data;
   } catch (err) {

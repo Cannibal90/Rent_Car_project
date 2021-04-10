@@ -6,6 +6,8 @@ import com.projekt.cannibal.car_rent.dao.helpers.CarBrandDao;
 import com.projekt.cannibal.car_rent.model.Car;
 import com.projekt.cannibal.car_rent.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,10 +22,16 @@ public class CarController {
     private CarService carService;
 
 
+//    @GetMapping("/all")
+//    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+//    public List<Car> getAll(){
+//        return carService.findAll();
+//    }
+
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-    public List<Car> getAll(){
-        return carService.findAll();
+    public Page<Car> getAll(Pageable page){
+        return carService.findAll(page);
     }
 
     @GetMapping("/{id}")

@@ -12,6 +12,7 @@ import { DropdownList } from "../dropdownList";
 import styled from "styled-components";
 import { CarCard } from "../carCard";
 import { deleteSelectedOrder } from "../../_ordersFunctions";
+import { ErrorDialog } from "../ErrorDialog";
 
 const CarContainer = styled.div`
   width: 100%;
@@ -61,6 +62,9 @@ export function OrderCard(props) {
   const [newPaymentDate, setNewPaymentDate] = useState(paymentDate);
   const [newCars, setNewCars] = useState(cars);
 
+  const [show, setShow] = useState(false);
+  const [body, setBody] = useState([]);
+
   var modifyOrder = function () {
     setDisable(false);
   };
@@ -95,6 +99,8 @@ export function OrderCard(props) {
       })
       .catch((error) => {
         console.log("Error: ", error.response.data);
+        setBody(error.response.data.validationErrors);
+        setShow(true);
       });
   };
 
@@ -118,6 +124,7 @@ export function OrderCard(props) {
   var paymentTypes = ["Bank transfer", "Cash", "Payment card"];
   return (
     <TopContainer>
+      <ErrorDialog show={show} body={body} handler={setShow} />
       <ContentContainer>
         <Input type="text" placeholder={id} disabled={true} />
         <DropdownList

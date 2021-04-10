@@ -13,6 +13,8 @@ import {
   Title,
 } from "../../components/Cards";
 import { getAddressForSelectedUser } from "../../_addressesFunctions";
+import { ErrorDialog } from "../../components/ErrorDialog";
+import Pagination from "react-bootstrap/Pagination";
 
 const AddressContainer = styled.div`
   width: 100%;
@@ -21,12 +23,22 @@ const AddressContainer = styled.div`
   align-items: flex-start;
   margin-bottom: 10%;
 `;
+const HelpContainer = styled.div`
+  width: 100%;
+`;
 
 export function Addresses(props) {
   const { userId } = props;
   const user = JSON.parse(localStorage.getItem("currentUser"));
   const token = user ? `Bearer ${user.token}` : "";
   const [addressList, setAddressList] = useState([]);
+
+  const [totalPages, setTotalPages] = useState(0);
+  const [activePage, setActivePage] = useState(0);
+  const [itemsPerPage, setItemsPerPage] = useState(1);
+
+  const [show, setShow] = useState(false);
+  const [body, setBody] = useState([]);
 
   //////////////
   const [newCountry, setNewCountry] = useState();
@@ -38,12 +50,32 @@ export function Addresses(props) {
 
   //////////////
   useEffect(() => {
-    getAddressForSelectedUser(userId).then((res) => setAddressList(res));
-  }, [userId]);
+    getAddressForSelectedUser(userId, activePage, itemsPerPage).then((res) => {
+      setTotalPages(res.totalPages);
+      setActivePage(res.number);
+      setItemsPerPage(res.size);
+
+      setAddressList(res.content);
+    });
+  }, [userId, activePage, itemsPerPage]);
+
+  let items = [];
+  for (let number = 0; number < totalPages; number++) {
+    items.push(
+      <Pagination.Item
+        key={number + 1}
+        active={number === activePage}
+        onClick={() => {
+          setActivePage(number);
+        }}
+      >
+        {number + 1}
+      </Pagination.Item>
+    );
+  }
 
   var addAddress = function (id) {
     setDisable(true);
-    console.log("dziala?: " + id);
   };
 
   var saveAddress = function () {
@@ -70,108 +102,114 @@ export function Addresses(props) {
       })
       .catch((error) => {
         console.log("Error: ", error.response.data);
-        // setBody(error.response.data.message);
-        // setShow(true);
+        setBody(error.response.data.validationErrors);
+        setShow(true);
       });
   };
 
   return (
-    <AddressContainer>
-      <ContentContainer>
-        <Title>Addresses</Title>
-      </ContentContainer>
-      <ContentContainer>
-        <Button
-          size={35}
-          paddingW={40}
-          paddingH={2}
-          onClick={() => addAddress(userId)}
-        >
-          +
-        </Button>
-      </ContentContainer>
-      <ContentContainer>
-        <Info>Id</Info>
-        <Info>country</Info>
-        <Info>city</Info>
-        <Info>street</Info>
-        <Info>number</Info>
-        <Info>post code</Info>
-        <Info>edit</Info>
-        <Info>delete</Info>
-      </ContentContainer>
-
-      {disable ? (
+    <HelpContainer>
+      <AddressContainer>
+        <ErrorDialog show={show} body={body} handler={setShow} />
         <ContentContainer>
-          <Input type="text" placeholder={"id"} disabled={true} />
-          <Input
-            type="text"
-            placeholder={"country"}
-            onChange={(e) => {
-              setNewCountry(e.target.value);
-            }}
-          />
-          <Input
-            type="text"
-            placeholder={"city"}
-            onChange={(e) => {
-              setNewCity(e.target.value);
-            }}
-          />
-          <Input
-            type="text"
-            placeholder={"street"}
-            onChange={(e) => {
-              setNewStreet(e.target.value);
-            }}
-          />
-          <Input
-            type="text"
-            placeholder={"number"}
-            onChange={(e) => {
-              setNewNumber(e.target.value);
-            }}
-          />
-          <Input
-            type="text"
-            placeholder={"postCode"}
-            onChange={(e) => {
-              setNewPostCode(e.target.value);
-            }}
-          />
-          <Icon>
-            <FontAwesomeIcon
-              icon={faSave}
-              onClick={() => {
-                saveAddress();
-              }}
-            />
-          </Icon>
-          <Icon>
-            <FontAwesomeIcon
-              icon={faTrashAlt}
-              onClick={() => {
-                setDisable(false);
-              }}
-            />
-          </Icon>
+          <Title>Addresses</Title>
         </ContentContainer>
-      ) : (
-        <></>
-      )}
+        <ContentContainer>
+          <Button
+            size={35}
+            paddingW={40}
+            paddingH={2}
+            onClick={() => addAddress(userId)}
+          >
+            +
+          </Button>
+        </ContentContainer>
+        <ContentContainer>
+          <Info>Id</Info>
+          <Info>country</Info>
+          <Info>city</Info>
+          <Info>street</Info>
+          <Info>number</Info>
+          <Info>post code</Info>
+          <Info>edit</Info>
+          <Info>delete</Info>
+        </ContentContainer>
 
-      {addressList.map((address) => (
-        <AddressCard
-          key={address.id}
-          id={address.id}
-          country={address.country}
-          city={address.city}
-          street={address.street}
-          number={address.number}
-          postCode={address.postCode}
-          userId={userId}
-        />
-      ))}
-    </AddressContainer>
+        {disable ? (
+          <ContentContainer>
+            <Input type="text" placeholder={"id"} disabled={true} />
+            <Input
+              type="text"
+              placeholder={"country"}
+              onChange={(e) => {
+                setNewCountry(e.target.value);
+              }}
+            />
+            <Input
+              type="text"
+              placeholder={"city"}
+              onChange={(e) => {
+                setNewCity(e.target.value);
+              }}
+            />
+            <Input
+              type="text"
+              placeholder={"street"}
+              onChange={(e) => {
+                setNewStreet(e.target.value);
+              }}
+            />
+            <Input
+              type="text"
+              placeholder={"number"}
+              onChange={(e) => {
+                setNewNumber(e.target.value);
+              }}
+            />
+            <Input
+              type="text"
+              placeholder={"postCode"}
+              onChange={(e) => {
+                setNewPostCode(e.target.value);
+              }}
+            />
+            <Icon>
+              <FontAwesomeIcon
+                icon={faSave}
+                onClick={() => {
+                  saveAddress();
+                }}
+              />
+            </Icon>
+            <Icon>
+              <FontAwesomeIcon
+                icon={faTrashAlt}
+                onClick={() => {
+                  setDisable(false);
+                }}
+              />
+            </Icon>
+          </ContentContainer>
+        ) : (
+          <></>
+        )}
+
+        {addressList.map((address) => (
+          <AddressCard
+            key={address.id}
+            id={address.id}
+            country={address.country}
+            city={address.city}
+            street={address.street}
+            number={address.number}
+            postCode={address.postCode}
+            userId={userId}
+          />
+        ))}
+      </AddressContainer>
+      <Pagination style={{ justifyContent: "center" }} size="lg">
+        {items}
+      </Pagination>
+    </HelpContainer>
   );
 }

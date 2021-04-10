@@ -10,6 +10,8 @@ import com.projekt.cannibal.car_rent.model.Car;
 import com.projekt.cannibal.car_rent.model.Equipment;
 import com.projekt.cannibal.car_rent.model.helpers.CarBrand;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -29,8 +31,12 @@ public class CarService {
     @Autowired
     private EquipmentDao equipmentDao;
 
-    public List<Car> findAll(){
-        return carDao.findAll();
+//    public List<Car> findAll(){
+//        return carDao.findAll();
+//    }
+
+    public Page<Car> findAll(Pageable page){
+        return carDao.findAll(page);
     }
 
     public Car findById(Long id){

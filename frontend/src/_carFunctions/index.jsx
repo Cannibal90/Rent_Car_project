@@ -3,14 +3,20 @@ import axios from "axios";
 const user = JSON.parse(localStorage.getItem("currentUser"));
 const token = user ? `Bearer ${user.token}` : "";
 
-export async function getAllCars() {
+export async function getAllCars(number, size) {
   try {
-    let res = await axios.get("http://localhost:8080/api/car/all", {
-      headers: {
-        Authorization: token,
-        "Content-Type": "application/json ",
-      },
-    });
+    let res = await axios.get(
+      "http://localhost:8080/api/car/all?pageSize=" +
+        size +
+        "&pageNumber=" +
+        number,
+      {
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json ",
+        },
+      }
+    );
     console.log("GET ALL CARS");
     return res.data;
   } catch (err) {

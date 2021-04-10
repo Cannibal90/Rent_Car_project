@@ -6,6 +6,8 @@ import com.projekt.cannibal.car_rent.exceptions.ApiNoFoundResourceException;
 import com.projekt.cannibal.car_rent.exceptions.ApiValidationException;
 import com.projekt.cannibal.car_rent.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,10 @@ public class UserService {
 
     @Autowired
     private UserDao userDao;
+
+    public Page<User> findAll(Pageable page){
+        return userDao.findAll(page);
+    }
 
     public List<User> findAll(){
         return userDao.findAll();

@@ -9,6 +9,7 @@ import {
 
 import { Input, Icon, ContentContainer, TopContainer } from "../Cards";
 import { deleteSelectedAddress } from "../../_addressesFunctions";
+import { ErrorDialog } from "../ErrorDialog";
 
 export function AddressCard(props) {
   const user = JSON.parse(localStorage.getItem("currentUser"));
@@ -20,6 +21,9 @@ export function AddressCard(props) {
   const [newNumber, setNewNumber] = useState(number);
   const [newPostCode, setNewPostCode] = useState(postCode);
   const [disable, setDisable] = useState(true);
+
+  const [show, setShow] = useState(false);
+  const [body, setBody] = useState([]);
 
   var updateAddress = function (id) {
     console.log("update " + id);
@@ -52,6 +56,8 @@ export function AddressCard(props) {
       })
       .catch((error) => {
         console.log("Error: ", error.response);
+        setBody(error.response.data.validationErrors);
+        setShow(true);
       });
   };
   var deleteAddress = function (id) {
@@ -62,7 +68,7 @@ export function AddressCard(props) {
 
   return (
     <TopContainer>
-      {/* dialog */}
+      <ErrorDialog show={show} body={body} handler={setShow} />
 
       <ContentContainer>
         <Input type="text" placeholder={id} disabled={true} />

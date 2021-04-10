@@ -6,6 +6,8 @@ import com.projekt.cannibal.car_rent.helpers.Role;
 import com.projekt.cannibal.car_rent.model.Address;
 import com.projekt.cannibal.car_rent.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -31,9 +33,8 @@ public class AddressController {
 
   @GetMapping("/{id}")
   @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-  public List<Address> getAddressByUserId(@PathVariable(name = "id") Long id){
-    System.out.println("adresy: " + addressService.findByUserId(id));
-    return addressService.findByUserId(id);
+  public Page<Address> getAddressByUserId(@PathVariable(name = "id") Long id, Pageable page){
+    return addressService.findByUserId(id, page);
   }
 
   @PostMapping("/add/{id}")

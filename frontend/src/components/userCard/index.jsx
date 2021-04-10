@@ -10,14 +10,8 @@ import axios from "axios";
 import { useState } from "react";
 import { Icon, Input, ContentContainer, TopContainer } from "../Cards";
 import { DropdownList } from "../dropdownList";
-
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import { deleteUser } from "../../_userFunctions";
+import { ErrorDialog } from "../ErrorDialog";
 
 export function UserCard(props) {
   const { id, username, email, password, firstname, lastname, role } = props;
@@ -29,7 +23,7 @@ export function UserCard(props) {
   const [newEmail, setNewEmail] = useState(email);
   const [newRole, setNewRole] = useState(role);
   const [show, setShow] = useState(false);
-  const [body, setBody] = useState("");
+  const [body, setBody] = useState([]);
   const user = JSON.parse(localStorage.getItem("currentUser"));
   const token = user ? `Bearer ${user.token}` : "";
 
@@ -73,39 +67,17 @@ export function UserCard(props) {
       })
       .catch((error) => {
         console.log("Error: ", error.response.data);
-        setBody(error.response.data.message);
+        setBody(error.response.data.validationErrors);
         setShow(true);
       });
 
     setDisable(true);
   };
 
-  const handleClose = () => setShow(false);
-
   var userRoles = ["ROLE_USER", "ROLE_ADMIN"];
   return (
     <TopContainer>
-      <Dialog
-        open={show}
-        keepMounted
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-slide-title"
-        aria-describedby="alert-dialog-slide-description"
-      >
-        <DialogTitle id="alert-dialog-slide-title">
-          {"Something gone wrong..."}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            {body}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            OK
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <ErrorDialog show={show} body={body} handler={setShow} />
 
       <ContentContainer>
         <Input type="text" placeholder={id} disabled={true} />

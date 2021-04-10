@@ -8,6 +8,8 @@ import com.projekt.cannibal.car_rent.model.Address;
 import com.projekt.cannibal.car_rent.model.Car;
 import com.projekt.cannibal.car_rent.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,12 +37,12 @@ public class AddressService {
         return addressInDB.get();
     }
 
-    public List<Address> findByUserId(Long id){
+    public Page<Address> findByUserId(Long id, Pageable page){
         Optional<User> userInDb = userDao.findById(id);
         if(userInDb.isEmpty()){
             throw new ApiNoFoundResourceException("User not found");
         }
-        return addressDao.findByUser(userInDb.get());
+        return addressDao.findByUser(userInDb.get(), page);
     }
 
     public Address add(Address address, Long userId){

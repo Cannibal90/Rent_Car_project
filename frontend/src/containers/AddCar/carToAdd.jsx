@@ -13,10 +13,14 @@ import {
   InformationContainer,
 } from "../../components/carManageCommons";
 import { firebaseStorage } from "../../firebase";
+import { ErrorDialog } from "../../components/ErrorDialog";
 
 export function CarToAdd(props) {
   const user = JSON.parse(localStorage.getItem("currentUser"));
   const token = user ? `Bearer ${user.token}` : "";
+
+  const [show, setShow] = useState(false);
+  const [body, setBody] = useState([]);
 
   const [image, setImage] = useState(null);
   //basic car info
@@ -137,6 +141,8 @@ export function CarToAdd(props) {
       })
       .catch((error) => {
         console.log("Error: ", error.response.data);
+        setBody(error.response.data.validationErrors);
+        setShow(true);
       });
   };
 
@@ -170,6 +176,7 @@ export function CarToAdd(props) {
 
   return (
     <TopContainer>
+      <ErrorDialog show={show} body={body} handler={setShow} />
       <ContentContainer>
         <Title>Select Image</Title>
       </ContentContainer>

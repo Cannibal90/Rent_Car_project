@@ -14,6 +14,7 @@ import {
   InformationContainer,
 } from "../../components/carManageCommons";
 import { firebaseStorage } from "../../firebase";
+import { ErrorDialog } from "../../components/ErrorDialog";
 
 export function CarToUpdate(props) {
   const { car } = props;
@@ -21,6 +22,8 @@ export function CarToUpdate(props) {
   const token = user ? `Bearer ${user.token}` : "";
   const [image, setImage] = useState(null);
   const [change, setChange] = useState(false);
+  const [show, setShow] = useState(false);
+  const [body, setBody] = useState([]);
 
   //basic car info
   const [newBrand, setNewBrand] = useState(car.brand.brandName);
@@ -179,6 +182,8 @@ export function CarToUpdate(props) {
       })
       .catch((error) => {
         console.log("Error: ", error.response.data);
+        setBody(error.response.data.validationErrors);
+        setShow(true);
       });
   };
 
@@ -188,6 +193,7 @@ export function CarToUpdate(props) {
 
   return (
     <TopContainer>
+      <ErrorDialog show={show} body={body} handler={setShow} />
       {change ? (
         <SelectedContainer>
           <Input type="file" onChange={handleChange} />

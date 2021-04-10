@@ -7,6 +7,8 @@ import com.projekt.cannibal.car_rent.service.UserService;
 import com.projekt.cannibal.car_rent.validators.RoleIdValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,8 +30,8 @@ public class UserController {
 
   @GetMapping("/all")
   @PreAuthorize("hasRole('ROLE_ADMIN')")
-  public List<User> getAll() {
-    return userService.findAll();
+  public Page<User> getAll(Pageable page) {
+    return userService.findAll(page);
   }
 
   @GetMapping("/{id}")
@@ -40,10 +42,11 @@ public class UserController {
     return userService.findById(id);
   }
 
+  //TODO: wywala blad przy update z uniqueEmail, uniqueUsername chyba DTO
   @PutMapping("/update/{id}")
   @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
   public User updateUser(
-      @PathVariable(name = "id") Long id,@RequestBody @Valid User user, @LoggedInUser AppUser appUser) {
+      @PathVariable(name = "id") Long id,@RequestBody User user, @LoggedInUser AppUser appUser) {
     RoleIdValidator.validate(appUser,id, "This resource is forbbiden for this role");
     return userService.update(id, user);
   }

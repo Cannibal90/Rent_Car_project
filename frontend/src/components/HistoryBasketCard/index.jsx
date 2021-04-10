@@ -6,6 +6,7 @@ import { DropdownList } from "../dropdownList";
 import { useState } from "react";
 import axios from "axios";
 import { Button } from "../button";
+import { ErrorDialog } from "../ErrorDialog";
 
 const CarContainer = styled.div`
   width: 100%;
@@ -50,6 +51,9 @@ export function HistoryBasketCard(props) {
   const user = JSON.parse(localStorage.getItem("currentUser"));
   const token = user ? `Bearer ${user.token}` : "";
 
+  const [show, setShow] = useState(false);
+  const [body, setBody] = useState([]);
+
   const [newPaymentType, setNewPaymentType] = useState(paymentType);
   var paymentTypes = ["Bank transfer", "Cash", "Payment card"];
 
@@ -79,15 +83,18 @@ export function HistoryBasketCard(props) {
       )
       .then((response) => {
         console.log("Response: ", response.data);
-        //window.location.reload();
+        window.location.reload();
       })
       .catch((error) => {
         console.log("Error: ", error.response.data);
+        setBody(error.response.data.validationErrors);
+        setShow(true);
       });
   };
 
   return (
     <TopContainer>
+      <ErrorDialog show={show} body={body} handler={setShow} />
       <ContentContainer>
         <Info>{id}</Info>
         <Info>{status}</Info>
