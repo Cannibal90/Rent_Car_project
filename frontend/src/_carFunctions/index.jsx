@@ -24,6 +24,29 @@ export async function getAllCars(number, size) {
   }
 }
 
+export async function getAllCarsByName(number, size, search) {
+  try {
+    let res = await axios.get(
+      "http://localhost:8080/api/car/search?pageSize=" +
+        size +
+        "&pageNumber=" +
+        number +
+        "&search=" +
+        search,
+      {
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json ",
+        },
+      }
+    );
+    console.log("GET ALL CARS");
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export async function getSelectedCar(carID) {
   try {
     let res = await axios.get("http://localhost:8080/api/car/" + carID, {

@@ -39,12 +39,18 @@ public class CarService {
         return carDao.findAll(page);
     }
 
+    public Page<Car> findAllByModel(String name, Pageable page){
+        return carDao.findByModelOrBrand(name, page);
+    }
+
     public Car findById(Long id){
         Optional<Car> carInDb = carDao.findById(id);
         if(carInDb.isEmpty())
             throw new ApiNoFoundResourceException("Car not found");
         return carInDb.get();
     }
+
+
 
     public Car add(Car car){
         Optional<CarBrand> carBrandInDb = carBrandDao.findByBrandName(car.getBrand().getBrandName());
