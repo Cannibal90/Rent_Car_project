@@ -21,6 +21,7 @@ export function CarToAdd(props) {
 
   const [show, setShow] = useState(false);
   const [body, setBody] = useState([]);
+  const [title, setTitle] = useState("");
 
   const [image, setImage] = useState(null);
   //basic car info
@@ -141,6 +142,7 @@ export function CarToAdd(props) {
       })
       .catch((error) => {
         console.log("Error: ", error.response.data);
+        setTitle("Something gone wrong...");
         setBody(error.response.data.validationErrors);
         setShow(true);
       });
@@ -168,7 +170,9 @@ export function CarToAdd(props) {
           .getDownloadURL()
           .then((url) => {
             setNewURL(url);
-            console.log("URL: " + url);
+            setTitle("Car Image");
+            setBody("Image has been uploaded");
+            setShow(true);
           });
       }
     );
@@ -176,7 +180,7 @@ export function CarToAdd(props) {
 
   return (
     <TopContainer>
-      <ErrorDialog show={show} body={body} handler={setShow} />
+      <ErrorDialog show={show} body={body} handler={setShow} title={title} />
       <ContentContainer>
         <Title>Select Image</Title>
       </ContentContainer>

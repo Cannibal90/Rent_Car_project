@@ -43,7 +43,6 @@ public class PaymentService {
     }
 
     public void delete(Long id){
-        //TODO: usuwanie z order
         Optional<Payment> paymentInDb = paymentDao.findById(id);
         if(paymentInDb.isEmpty())
             throw new ApiNoFoundResourceException("Payment not found");

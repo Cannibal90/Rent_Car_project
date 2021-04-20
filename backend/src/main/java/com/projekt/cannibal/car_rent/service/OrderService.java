@@ -80,13 +80,12 @@ public class OrderService {
         return orderInDb.get();
     }
 
-    //TODO do nowy payment, cos z tym localdate
     public Order addOrder(Order order, Long userId){
         Optional<User> userInDb = userDao.findById(userId);
         if(userInDb.isEmpty())
             throw new ApiNoFoundResourceException("User not found");
         order.addUser(userInDb.get());
-        Payment payment = new Payment(PaymentType.CASH, 0, LocalDate.now());
+        Payment payment = new Payment(PaymentType.CASH, 0, LocalDate.now().plusDays(2));
         paymentDao.save(payment);
         order.addPayment(payment);
         order.setStatus(OrderStatus.VERIFICATION);

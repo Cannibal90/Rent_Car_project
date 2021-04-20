@@ -1,16 +1,15 @@
 package com.projekt.cannibal.car_rent.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.projekt.cannibal.car_rent.helpers.PaymentType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 @Entity
@@ -33,7 +32,8 @@ public class Payment {
   private double amount;
 
   @NotNull
-  //TODO: cos z ta data pomyslec
+  @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
+  @FutureOrPresent(message = "Pole Payment Date nie może zawierac daty w przeszłosci!")
   private LocalDate paymentDate;
 
   @OneToOne(mappedBy = "payment")

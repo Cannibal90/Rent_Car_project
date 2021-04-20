@@ -22,7 +22,7 @@ export function ManageOrders(props) {
 
   const [totalPages, setTotalPages] = useState(0);
   const [activePage, setActivePage] = useState(0);
-  const [itemsPerPage, setItemsPerPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(2);
 
   useEffect(() => {
     getAllOrders(activePage, itemsPerPage).then((res) => {

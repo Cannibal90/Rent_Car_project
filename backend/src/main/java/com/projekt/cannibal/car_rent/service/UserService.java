@@ -46,7 +46,6 @@ public class UserService {
     }
 
     public User update(Long id, User user){
-        //TODO: sprawdzic jak z rolami gdy sa zle podane
         Optional<User> userInDb = userDao.findById(id);
         if(userInDb.isEmpty()){
             throw new ApiNoFoundResourceException("User not found");
@@ -79,7 +78,6 @@ public class UserService {
         if(userInDB.isEmpty()){
             throw new ApiNoFoundResourceException("User not found");
         }
-        //TODO: usuwanie addresow i orderow
         userDao.delete(userInDB.get());
         return  userInDB.get();
     }

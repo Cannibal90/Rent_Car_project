@@ -24,6 +24,7 @@ export function CarToUpdate(props) {
   const [change, setChange] = useState(false);
   const [show, setShow] = useState(false);
   const [body, setBody] = useState([]);
+  const [title, setTitle] = useState("");
 
   //basic car info
   const [newBrand, setNewBrand] = useState(car.brand.brandName);
@@ -133,6 +134,9 @@ export function CarToUpdate(props) {
           .then((url) => {
             setNewURL(url);
             console.log("URL: " + url);
+            setTitle("Car Image");
+            setBody("Image has been uploaded");
+            setShow(true);
           });
       }
     );
@@ -182,6 +186,7 @@ export function CarToUpdate(props) {
       })
       .catch((error) => {
         console.log("Error: ", error.response.data);
+        setTitle("Something gone wrong...");
         setBody(error.response.data.validationErrors);
         setShow(true);
       });
@@ -193,7 +198,7 @@ export function CarToUpdate(props) {
 
   return (
     <TopContainer>
-      <ErrorDialog show={show} body={body} handler={setShow} />
+      <ErrorDialog show={show} body={body} handler={setShow} title={title} />
       {change ? (
         <SelectedContainer>
           <Input type="file" onChange={handleChange} />

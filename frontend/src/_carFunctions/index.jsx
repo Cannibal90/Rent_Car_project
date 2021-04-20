@@ -41,6 +41,9 @@ export async function getAllCarsByName(number, size, search) {
       }
     );
     console.log("GET ALL CARS");
+    if (search !== "") {
+      res.data.number = 0;
+    }
     return res.data;
   } catch (err) {
     console.log(err);

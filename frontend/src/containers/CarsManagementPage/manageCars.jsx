@@ -42,7 +42,7 @@ export function ManageCars(props) {
 
   const [totalPages, setTotalPages] = useState(0);
   const [activePage, setActivePage] = useState(0);
-  const [itemsPerPage, setItemsPerPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(6);
 
   useEffect(() => {
     getAllCars(activePage, itemsPerPage).then((res) => {
@@ -77,7 +77,10 @@ export function ManageCars(props) {
 
   var handleDelete = function (car) {
     console.log("delete " + car.id);
-    deleteCar(car).then((res) => console.log("usuniete"));
+    deleteCar(car).then((res) => {
+      console.log("usuniete");
+      window.location.reload();
+    });
   };
 
   return (

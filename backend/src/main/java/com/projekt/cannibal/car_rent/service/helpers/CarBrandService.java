@@ -34,7 +34,6 @@ public class CarBrandService {
     }
 
     public CarBrand add(CarBrand carBrand){
-        //TODO: sprawdzic jak z walidacja - unique
         return carBrandDao.save(carBrand);
     }
 
@@ -47,7 +46,6 @@ public class CarBrandService {
     }
 
     public void delete(Long id){
-        //TODO: usuwanie samochodow
         Optional<CarBrand> carBrandInDb = carBrandDao.findById(id);
         if(carBrandInDb.isEmpty())
             throw new ApiNoFoundResourceException("CarBrand not found");

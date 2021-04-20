@@ -64,7 +64,6 @@ public class CarService {
     }
 
     public Car update(Car car, Long carId){
-        //TODO: sprawdzic jak z carbrand po update
         Optional<Car> carInDb = carDao.findById(carId);
         if(carInDb.isEmpty()){
             throw new ApiNoFoundResourceException("Car not found");

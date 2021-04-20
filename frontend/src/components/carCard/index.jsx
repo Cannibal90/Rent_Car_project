@@ -133,7 +133,7 @@ export function CarCard(props) {
           </EnginePetrol>
           <Info>
             <Marginer direction="Vertical" margin={5} />
-            {year} {"\u25CF"} {odometer}km {"\u25CF"} {gearbox}
+            {year.substring(6, 10)} {"\u25CF"} {odometer}km {"\u25CF"} {gearbox}
           </Info>
         </BottomContainer>
       </CardContainer>

@@ -45,7 +45,6 @@ public class EquipmentService {
     }
 
     public void delete(Long id){
-        //TODO: usuwanie z car
         Optional<Equipment> equipmentInDb = equipmentDao.findById(id);
         if(equipmentInDb.isEmpty())
             throw new ApiNoFoundResourceException("Equipment not found");

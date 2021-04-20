@@ -34,7 +34,7 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="production_date" type="VARCHAR(255)"/>
+            <column name="production_date" type="DATE"/>
 
             <column name="url" type="VARCHAR(255)"/>
 

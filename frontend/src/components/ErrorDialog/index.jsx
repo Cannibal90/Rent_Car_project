@@ -6,14 +6,14 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 export function ErrorDialog(props) {
-  const { show, body, handler } = props;
+  const { show, body, handler, title } = props;
 
   const handleClose = () => handler(!show);
 
   var x,
     text = "";
   for (x in body) {
-    text += body[x] + "<br />";
+    text += body[x];
   }
 
   return (
@@ -25,7 +25,7 @@ export function ErrorDialog(props) {
       aria-describedby="alert-dialog-slide-description"
     >
       <DialogTitle id="alert-dialog-slide-title">
-        {"Something gone wrong..."}
+        {title ? title : "Something gone wrong..."}
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-slide-description">

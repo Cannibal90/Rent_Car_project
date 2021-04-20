@@ -1,6 +1,7 @@
 package com.projekt.cannibal.car_rent.model;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.projekt.cannibal.car_rent.helpers.AvailabilityStatus;
 import com.projekt.cannibal.car_rent.helpers.CarType;
@@ -16,6 +17,7 @@ import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,8 +61,10 @@ public class Car implements Serializable {
   @PositiveOrZero(message = "Odometer musi byc wieksza od 0")
   private long odometer;
 
-  @NotBlank(message = "Pole Production Date nie może być puste!")
-  private String production_date;
+  @NotNull
+  @PastOrPresent(message = "Pole Production Date nie może zawierac daty w przyszłosci!")
+  @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
+  private LocalDate production_date;
 
   @NotNull
   private AvailabilityStatus availabilityStatus;

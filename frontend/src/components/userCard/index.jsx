@@ -67,7 +67,7 @@ export function UserCard(props) {
       })
       .catch((error) => {
         console.log("Error: ", error.response.data);
-        setBody(error.response.data.validationErrors);
+        setBody(error.response.data.message);
         setShow(true);
       });
 

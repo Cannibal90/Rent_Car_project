@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { CarCard } from "../../components/carCard";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Input } from "../../components/Cards";
-//TODO
 
 import { getAllCarsByName } from "../../_carFunctions";
 
