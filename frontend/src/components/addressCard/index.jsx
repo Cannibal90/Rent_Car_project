@@ -26,11 +26,9 @@ export function AddressCard(props) {
   const [body, setBody] = useState([]);
 
   var updateAddress = function (id) {
-    console.log("update " + id);
     setDisable(false);
   };
   var saveAddress = function (id) {
-    console.log("save " + id);
     axios
       .put(
         "http://localhost:8080/api/address/update/" + id,

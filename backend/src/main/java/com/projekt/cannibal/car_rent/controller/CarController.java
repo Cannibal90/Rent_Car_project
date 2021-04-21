@@ -22,26 +22,17 @@ public class CarController {
     private CarService carService;
 
 
-//    @GetMapping("/all")
-//    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-//    public List<Car> getAll(){
-//        return carService.findAll();
-//    }
-
     @GetMapping("/all")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public Page<Car> getAll(Pageable page){
         return carService.findAll(page);
     }
 
     @GetMapping("/search")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public Page<Car> SearchAll(@RequestParam(required = false) String search, Pageable page){
         return carService.findAllByModel(search, page);
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public Car getCarById(@PathVariable(name = "id") Long id){
         return carService.findById(id);
     }

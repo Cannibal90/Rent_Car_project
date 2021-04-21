@@ -105,7 +105,6 @@ export function OrderCard(props) {
   };
 
   var deleteOrder = function (id) {
-    console.log("delete");
     deleteSelectedOrder(id).then(() => window.location.reload());
   };
   var statusOption = [

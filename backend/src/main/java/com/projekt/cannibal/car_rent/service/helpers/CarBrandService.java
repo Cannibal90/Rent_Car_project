@@ -19,6 +19,10 @@ public class CarBrandService {
         return carBrandDao.findAll();
     }
 
+    public List<String> findAllNames(){
+        return carBrandDao.findAllByBrandName();
+    }
+
     public CarBrand findById(Long id){
         Optional<CarBrand> carBrandInDb = carBrandDao.findById(id);
         if(carBrandInDb.isEmpty())

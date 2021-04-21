@@ -14,6 +14,15 @@ import {
 } from "../../components/carManageCommons";
 import { firebaseStorage } from "../../firebase";
 import { ErrorDialog } from "../../components/ErrorDialog";
+import {
+  availabilityStatus,
+  CarType,
+  Fuel,
+  Gearbox,
+  Upholostery,
+} from "../../_carFunctions/carConstants";
+import { getAllBrands } from "../../_carFunctions";
+import { useEffect } from "react";
 
 export function CarToAdd(props) {
   const user = JSON.parse(localStorage.getItem("currentUser"));
@@ -46,60 +55,12 @@ export function CarToAdd(props) {
   const [newABS, setNewABS] = useState(false);
   const [newESP, setNewESP] = useState(false);
 
-  const brands = [
-    "Acura",
-    "Alfa Romeo",
-    "Aston Martin",
-    "Audi",
-    "Bentley",
-    "Bmw",
-    "Chevrolet",
-    "Chrysler",
-    "Citroen",
-    "Dacia",
-    "Dodge",
-    "Fiat",
-    "Ford",
-    "Honda",
-    "Hyundai",
-    "Infinity",
-    "Jaguar",
-    "Jeep",
-    "Kia",
-    "Lexus",
-    "Mazda",
-    "Mercedes",
-    "Mini",
-    "Mitsubishi",
-    "Opel",
-    "Peugeot",
-    "Porshe",
-    "Renault",
-    "Saab",
-    "Seat",
-    "Skoda",
-    "Subaru",
-    "Suzuki",
-    "Tesla",
-    "Toyota",
-    "Volkswagen",
-    "Volo",
-  ];
-  const availabilityStatus = ["Available", "Soon", "Out of stock"];
-  const CarType = [
-    "Cabriolet",
-    "Coupe",
-    "Hatchback",
-    "Liftback",
-    "Kombi",
-    "Minivan",
-    "Sedan",
-    "SUV",
-  ];
-
-  const Fuel = ["Petrol", "Diesel", "Electric"];
-  const Gearbox = ["Automatic", "Manual 5S", "Manual 6S"];
-  const Upholostery = ["Fabric", "Half leather", "Leather", "Velor"];
+  const [brands, setBrands] = useState([]);
+  useEffect(() => {
+    getAllBrands().then((res) => {
+      setBrands(res);
+    });
+  }, []);
 
   var addCar = function () {
     axios
@@ -155,7 +116,6 @@ export function CarToAdd(props) {
   };
 
   var uploadFile = function () {
-    console.log("upload");
     const uploadPath = firebaseStorage.ref(`images/${image.name}`).put(image);
     uploadPath.on(
       "state_changed",

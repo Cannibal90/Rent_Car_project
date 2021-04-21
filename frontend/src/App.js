@@ -14,6 +14,8 @@ import { OrdersManagementPage } from "./containers/OrdersManagementPage";
 import { AddressManagementPage } from "./containers/AddressManagementPage";
 import { UpdateCarPage } from "./containers/UpdateCar";
 import { AddCarPage } from "./containers/AddCar";
+import { ProtectedRoute } from "./components/protectedRoute";
+import { UnautorizedPage } from "./containers/UnautorizedPage";
 
 function App(props) {
   return (
@@ -21,24 +23,41 @@ function App(props) {
       <Router>
         <Switch>
           <Route path="/" exact component={HomePage} />
-          <Route path="/account" exact component={MyAccount} />
-          <Route path="/manage" exact component={ManagementPage} />
-          <Route path="/manage/users" exact component={UsersManagementPage} />
-          <Route path="/manage/cars" exact component={CarsManagementPage} />
-          <Route path="/manage/cars/add" exact component={AddCarPage} />
-          <Route
+          <ProtectedRoute path="/account" exact component={MyAccount} />
+          <ProtectedRoute path="/manage" exact component={ManagementPage} />
+          <ProtectedRoute
+            path="/manage/users"
+            exact
+            component={UsersManagementPage}
+          />
+          <ProtectedRoute
+            path="/manage/cars"
+            exact
+            component={CarsManagementPage}
+          />
+          <ProtectedRoute
+            path="/manage/cars/add"
+            exact
+            component={AddCarPage}
+          />
+          <ProtectedRoute
             path="/manage/cars/update/:id"
             exact
             component={UpdateCarPage}
           />
-          <Route path="/manage/orders" exact component={OrdersManagementPage} />
-          <Route
+          <ProtectedRoute
+            path="/manage/orders"
+            exact
+            component={OrdersManagementPage}
+          />
+          <ProtectedRoute
             path="/manage/address/:id"
             exact
             component={AddressManagementPage}
           />
-          <Route path="/basket" exact component={Basket} />
-          <Route path="/history" exact component={History} />
+          <Route path="/unauthorized" exact component={UnautorizedPage} />
+          <ProtectedRoute path="/basket" exact component={Basket} />
+          <ProtectedRoute path="/history" exact component={History} />
           <Route path="/cars" exact component={OffertsPage} />
           <Route path="/cars/:id" exact component={SelectedOffertPage} />
           <Route path="/:action" exact component={CustomerAccessPage} />

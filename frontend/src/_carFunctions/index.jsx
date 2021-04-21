@@ -12,7 +12,6 @@ export async function getAllCars(number, size) {
         number,
       {
         headers: {
-          Authorization: token,
           "Content-Type": "application/json ",
         },
       }
@@ -35,7 +34,6 @@ export async function getAllCarsByName(number, size, search) {
         search,
       {
         headers: {
-          Authorization: token,
           "Content-Type": "application/json ",
         },
       }
@@ -54,7 +52,6 @@ export async function getSelectedCar(carID) {
   try {
     let res = await axios.get("http://localhost:8080/api/car/" + carID, {
       headers: {
-        Authorization: token,
         "Content-Type": "application/json ",
       },
     });
@@ -77,6 +74,21 @@ export async function deleteCar(car) {
       }
     );
     console.log("DELETE SELECTED CARS");
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function getAllBrands() {
+  try {
+    let res = await axios.get("http://localhost:8080/api/carBrand/all", {
+      headers: {
+        Authorization: token,
+        "Content-Type": "application/json ",
+      },
+    });
+    console.log("GET ALL CAR BRANDS");
     return res.data;
   } catch (err) {
     console.log(err);

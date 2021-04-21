@@ -76,9 +76,7 @@ export function ManageCars(props) {
   };
 
   var handleDelete = function (car) {
-    console.log("delete " + car.id);
     deleteCar(car).then((res) => {
-      console.log("usuniete");
       window.location.reload();
     });
   };

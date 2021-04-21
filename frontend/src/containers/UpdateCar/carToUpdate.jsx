@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ContentContainer, Input } from "../../components/Cards";
 import { DropdownList } from "../../components/dropdownList";
 import { Button } from "../../components/button";
@@ -15,6 +15,14 @@ import {
 } from "../../components/carManageCommons";
 import { firebaseStorage } from "../../firebase";
 import { ErrorDialog } from "../../components/ErrorDialog";
+import {
+  availabilityStatus,
+  CarType,
+  Fuel,
+  Gearbox,
+  Upholostery,
+} from "../../_carFunctions/carConstants";
+import { getAllBrands } from "../../_carFunctions";
 
 export function CarToUpdate(props) {
   const { car } = props;
@@ -56,60 +64,12 @@ export function CarToUpdate(props) {
   const [newABS, setNewABS] = useState(car.equipment.abs);
   const [newESP, setNewESP] = useState(car.equipment.esp);
 
-  const brands = [
-    "Acura",
-    "Alfa Romeo",
-    "Aston Martin",
-    "Audi",
-    "Bentley",
-    "Bmw",
-    "Chevrolet",
-    "Chrysler",
-    "Citroen",
-    "Dacia",
-    "Dodge",
-    "Fiat",
-    "Ford",
-    "Honda",
-    "Hyundai",
-    "Infinity",
-    "Jaguar",
-    "Jeep",
-    "Kia",
-    "Lexus",
-    "Mazda",
-    "Mercedes",
-    "Mini",
-    "Mitsubishi",
-    "Opel",
-    "Peugeot",
-    "Porshe",
-    "Renault",
-    "Saab",
-    "Seat",
-    "Skoda",
-    "Subaru",
-    "Suzuki",
-    "Tesla",
-    "Toyota",
-    "Volkswagen",
-    "Volo",
-  ];
-  const availabilityStatus = ["Available", "Soon", "Out of stock"];
-  const CarType = [
-    "Cabriolet",
-    "Coupe",
-    "Hatchback",
-    "Liftback",
-    "Kombi",
-    "Minivan",
-    "Sedan",
-    "SUV",
-  ];
-
-  const Fuel = ["Petrol", "Diesel", "Electric"];
-  const Gearbox = ["Automatic", "Manual 5S", "Manual 6S"];
-  const Upholostery = ["Fabric", "Half leather", "Leather", "Velor"];
+  const [brands, setBrands] = useState([]);
+  useEffect(() => {
+    getAllBrands().then((res) => {
+      setBrands(res);
+    });
+  }, []);
 
   const handleChange = (e) => {
     if (e.target.files[0]) {
@@ -118,7 +78,6 @@ export function CarToUpdate(props) {
   };
 
   var uploadFile = function () {
-    console.log("upload");
     const uploadPath = firebaseStorage.ref(`images/${image.name}`).put(image);
     uploadPath.on(
       "state_changed",
@@ -133,7 +92,6 @@ export function CarToUpdate(props) {
           .getDownloadURL()
           .then((url) => {
             setNewURL(url);
-            console.log("URL: " + url);
             setTitle("Car Image");
             setBody("Image has been uploaded");
             setShow(true);
@@ -143,7 +101,6 @@ export function CarToUpdate(props) {
   };
 
   var updateCar = function () {
-    console.log("update" + car.id);
     axios
       .put(
         "http://localhost:8080/api/car/update/" + car.id,

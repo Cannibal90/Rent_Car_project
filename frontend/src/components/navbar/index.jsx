@@ -39,7 +39,6 @@ export function Navbar(props) {
   const { useTransparent } = props;
   const isLogged = localStorage.getItem("isLogged");
   const user = JSON.parse(localStorage.getItem("currentUser"));
-  // console.log("user curr: ", user);
   const role = user ? user.role : null;
 
   var logOut = function () {

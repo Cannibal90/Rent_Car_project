@@ -56,7 +56,6 @@ export function DropdownList(props) {
   };
 
   var changeOption = function (item) {
-    console.log("dziala cos ?");
     setOption(item.item);
     handler(item.item);
     setShow(false);

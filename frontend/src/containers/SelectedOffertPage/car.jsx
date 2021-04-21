@@ -88,6 +88,7 @@ export function SelectedCar(props) {
   const [isLoading, setLoading] = useState(true);
   const { id } = props;
   const [car, setCar] = useState();
+  const user = JSON.parse(localStorage.getItem("currentUser"));
 
   useEffect(() => {
     getSelectedCar(id).then((res) => {
@@ -102,7 +103,6 @@ export function SelectedCar(props) {
 
   var addToBasket = function () {
     addCarToOrder(car).then((res) => {
-      console.log("udalo sie dodac! = " + JSON.stringify(res));
       window.location.reload();
     });
   };
@@ -121,18 +121,22 @@ export function SelectedCar(props) {
         <AccessibilityContainer>
           <Title>{car.price}zł</Title>
           <Marginer direction="horizontal" margin={50} />
-          <Link to="/basket">
-            <Button
-              size={45}
-              paddingW={2}
-              paddingH={3}
-              onClick={() => {
-                addToBasket();
-              }}
-            >
-              Kup teraz
-            </Button>
-          </Link>
+          {user ? (
+            <Link to="/basket">
+              <Button
+                size={45}
+                paddingW={2}
+                paddingH={3}
+                onClick={() => {
+                  addToBasket();
+                }}
+              >
+                Kup teraz
+              </Button>
+            </Link>
+          ) : (
+            <Title>Musisz być zalogowany!</Title>
+          )}
         </AccessibilityContainer>
       </TitlePriceContainer>
 
