@@ -31,9 +31,6 @@ public class CarService {
     @Autowired
     private EquipmentDao equipmentDao;
 
-//    public List<Car> findAll(){
-//        return carDao.findAll();
-//    }
 
     public Page<Car> findAll(Pageable page){
         return carDao.findAll(page);

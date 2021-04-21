@@ -89,11 +89,15 @@ export function SelectedCar(props) {
   const { id } = props;
   const [car, setCar] = useState();
   const user = JSON.parse(localStorage.getItem("currentUser"));
+  const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
     getSelectedCar(id).then((res) => {
       setCar(res);
       setLoading(false);
+      if (res.availabilityStatus === "Out of stock") {
+        setDisabled(true);
+      }
     });
   }, [id]);
 
@@ -127,11 +131,12 @@ export function SelectedCar(props) {
                 size={45}
                 paddingW={2}
                 paddingH={3}
+                disabled={disabled ? true : ""}
                 onClick={() => {
                   addToBasket();
                 }}
               >
-                Kup teraz
+                {disabled ? "Out of stock" : "Kup teraz"}
               </Button>
             </Link>
           ) : (

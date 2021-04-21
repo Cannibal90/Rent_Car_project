@@ -117,6 +117,7 @@ export function ManageCars(props) {
                 odometer={car.odometer}
                 gearbox={car.equipment.gearbox}
                 urls={car.url}
+                status={car.availabilityStatus}
                 power={car.power}
                 disabled={disable ? true : ""}
                 handler={() => {

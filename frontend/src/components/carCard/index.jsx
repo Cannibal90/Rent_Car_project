@@ -102,6 +102,7 @@ export function CarCard(props) {
     odometer,
     gearbox,
     urls,
+    status,
     handler,
     disabled,
     linkto,
@@ -133,7 +134,8 @@ export function CarCard(props) {
           </EnginePetrol>
           <Info>
             <Marginer direction="Vertical" margin={5} />
-            {year.substring(6, 10)} {"\u25CF"} {odometer}km {"\u25CF"} {gearbox}
+            {year.substring(6, 10)} {"\u25CF"} {odometer}km {"\u25CF"} {gearbox}{" "}
+            {"\u25CF"} {status}
           </Info>
         </BottomContainer>
       </CardContainer>

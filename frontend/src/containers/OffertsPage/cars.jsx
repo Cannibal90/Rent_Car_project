@@ -96,6 +96,7 @@ export function Cars(props) {
               odometer={car.odometer}
               gearbox={car.equipment.gearbox}
               urls={car.url}
+              status={car.availabilityStatus}
               power={car.power}
               disabled={true}
             />

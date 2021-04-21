@@ -193,6 +193,7 @@ export function OrderCard(props) {
                 gearbox={car.equipment.gearbox}
                 power={car.power}
                 urls={car.url}
+                status={car.availabilityStatus}
                 disabled={disable ? true : ""}
                 handler={() => {
                   click(car);

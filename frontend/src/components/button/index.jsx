@@ -24,10 +24,11 @@ const ButtonWrapper = styled.button`
 `;
 
 export function Button(props) {
-  const { onClick, size, paddingH, paddingW } = props;
+  const { onClick, size, paddingH, paddingW, disabled } = props;
 
   return (
     <ButtonWrapper
+      disabled={disabled}
       onClick={onClick}
       size={size}
       paddingW={paddingW}

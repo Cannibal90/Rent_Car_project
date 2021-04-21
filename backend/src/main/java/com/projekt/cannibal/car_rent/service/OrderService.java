@@ -6,6 +6,7 @@ import com.projekt.cannibal.car_rent.dao.PaymentDao;
 import com.projekt.cannibal.car_rent.dao.UserDao;
 import com.projekt.cannibal.car_rent.dto.OrderDTO;
 import com.projekt.cannibal.car_rent.exceptions.ApiNoFoundResourceException;
+import com.projekt.cannibal.car_rent.helpers.AvailabilityStatus;
 import com.projekt.cannibal.car_rent.helpers.OrderStatus;
 import com.projekt.cannibal.car_rent.helpers.PaymentType;
 import com.projekt.cannibal.car_rent.model.Car;
@@ -112,14 +113,12 @@ public class OrderService {
         Optional<Car> carInDb = carDao.findById(orderDTO.getCarToAdd().getId());
         if(carInDb.isEmpty())
             throw new ApiNoFoundResourceException("Car not found");
-
+        carInDb.get().setAvailabilityStatus(AvailabilityStatus.OUT_OF_STOCK);
         Payment payment = orderInDb.getPayment();
         Double price = carInDb.get().getPrice() + payment.getAmount();
         payment.setAmount(price);
         orderInDb.setPayment(payment);
         orderInDb.addCar(carInDb.get());
-//        carInDb.get().getOrders().add(orderInDb);
-//        orderInDb.getCars().add(carInDb.get());
         return orderDao.save(orderInDb);
     }
 
