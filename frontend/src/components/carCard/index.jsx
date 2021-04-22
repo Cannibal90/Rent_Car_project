@@ -12,7 +12,6 @@ const CardContainer = styled.div`
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
   margin: 3.5em;
   margin-bottom: 1.3em;
-  //z-index: 1;
 
   &:hover {
     box-shadow: 0 0 33px rgba(0, 0, 0, 0.7);
@@ -44,7 +43,6 @@ const ContentContainer = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  //flex: 1;
   padding: 15px 14px;
 `;
 
@@ -83,7 +81,6 @@ const Info = styled.div`
 const DeleteBoxText = styled.div`
   position: absolute;
   z-index: 2;
-  //margin: auto 0;
   top: 8px;
   right: 8px;
   text-align: right;
@@ -108,7 +105,6 @@ export function CarCard(props) {
     linkto,
   } = props;
 
-  //var to = `/cars/${id}`;
   var to = linkto ? linkto : `/cars/${id}`;
   return (
     <Link to={disabled ? to : "#"} style={{ textDecoration: "none" }}>

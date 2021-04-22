@@ -1,19 +1,13 @@
-import styled from "styled-components";
-import { ContentContainer, WeightInfo, Title } from "../../components/Cards";
+import {
+  ContentContainer,
+  WeightInfo,
+  Title,
+  CommonContainer,
+  WidthContainer,
+} from "../../components/Cards";
 import { useEffect, useState } from "react";
 import { getBasket } from "../../_ordersFunctions";
 import { HistoryBasketCard } from "../../components/HistoryBasketCard";
-
-const OrderContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 10%;
-`;
-const HelpContainer = styled.div`
-  width: 100%;
-`;
 
 export function BasketOrders(props) {
   const [order, setOrder] = useState();
@@ -31,7 +25,7 @@ export function BasketOrders(props) {
   }
 
   return (
-    <OrderContainer>
+    <CommonContainer>
       <ContentContainer>
         <Title>Basket</Title>
       </ContentContainer>
@@ -44,7 +38,7 @@ export function BasketOrders(props) {
       </ContentContainer>
 
       {!isLoading && order && (
-        <HelpContainer>
+        <WidthContainer>
           <HistoryBasketCard
             id={order.id}
             status={order.status}
@@ -56,8 +50,8 @@ export function BasketOrders(props) {
             orderUser={order.user}
             disable={""}
           />
-        </HelpContainer>
+        </WidthContainer>
       )}
-    </OrderContainer>
+    </CommonContainer>
   );
 }

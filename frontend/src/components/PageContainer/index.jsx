@@ -19,9 +19,7 @@ export const InnerPageContainer = styled.div`
   flex: 1;
   width: 100%;
   max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : "auto")};
-  /*min-height Need more testing*/
   min-height: 70vh;
-  //padding: 1em;
   display: flex;
   flex-direction: column;
   align-items: center;

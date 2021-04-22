@@ -101,7 +101,7 @@ public class OrderService {
                 .stream()
                 .filter(order -> order.getStatus().equals(OrderStatus.VERIFICATION))
                 .collect(Collectors.toList());
-        System.out.println("Orders: " +  userOrder);
+
         Order orderInDb = null;
         if(userOrder.isEmpty()){
             orderInDb = addOrder(new Order(), orderDTO.getUserId());

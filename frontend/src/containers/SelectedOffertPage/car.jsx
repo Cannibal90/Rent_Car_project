@@ -1,5 +1,3 @@
-//import axios from "axios";
-
 import { Button } from "../../components/button";
 import styled from "styled-components";
 import { Marginer } from "../../components/marginer";

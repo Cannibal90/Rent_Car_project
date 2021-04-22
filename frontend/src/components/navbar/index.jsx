@@ -4,6 +4,7 @@ import { BrandLogo } from "../brandLogo";
 import { Button } from "../../components/button";
 import { Marginer } from "../marginer";
 import { Link } from "react-router-dom";
+
 const NavbarContainer = styled.div`
   width: 100%;
   height: 75px;

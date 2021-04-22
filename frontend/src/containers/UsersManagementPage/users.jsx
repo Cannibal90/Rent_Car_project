@@ -1,21 +1,15 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import styled from "styled-components";
 import { UserCard } from "../../components/userCard";
-import { Info, ContentContainer, Title } from "../../components/Cards";
+import {
+  Info,
+  ContentContainer,
+  Title,
+  CommonContainer,
+  WidthContainer,
+} from "../../components/Cards";
 import { getAllUsers } from "../../_userFunctions";
 import Pagination from "react-bootstrap/Pagination";
-
-const UserContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 10%;
-`;
-const TopContainer = styled.div`
-  width: 100%;
-`;
 
 export function Users(props) {
   const [userList, setUserList] = useState([]);
@@ -50,8 +44,8 @@ export function Users(props) {
   }
 
   return (
-    <TopContainer>
-      <UserContainer>
+    <WidthContainer>
+      <CommonContainer>
         <ContentContainer>
           <Title>Users</Title>
         </ContentContainer>
@@ -80,11 +74,11 @@ export function Users(props) {
             role={user.role}
           />
         ))}
-      </UserContainer>
+      </CommonContainer>
 
       <Pagination style={{ justifyContent: "center" }} size="lg">
         {items}
       </Pagination>
-    </TopContainer>
+    </WidthContainer>
   );
 }

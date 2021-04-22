@@ -13,7 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
+
 
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -42,7 +42,6 @@ public class UserController {
     return userService.findById(id);
   }
 
-  //TODO: wywala blad przy update z uniqueEmail, uniqueUsername chyba DTO
   @PutMapping("/update/{id}")
   @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
   public User updateUser(

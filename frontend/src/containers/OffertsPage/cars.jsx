@@ -3,29 +3,14 @@ import Pagination from "react-bootstrap/Pagination";
 import styled from "styled-components";
 import { CarCard } from "../../components/carCard";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Input } from "../../components/Cards";
+import {
+  Input,
+  CommonContainer,
+  WidthContainer,
+  CarWrapper,
+} from "../../components/Cards";
 
 import { getAllCarsByName } from "../../_carFunctions";
-
-const CarContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 10%;
-`;
-
-const CarWrapper = styled.div`
-  display: flex;
-  justify-content: space-around;
-  //moze byc space between
-  margin: 0 0;
-  flex-wrap: wrap; //tutaj nastepuje przeniesienie do nowej lini
-`;
-
-const TopContainer = styled.div`
-  width: 100%;
-`;
 
 const SearchBarContainer = styled.div`
   width: 30%;
@@ -43,7 +28,6 @@ export function Cars(props) {
   const [totalPages, setTotalPages] = useState(0);
   const [activePage, setActivePage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(6);
-  // const [totalElements, setTotalElements] = useState(0);
 
   useEffect(() => {
     getAllCarsByName(activePage, itemsPerPage, search).then((res) => {
@@ -51,8 +35,6 @@ export function Cars(props) {
       setActivePage(res.number);
       setItemsPerPage(res.size);
       setCarList(res.content);
-
-      //setTotalElements(res.totalElements);
     });
   }, [activePage, itemsPerPage, search]);
 
@@ -72,7 +54,7 @@ export function Cars(props) {
   }
 
   return (
-    <TopContainer>
+    <WidthContainer>
       <SearchBarContainer>
         <Input
           type="text"
@@ -82,7 +64,7 @@ export function Cars(props) {
           }}
         />
       </SearchBarContainer>
-      <CarContainer>
+      <CommonContainer>
         <CarWrapper>
           {carList.map((car) => (
             <CarCard
@@ -102,10 +84,10 @@ export function Cars(props) {
             />
           ))}
         </CarWrapper>
-      </CarContainer>
+      </CommonContainer>
       <Pagination style={{ justifyContent: "center" }} size="lg">
         {items}
       </Pagination>
-    </TopContainer>
+    </WidthContainer>
   );
 }

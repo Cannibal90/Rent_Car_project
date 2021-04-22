@@ -1,5 +1,12 @@
 import React from "react";
-import { Icon, Input, ContentContainer, Info } from "../Cards";
+import {
+  Icon,
+  Input,
+  ContentContainer,
+  Info,
+  CarWrapper,
+  CarContainer,
+} from "../Cards";
 import { useState } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,22 +20,6 @@ import styled from "styled-components";
 import { CarCard } from "../carCard";
 import { deleteSelectedOrder } from "../../_ordersFunctions";
 import { ErrorDialog } from "../ErrorDialog";
-
-const CarContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 1%;
-  z-index: 1;
-`;
-
-const CarWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 0 0;
-  flex-wrap: wrap; //tutaj nastepuje przeniesienie do nowej lini
-`;
 
 const OrderCarContainer = styled.div`
   width: 100%;

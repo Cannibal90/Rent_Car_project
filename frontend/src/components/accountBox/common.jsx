@@ -4,7 +4,7 @@ export const BoxContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: left; //tutaj bylo center
+  align-items: left;
   margin-top: 10px;
 `;
 

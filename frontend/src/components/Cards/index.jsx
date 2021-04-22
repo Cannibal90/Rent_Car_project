@@ -113,3 +113,30 @@ export const Title = styled.h2`
   font-weight: 600;
   font-size: 30px;
 `;
+
+export const CommonContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 10%;
+`;
+export const WidthContainer = styled.div`
+  width: 100%;
+`;
+
+export const CarWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0;
+  flex-wrap: wrap;
+`;
+
+export const CarContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 1%;
+  z-index: 1;
+`;

@@ -1,16 +1,11 @@
-import { ContentContainer, Info } from "../../components/Cards";
+import {
+  ContentContainer,
+  Info,
+  CommonContainer,
+} from "../../components/Cards";
 import { useState, useEffect } from "react";
-import styled from "styled-components";
 import { UserCard } from "../../components/userCard";
 import { getSelectedUser } from "../../_userFunctions";
-
-const UserContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 10%;
-`;
 
 export function ManageUser(props) {
   const [userFromDb, setUserFromDb] = useState();
@@ -28,7 +23,7 @@ export function ManageUser(props) {
   }
 
   return (
-    <UserContainer>
+    <CommonContainer>
       <ContentContainer>
         <Info>id</Info>
         <Info>username</Info>
@@ -51,6 +46,6 @@ export function ManageUser(props) {
         lastname={userFromDb.lastname}
         role={userFromDb.role}
       />
-    </UserContainer>
+    </CommonContainer>
   );
 }

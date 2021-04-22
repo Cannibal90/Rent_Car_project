@@ -1,8 +1,8 @@
-import styled from "styled-components";
 import axios from "axios";
 import { Button } from "../../components/button";
 import { useEffect, useState } from "react";
 import { AddressCard } from "../../components/addressCard";
+import { CommonContainer, WidthContainer } from "../../components/Cards";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faSave } from "@fortawesome/free-regular-svg-icons";
 import {
@@ -15,17 +15,6 @@ import {
 import { getAddressForSelectedUser } from "../../_addressesFunctions";
 import { ErrorDialog } from "../../components/ErrorDialog";
 import Pagination from "react-bootstrap/Pagination";
-
-const AddressContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 10%;
-`;
-const HelpContainer = styled.div`
-  width: 100%;
-`;
 
 export function Addresses(props) {
   const { userId } = props;
@@ -40,7 +29,6 @@ export function Addresses(props) {
   const [show, setShow] = useState(false);
   const [body, setBody] = useState([]);
 
-  //////////////
   const [newCountry, setNewCountry] = useState();
   const [newCity, setNewCity] = useState();
   const [newStreet, setNewStreet] = useState();
@@ -48,7 +36,6 @@ export function Addresses(props) {
   const [newPostCode, setNewPostCode] = useState();
   const [disable, setDisable] = useState(false);
 
-  //////////////
   useEffect(() => {
     getAddressForSelectedUser(userId, activePage, itemsPerPage).then((res) => {
       setTotalPages(res.totalPages);
@@ -108,8 +95,8 @@ export function Addresses(props) {
   };
 
   return (
-    <HelpContainer>
-      <AddressContainer>
+    <WidthContainer>
+      <CommonContainer>
         <ErrorDialog show={show} body={body} handler={setShow} />
         <ContentContainer>
           <Title>Addresses</Title>
@@ -206,10 +193,10 @@ export function Addresses(props) {
             userId={userId}
           />
         ))}
-      </AddressContainer>
+      </CommonContainer>
       <Pagination style={{ justifyContent: "center" }} size="lg">
         {items}
       </Pagination>
-    </HelpContainer>
+    </WidthContainer>
   );
 }

@@ -1,5 +1,11 @@
-import { ContentContainer, Title } from "../../components/Cards";
-import styled from "styled-components";
+import {
+  ContentContainer,
+  Title,
+  CommonContainer,
+  WidthContainer,
+  CarWrapper,
+  CarContainer,
+} from "../../components/Cards";
 import { Button } from "../../components/button";
 import { CarCard } from "../../components/carCard";
 import { useState } from "react";
@@ -7,33 +13,6 @@ import { Link } from "react-router-dom";
 import { deleteCar, getAllCars } from "../../_carFunctions";
 import { useEffect } from "react";
 import Pagination from "react-bootstrap/Pagination";
-
-const CarsContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 10%;
-`;
-const CarContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 1%;
-  z-index: 1;
-`;
-
-const CarWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 0 0;
-  flex-wrap: wrap; //tutaj nastepuje przeniesienie do nowej lini
-`;
-
-const TopContainer = styled.div`
-  width: 100%;
-`;
 
 export function ManageCars(props) {
   const [editMode, setEditMode] = useState(true);
@@ -50,8 +29,6 @@ export function ManageCars(props) {
       setActivePage(res.number);
       setItemsPerPage(res.size);
       setCarList(res.content);
-
-      //setTotalElements(res.totalElements);
     });
   }, [activePage, itemsPerPage]);
 
@@ -82,8 +59,8 @@ export function ManageCars(props) {
   };
 
   return (
-    <TopContainer>
-      <CarsContainer>
+    <WidthContainer>
+      <CarContainer>
         <ContentContainer>
           <Title>Cars</Title>
         </ContentContainer>
@@ -103,7 +80,7 @@ export function ManageCars(props) {
             </Button>
           </Link>
         </ContentContainer>
-        <CarContainer>
+        <CommonContainer>
           <CarWrapper>
             {carList.map((car) => (
               <CarCard
@@ -127,12 +104,12 @@ export function ManageCars(props) {
               />
             ))}
           </CarWrapper>
-        </CarContainer>
-      </CarsContainer>
+        </CommonContainer>
+      </CarContainer>
 
       <Pagination style={{ justifyContent: "center" }} size="lg">
         {items}
       </Pagination>
-    </TopContainer>
+    </WidthContainer>
   );
 }

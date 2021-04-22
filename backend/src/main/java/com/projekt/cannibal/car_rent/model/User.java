@@ -40,7 +40,7 @@ public class User {
   private String lastname;
 
   @UniqueEmail
-  //TODO zastanowic się nad tym dlugim regexem
+  @Pattern(regexp = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", message = "Email ma zły format!")
   private String email;
 
   @NotBlank(message = "Password nie może być puste")
