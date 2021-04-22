@@ -9,6 +9,9 @@ public enum AvailabilityStatus {
   @JsonProperty(value = "Soon")
   SOON("Soon"),
 
+  @JsonProperty(value = "Reserved")
+  RESERVED("Reserved"),
+
   @JsonProperty(value = "Out of stock")
   OUT_OF_STOCK("Out of stock");
 

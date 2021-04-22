@@ -15,6 +15,6 @@ import java.util.List;
 @Transactional
 public interface CarDao extends JpaRepository<Car, Long> {
 
-    @Query(value = "SELECT * FROM car Inner Join car_brand on car.brand_id = car_brand.id WHERE car.availability_status!=2 and (model LIKE %:search% Or car_brand.brand_name LIKE %:search%)", nativeQuery = true)
+    @Query(value = "SELECT * FROM car Inner Join car_brand on car.brand_id = car_brand.id WHERE car.availability_status!=2 and car.availability_status!=3 and (model LIKE %:search% Or car_brand.brand_name LIKE %:search%)", nativeQuery = true)
     Page<Car> findByModelOrBrand(@Param("search")String search, Pageable page);
 }

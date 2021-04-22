@@ -139,7 +139,7 @@ export function CarToUpdate(props) {
       )
       .then((response) => {
         console.log("Response: ", response.data);
-        window.location.reload();
+        window.location = "/manage/cars";
       })
       .catch((error) => {
         console.log("Error: ", error.response.data);

@@ -1,4 +1,9 @@
-export const availabilityStatus = ["Available", "Soon", "Out of stock"];
+export const availabilityStatus = [
+  "Available",
+  "Soon",
+  "Reserved",
+  "Out of stock",
+];
 export const CarType = [
   "Cabriolet",
   "Coupe",
